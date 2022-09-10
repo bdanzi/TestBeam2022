@@ -136,15 +136,15 @@ wave() : bsln(0.0), rms(0.0), integ(0.0), max(-9999), integInR(0.0), maxInR(-999
       integ+=Y.back();            //l'integrale � in sostanza una somma, integ � inizializzata a zero e poi viene incrementata.
       //std::cout << "i-th point "<<ipt<<"Integ: " << integ <<"\n";
       //Rms somma Y nei primi 100 bin
-     // if (ipt==fbin_rms[isl]-1) {
-       if(ipt>skipFstBin[isl] && ipt<(fbin_rms[isl]+skipFstBin[isl])){
-	      bsln = (float) integ*invfbin;
-	      //rms=sqrt(rms*invfbin-bsln*bsln);
+      // if (ipt==fbin_rms[isl]-1) {
+      if(ipt>skipFstBin[isl] && ipt<(fbin_rms[isl]+skipFstBin[isl])){
+	bsln = (float) integ*invfbin;
+	//rms=sqrt(rms*invfbin-bsln*bsln);
       }
       //std::cout << "i-th point "<<ipt<<"Bsl: " << bsln <<"\n";
       //if (ipt==fbin_rms[isl]-1/*100*/) {
-        if(ipt>skipFstBin[isl] && ipt<(fbin_rms[isl]+skipFstBin[isl])){
-	      rms+=(Y.back()-bsln)*(Y.back()-bsln);    //.back mi restituisce l'ultimo elemento del vettore.
+      if(ipt>skipFstBin[isl] && ipt<(fbin_rms[isl]+skipFstBin[isl])){
+	rms+=(Y.back()-bsln)*(Y.back()-bsln);    //.back mi restituisce l'ultimo elemento del vettore.
       }
       
       if (Y.back()>max) { max=Y.back(); maxPos=ipt; }
@@ -181,17 +181,17 @@ wave() : bsln(0.0), rms(0.0), integ(0.0), max(-9999), integInR(0.0), maxInR(-999
     for (int ipt=0; ipt<nPt; ++ipt) {
       Y.push_back(arr[ipt]);        
       integ+=Y.back();
-       //if (ipt<fbin_rms[isl]) {
+      //if (ipt<fbin_rms[isl]) {
 	     //    rms+=Y.back()*Y.back();
-       //   }
+      //   }
       if (ipt>skipFstBin[isl] && ipt<(fbin_rms[isl]+skipFstBin[isl])) {
-	      bsln=(float) integ*invfbin;
+	bsln=(float) integ*invfbin;
 	
       }
       
       //if (ipt==fbin_rms[isl]-1/*100*/) {
-        if(ipt>skipFstBin[isl] && ipt<(fbin_rms[isl]+skipFstBin[isl])){
-	      rms+=(Y.back()-bsln)*(Y.back()-bsln);    //.back mi restituisce l'ultimo elemento del vettore.
+      if(ipt>skipFstBin[isl] && ipt<(fbin_rms[isl]+skipFstBin[isl])){
+	rms+=(Y.back()-bsln)*(Y.back()-bsln);    //.back mi restituisce l'ultimo elemento del vettore.
       }
       
       if (Y.back()>max) { max=Y.back(); maxPos=ipt; }
@@ -264,7 +264,7 @@ struct hstPerCh { //istogrammi per tutti i canali dell'oscilloscopio.
   TH2F *hNClusterFCluster;
   TH1F *hTPeaks;
   TH1F *hTFstPeaks;
-	TH1F *hNPeaks_1;
+  TH1F *hNPeaks_1;
   TH1F *hBsl;
   TH1F *hInteg;
   TH1F *hIntegN;

@@ -220,78 +220,78 @@ void ReadSglChannel_test(){
       string name_file = fname.Data();
       fscanf(fp,"%d",&channel); //number of channels for which I show plots (0-11)
       fscanf(fp,"%d",&ev); //number of events for which I show plots (0-...)
-       if((name_file =="histosTB_run_39.root") || ((name_file =="histosTB_run_41.root"))){
-cluster_per_cm_mip = 18.;
-printf("Changed Cluster per cm physical quantity to %0.1f!\n",cluster_per_cm_mip);
+      if((name_file =="histosTB_run_39.root") || ((name_file =="histosTB_run_41.root"))){
+	cluster_per_cm_mip = 18.;
+	printf("Changed Cluster per cm physical quantity to %0.1f!\n",cluster_per_cm_mip);
       }
       else if((name_file =="histosTB_run_63.root")){
         cluster_per_cm_mip = 15.;
-printf("Changed Cluster per cm physical quantity to %0.1f!\n",cluster_per_cm_mip);
+	printf("Changed Cluster per cm physical quantity to %0.1f!\n",cluster_per_cm_mip);
       }
       else if((name_file =="histosTB_run_10.root")){
-cluster_per_cm_mip = 12.;
-printf("Changed Cluster per cm physical quantity to %0.1f!\n",cluster_per_cm_mip);
+	cluster_per_cm_mip = 12.;
+	printf("Changed Cluster per cm physical quantity to %0.1f!\n",cluster_per_cm_mip);
       }   
       if((name_file =="histosTB_run_99.root") ){
-alpha = 0;
-printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
+	alpha = 0;
+	printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
       }
       else if((name_file =="histosTB_run_98.root")){
-alpha = 15;
-printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
+	alpha = 15;
+	printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
       }
       else if((name_file =="histosTB_run_96.root")){
-alpha = 30;
-printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
-
+	alpha = 30;
+	printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
+	
 
       }
       else if((name_file =="histosTB_run_10.root") || (name_file =="histosTB_run_39.root") || (name_file =="histosTB_run_41.root") || (name_file =="histosTB_run_63.root")){
-alpha = 45;
-printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
+	alpha = 45;
+	printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
 
-
+	
       }
       else if((name_file =="histosTB_run_91.root") ){
-alpha = 60;
-printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
-
+	alpha = 60;
+	printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
+	
       }
       
       cos_alpha = TMath::Cos(alpha*TMath::DegToRad());
-
-	mean_electrons_1cm = 0.;
-  	mean_clusters_1cm = 0.;
-  	rms_clusters_1cm = 0.;
-  	rms_electrons_1cm = 0.;
-  	mean_electrons_2cm = 0.;
-  	mean_clusters_2cm = 0.;
-  	rms_clusters_2cm = 0.;
-  	rms_electrons_2cm = 0.;
-  	maximum_1cm = 0.;
-  	maximum_2cm = 0.;
-  	rms_maximum_1cm = 0.;
-  	rms_maximum_2cm = 0.;
-  	integral_1cm = 0.;
-  	integral_2cm = 0.;
-  	epc_1cm = 0.;
-  	epc_2cm = 0.;
-  	rms_epc_1cm = 0.;
-  	rms_epc_2cm = 0.;
-  	bsl_1cm_var = 0.;
-  	bsl_2cm_var = 0.;
-  	rms_bsl_1cm = 0.;
-  	rms_bsl_2cm = 0.;
-  	aveph_1cm = 0.;
-  	aveph_2cm = 0.;
-  	rms_aveph_1cm = 0.;
-  	rms_aveph_2cm = 0.;
-  	rms_1cm_var = 0.;
-  	rms_2cm_var = 0.;
-  	rms_rms_1cm = 0.;
-  	rms_rms_2cm = 0.;
-  	rms_integral_1cm = 0.;
-  	rms_integral_2cm = 0.;
+      
+      mean_electrons_1cm = 0.;
+      mean_clusters_1cm = 0.;
+      rms_clusters_1cm = 0.;
+      rms_electrons_1cm = 0.;
+      mean_electrons_2cm = 0.;
+      mean_clusters_2cm = 0.;
+      rms_clusters_2cm = 0.;
+      rms_electrons_2cm = 0.;
+      maximum_1cm = 0.;
+      maximum_2cm = 0.;
+      rms_maximum_1cm = 0.;
+      rms_maximum_2cm = 0.;
+      integral_1cm = 0.;
+      integral_2cm = 0.;
+      epc_1cm = 0.;
+      epc_2cm = 0.;
+      rms_epc_1cm = 0.;
+      rms_epc_2cm = 0.;
+      bsl_1cm_var = 0.;
+      bsl_2cm_var = 0.;
+      rms_bsl_1cm = 0.;
+      rms_bsl_2cm = 0.;
+      aveph_1cm = 0.;
+      aveph_2cm = 0.;
+      rms_aveph_1cm = 0.;
+      rms_aveph_2cm = 0.;
+      rms_1cm_var = 0.;
+      rms_2cm_var = 0.;
+      rms_rms_1cm = 0.;
+      rms_rms_2cm = 0.;
+      rms_integral_1cm = 0.;
+      rms_integral_2cm = 0.;
       
       if (stat(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/",fname.Data()), &st) == -1) {
 	mkdir(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/",fname.Data()), 0700);
@@ -315,9 +315,9 @@ printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
       TCanvas *hpeaks_2cm= new TCanvas("hpeaks_2","hpeaks",3500,1500);
       TCanvas *hnpeaks_1cm= new TCanvas("hnpeaks_1","hnpeaks",3500,1500);
       TCanvas *hnpeaks_2cm= new TCanvas("hnpeaks_2","hnpeaks",3500,1500);
-	  TCanvas *hncluster_1cm= new TCanvas("hncluster_1","hncluster",3500,1500);
+      TCanvas *hncluster_1cm= new TCanvas("hncluster_1","hncluster",3500,1500);
       TCanvas *hncluster_2cm= new TCanvas("hncluster_2","hncluster",3500,1500);
-	  TCanvas *hnelectron_1cm= new TCanvas("hnelectron_1","hnelectron",3500,1500);
+      TCanvas *hnelectron_1cm= new TCanvas("hnelectron_1","hnelectron",3500,1500);
       TCanvas *hnelectron_2cm= new TCanvas("hnelectron_2","hnelectron",3500,1500);
       TCanvas *tpeaks_1cm= new TCanvas("tpeaks_1","tpeaks",3500,1500);
       TCanvas *tpeaks_2cm= new TCanvas("tpeaks_2","tpeaks",3500,1500);
@@ -362,10 +362,10 @@ printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
       hpeaks_2cm->Divide(2,2);
       hnpeaks_1cm->Divide(2,4);
       hnpeaks_2cm->Divide(2,2);
-	  hncluster_1cm->Divide(2,4);
+      hncluster_1cm->Divide(2,4);
       hncluster_2cm->Divide(2,2);
-	  hnelectron_1cm->Divide(2,4);
-	  hnelectron_2cm->Divide(2,2);
+      hnelectron_1cm->Divide(2,4);
+      hnelectron_2cm->Divide(2,2);
       tpeaks_1cm->Divide(2,4);
       tpeaks_2cm->Divide(2,2);
       tfpeaks_1cm->Divide(2,4);
@@ -379,7 +379,7 @@ printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
 	  TGraph *h1=(TGraph*)file->Get(Form("signal_Afterflt/CvSignal_1_ev%i",i));
 	  if (h1==0x0) { continue; }
 	  h1->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/Waves/waves_ev%i.pdf",fname.Data(),i));
-	   //h1->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/Waves/waves_ev%i.png",fname.Data(),i));
+	  //h1->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/Waves/waves_ev%i.png",fname.Data(),i));
 	}
       }
       else if(!isdoubleCanvas){
@@ -391,7 +391,7 @@ printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
 	    h1->SetTitle(Form("Channel %d event %d Alpha %.1f Run %s",j,i,alpha, fname.Data()));
 	    //h1->GetYaxis()->SetRangeUser(-0.1,0.7);
 	    h1->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/Waves/waves_ev%i_Ch%i.pdf",fname.Data(),i,j));
-	   // h1->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/Waves/waves_ev%i_Ch%i.png",fname.Data(),i,j));
+	    // h1->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/Waves/waves_ev%i_Ch%i.png",fname.Data(),i,j));
 	    
 	  }
 	}
@@ -416,13 +416,13 @@ printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
 	diameter_1cm->SetTextAlign(12);
 	int diameters = 0.;
 	if(i == 2 || i == 3){
-	diameters = 15;
+	  diameters = 15;
 	}
 	else if(i == 1 ||  i== 5 ||  i== 6 || i== 8){
-	diameters = 20;
+	  diameters = 20;
 	}
 	else if( i== 9 ||  i== 10){
-	diameters = 25;
+	  diameters = 25;
 	}
 	diameter_1cm->AddText(Form("1 cm cell-size, %d micrometer diameter",diameters));
 	
@@ -752,16 +752,16 @@ printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
 	  bsl_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_1cm.pdf",fname.Data());
 	  rms_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_1cm.pdf",fname.Data());
 	  aveph_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_1cm.pdf",fname.Data());
-
+	  
 	  efficiency_clusters_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_clusters_1cm.png",fname.Data());
-      efficiency_electrons_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_electrons_1cm.png",fname.Data());
-      epc_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/epc_summary_1cm.png",fname.Data());
-      integral_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/integral_summary_1cm.png",fname.Data());
-      maximum_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/maximum_summary_1cm.png",fname.Data());
-      bsl_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_1cm.png",fname.Data());
-      rms_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_1cm.png",fname.Data());
-      aveph_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_1cm.png",fname.Data());
-      
+	  efficiency_electrons_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_electrons_1cm.png",fname.Data());
+	  epc_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/epc_summary_1cm.png",fname.Data());
+	  integral_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/integral_summary_1cm.png",fname.Data());
+	  maximum_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/maximum_summary_1cm.png",fname.Data());
+	  bsl_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_1cm.png",fname.Data());
+	  rms_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_1cm.png",fname.Data());
+	  aveph_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_1cm.png",fname.Data());
+	  
 	}
       }
       
@@ -786,27 +786,27 @@ printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
 	npeaks_clustser_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_cluster_1cm.pdf",fname.Data()));
 	cluster_population_canvas_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/cluster_population_1cm.pdf",fname.Data()));
 	hnelectron_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_1cm.pdf",fname.Data()));
-
-
+	
+	
 	timediff_clust_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/clust_difference_1cm.png",fname.Data()));
-    timediff_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/electrons_difference_1cm.png",fname.Data()));
-    npeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/npeaks_1cm.png",fname.Data()));
-    tpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tpeaks_1cm.png",fname.Data()));
-    tfpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tfpeaks_1cm.png",fname.Data()));
-    tlpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tlpeaks_1cm.png",fname.Data()));
+	timediff_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/electrons_difference_1cm.png",fname.Data()));
+	npeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/npeaks_1cm.png",fname.Data()));
+	tpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tpeaks_1cm.png",fname.Data()));
+	tfpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tfpeaks_1cm.png",fname.Data()));
+	tlpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tlpeaks_1cm.png",fname.Data()));
 	hncluster_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hncluster_1cm.png",fname.Data()));
-    hnpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_1cm.png",fname.Data()));
-    hpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hpeaks_1cm.png",fname.Data()));
-    bsl_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/bsl_1cm.png",fname.Data()));
-    max_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/max_1cm.png",fname.Data()));
-    integ_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/integ_1cm.png",fname.Data()));
-    rms_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/rms_1cm.png",fname.Data()));
-    //min->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/min_ch%i.png",fname.Data(),i));
-    npeaks_clustser_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_cluster_1cm.png",fname.Data()));
-    cluster_population_canvas_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/cluster_population_1cm.png",fname.Data()));
-    hnelectron_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_1cm.png",fname.Data()));
-
-    	}
+	hnpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_1cm.png",fname.Data()));
+	hpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hpeaks_1cm.png",fname.Data()));
+	bsl_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/bsl_1cm.png",fname.Data()));
+	max_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/max_1cm.png",fname.Data()));
+	integ_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/integ_1cm.png",fname.Data()));
+	rms_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/rms_1cm.png",fname.Data()));
+	//min->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/min_ch%i.png",fname.Data(),i));
+	npeaks_clustser_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_cluster_1cm.png",fname.Data()));
+	cluster_population_canvas_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/cluster_population_1cm.png",fname.Data()));
+	hnelectron_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_1cm.png",fname.Data()));
+	
+      }
       
       
       drift_size = 1.3;
@@ -827,13 +827,13 @@ printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
 	diameter_1p5cm->SetTextAlign(12);
 	int diameters_1p5 = 0.;
 	if(i == 7 || i == 11){
-	diameters_1p5 = 15;
+	  diameters_1p5 = 15;
 	}
 	else if(i == 0){
-	diameters_1p5 = 20;
+	  diameters_1p5 = 20;
 	}
 	else if(i == 4){
-	diameters_1p5 = 25;
+	  diameters_1p5 = 25;
 	}
 	diameter_1p5cm->AddText(Form("1.5 cm cell-size, %d micrometer diameter",diameters_1p5));
 	
@@ -1166,15 +1166,15 @@ printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
 	  aveph_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_2cm.pdf",fname.Data());
 	  
 	  efficiency_clusters_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_clusters_2cm.png",fname.Data());
-      efficiency_electrons_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_electrons_2cm.png",fname.Data()); 
-      integral_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/integral_summary_2cm.png",fname.Data());
-      maximum_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/maximum_summary_2cm.png",fname.Data());
-      epc_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/epc_summary_2cm.png",fname.Data());
-      bsl_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_2cm.png",fname.Data());
-      rms_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_2cm.png",fname.Data());
-      aveph_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_2cm.png",fname.Data());
-      
-
+	  efficiency_electrons_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_electrons_2cm.png",fname.Data()); 
+	  integral_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/integral_summary_2cm.png",fname.Data());
+	  maximum_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/maximum_summary_2cm.png",fname.Data());
+	  epc_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/epc_summary_2cm.png",fname.Data());
+	  bsl_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_2cm.png",fname.Data());
+	  rms_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_2cm.png",fname.Data());
+	  aveph_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_2cm.png",fname.Data());
+	  
+	  
 
 	}
       }
@@ -1202,33 +1202,33 @@ printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
 	//min->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/min_ch%i.pdf",fname.Data(),i));
 	hnelectron_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_2cm.pdf",fname.Data()));
 
-
+	
 	timediff_clust_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/clust_difference_2cm.png",fname.Data()));
-    timediff_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/electrons_difference_2cm.png",fname.Data()));
-    npeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/npeaks_2cm.png",fname.Data()));
-    tpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tpeaks_2cm.png",fname.Data()));
-    tfpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tfpeaks_2cm.png",fname.Data()));
-    tlpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tlpeaks_2cm.png",fname.Data()));
-    hncluster_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hncluster_2cm.png",fname.Data()));
+	timediff_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/electrons_difference_2cm.png",fname.Data()));
+	npeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/npeaks_2cm.png",fname.Data()));
+	tpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tpeaks_2cm.png",fname.Data()));
+	tfpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tfpeaks_2cm.png",fname.Data()));
+	tlpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tlpeaks_2cm.png",fname.Data()));
+	hncluster_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hncluster_2cm.png",fname.Data()));
 	hnpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_2cm.png",fname.Data()));
-    npeaks_clustser_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_cluster_2cm.png",fname.Data()));
-    hpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hpeaks_2cm.png",fname.Data()));
-    bsl_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/bsl_2cm.png",fname.Data()));
-    max_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/max_2cm.png",fname.Data()));
-    integ_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/integ_2cm.png",fname.Data()));
-    rms_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/rms_2cm.png",fname.Data()));
-    cluster_population_canvas_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/cluster_population_2cm.png",fname.Data()));
-    //min->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/min_ch%i.png",fname.Data(),i));
-    hnelectron_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_2cm.png",fname.Data()));
-
-
-
+	npeaks_clustser_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_cluster_2cm.png",fname.Data()));
+	hpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hpeaks_2cm.png",fname.Data()));
+	bsl_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/bsl_2cm.png",fname.Data()));
+	max_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/max_2cm.png",fname.Data()));
+	integ_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/integ_2cm.png",fname.Data()));
+	rms_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/rms_2cm.png",fname.Data()));
+	cluster_population_canvas_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/cluster_population_2cm.png",fname.Data()));
+	//min->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/min_ch%i.png",fname.Data(),i));
+	hnelectron_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_2cm.png",fname.Data()));
+	
+	
+	
       }
       
     }
     
     
- 
+    
     
     
     fclose(fp);
