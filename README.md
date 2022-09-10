@@ -24,7 +24,10 @@
 # TestBeam2022
 
 The `run_table.xlsx` file contains the details of the different configurations associated to the ROOT files used for this data analysis.
-The focus is on different momenta (165,40,180 GeV) muon beam runs from 6th July. 
+The focus is on different momenta (165,40,180 GeV) muon beam runs from 6th July.
+
+The following README could be deprecated in some parts, so please read carefully the general instructions in `TestBeam2022/drifttubes_offline_analysis/instructions.txt` ,
+`TestBeam2022/drifttubes_offline_analysis/testbeam_analysis/instructions_first.txt`and  `TestBeam2022/drifttubes_offline_analysis/testbeam_analysis/instructions_second.txt`to run the code.
 
 ## Authors
 
