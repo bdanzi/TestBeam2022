@@ -107,8 +107,8 @@ per each event in the third column some physical quantities which are related to
   - Channel 4 Wire diameter of 25 micrometer 
 - 12,13,14,15 : Trigger Counters
 
-<img width="964" alt="Channel Schematics" src="https://github.com/bdanzi/drifttubes_offline_analysis/blob/master/Schermata%202022-01-30%20alle%2015.42.17.png">
-Credits for the Channel Schematics: Franco Grancagnolo (https://agenda.infn.it/event/28676/)
+<img width="964" alt="Channel Schematics" src="https://github.com/bdanzi/TestBeam2022/blob/main/Schermata%202022-09-10%20alle%2020.18.11.png">
+Credits for the Channel Schematics: Federica Cuna (https://indico.ihep.ac.cn/event/16837/)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
