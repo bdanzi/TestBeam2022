@@ -31,8 +31,6 @@ The focus is on different momenta (165,40,180 GeV) muon beam runs from 6th July.
 - [Federica Cuna](https://github.com/federicacuna) (University and INFN Lecce)
 - [Brunella D'Anzi](https://github.com/bdanzi) (University and INFN Bari)
 - [Nicola De Filippis](https://github.com/ndefilip) (Politecnico and INFN Bari)
-- [Walaa Elmentenawee](https://github.com/elmetenawee) (University and INFN Bari)
-- [Matteo Greco](https://github.com/matteogreco2) (University and INFN Lecce)
 
 
 ## Setup
