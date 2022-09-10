@@ -10,7 +10,7 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#Drift-Tubes-2021-Test-Beam-offline-analysis">Drift Tubes 2021 Test Beam offline analysis</a>
+      <a href="#TestBeam2022">TestBeam2022</a>
       <ul>
         <li><a href="#authors">Authors</a></li>
         <li><a href="#setup">Setup</a></li>
@@ -24,10 +24,9 @@
 # TestBeam2022
 
 The `run_table.xlsx` file contains the details of the different configurations associated to the ROOT files used for this data analysis.
-The focus is on different momenta (165,40,180 GeV) muon beam runs from 6th July.
+The focus is on different momenta (165 GeV,40 GeV and 180 GeV) muon beam runs from 6th July.
 
-The following README could be deprecated in some parts, so please read carefully the general instructions in `TestBeam2022/drifttubes_offline_analysis/instructions.txt` ,
-`testbeam_analysis/instructions_first.txt`and `testbeam_analysis/instructions_second.txt`to run the code.
+The following README could be deprecated in some parts, so please read carefully the general instructions in `TestBeam2022/drifttubes_offline_analysis/instructions.txt`,`testbeam_analysis/instructions_first.txt`and `testbeam_analysis/instructions_second.txt`to run the code.
 
 ## Authors
 
