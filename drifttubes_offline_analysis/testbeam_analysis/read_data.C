@@ -82,24 +82,19 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
   tmax=_tmax;  //to fix compilation problem
   double timeRes;
 #ifndef _OSC
-  // fbin_rms=30;
   if(_gsample<=1.001){
     isl = 0;
-    
   }else if(_gsample<=1.2001)
     {
-      isl = 1;
-      
+      isl = 1; 
     }
   else if(_gsample<=1.5001)
     {
       isl = 2;
-      
     }
   else if(_gsample<=2.001)
     {
       isl = 3;
-      
     }
   invfbin=1.0/((float)fbin_rms[isl]);
 #else
@@ -107,7 +102,7 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
   // skipLstBin=300;//375
 #endif
   
-  /*********** creazione degli istogrammi***********/
+  /*********** Histogram creation***********/
   
   char *basename(char *path);
   cout << "Basename " << basename(output) << endl;
@@ -126,7 +121,7 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
   int count =0;
   
   
-  /***********creazione delle directory***********/
+  /***********Directory creation***********/
   theFile->cd("/");
   TDirectory *waveDir = theFile->mkdir("Waves");
   theFile->cd("/");
@@ -146,13 +141,13 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
   
   std::vector<int> trigCh; //vettore di interi per i canali di trigger.
   trigCh.clear();
-#ifndef _OSC
+#ifndef _OSC // For test beam usage
   trigCh.push_back(12);
   trigCh.push_back(13);
   trigCh.push_back(14);
   trigCh.push_back(15);
 
-#else //for muon data
+#else //for muon data - Oscilloscope in the lab
   trigCh.push_back(7);//osc1
   trigCh.push_back(8);//osc2
 #endif
@@ -162,13 +157,13 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
   std::map<int, int> nSelEv;
   nSelEv.clear();
   
-  if (fChain == 0) return; //è il puntatore TTree
+  if (fChain == 0) return; //TTree pointer
   
   Long64_t nentries = fChain->GetEntriesFast(); //Return the number of entries as of the last check.
   cout << "Total Number of entries: " << nentries << endl;
   //  Long64_t nbytes = 0, nb = 0;
   
-  Int_t firstEv=0;                               //inizializzo il primo evento a zero
+  Int_t firstEv=0;                              //inizializzo il primo evento a zero
   Int_t lastEv=nentries;                        //l'ultimo evento coincide con le nentries, che si prende con la funzione get...sopra
   //Int_t MidEv;
   if (eventn>=0&&eventn<lastEv) {
@@ -191,39 +186,35 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
   Float_t cluster_population = 1.6;
   Int_t NPeak;
   string name_file = outChar;
-      if((name_file =="histosTB_run_39.root") || ((name_file =="histosTB_run_41.root"))){
+      if((name_file =="histosTB_run_39.root") || ((name_file =="histosTB_run_41.root"))){ // 80-20
 	cluster_per_cm_mip = 18.;
 	printf("Changed Cluster per cm physical quantity to %0.1f!\n",cluster_per_cm_mip);
       }
-      else if((name_file =="histosTB_run_63.root")){
+      else if((name_file =="histosTB_run_63.root")){ // 85-15
         cluster_per_cm_mip = 15.;
 	printf("Changed Cluster per cm physical quantity to %0.1f!\n",cluster_per_cm_mip);
       }
-      else if((name_file =="histosTB_run_10.root")){
+      else if((name_file =="histosTB_run_10.root")){ //90-10
 	cluster_per_cm_mip = 12.;
 	printf("Changed Cluster per cm physical quantity to %0.1f!\n",cluster_per_cm_mip);
       }   
-      if((name_file =="histosTB_run_99.root") ){
+      if((name_file =="new runs to be inserted") ){
 	alpha = 0;
 	printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
       }
-      else if((name_file =="histosTB_run_98.root")){
+      else if((name_file =="new runs to be inserted")){
 	alpha = 15;
 	printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
       }
-      else if((name_file =="histosTB_run_96.root")){
+      else if((name_file =="new runs to be inserted")){
 	alpha = 30;
 	printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
-	
-	
       }
       else if((name_file =="histosTB_run_10.root") || (name_file =="histosTB_run_39.root") || (name_file =="histosTB_run_41.root") || (name_file =="histosTB_run_63.root")){
 	alpha = 45;
 	printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
-	
-
       }
-      else if((name_file =="histosTB_run_91.root") ){
+      else if((name_file =="new runs to be inserted") ){
 	alpha = 60;
 	printf("Changed angle Alpha physical quantity to %0.1f!\n",alpha);
 	
@@ -264,20 +255,19 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
 	tmpWSG_signal.clear();
 	SmtSGWaves.clear();
 	
-	//lettura dei file di dati .root
+	//.root files reading
 	
 	if(jentry==firstEv) {
 	  // 1024 channel of ADC = 0.833*1024 ns // => every channel is 0.853 nano sec   
 	  timeRes = (_tmax*1.0e+9)/((float)dim);//in nano sec = 0.833s
-	  cout<< "timeRes "<<timeRes;
-	  cout<< "_tmax "<<_tmax;
-	  //timeRes = 1;    
+	  //cout<< "timeRes "<<timeRes;
+	  //cout<< "_tmax "<<_tmax;
 	  X.clear();
 	  //cout<< "dim "<<dim<<" time "<<timeRes<<endl;
 	  for (int i = 0; i < dim; ++i) { X.push_back(timeRes *(i+1));  }
 	}
 	
-	cout << "Event analyzed: #" << jentry << "\n";
+	cout << "Event analyzed: #" << jentry << "\r";
 	fflush(stdout);
 	
 	bool firstEntering=true;
@@ -289,7 +279,7 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
 	int counter_1cm=0;
 	int counter_1p5cm=0;
 	
-	
+	// Loop to fill the waveforms  - July 2022 test beam customized
 	for (auto point : wd->getX742Data()) {
 	  
 	  for (int channel=0; channel<=nMaxCh; channel++){
@@ -299,11 +289,11 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
 	  } //get the number of TriggerChannels
 	  
 	  int channel = point.first;
-	  //for (int channel=0; channel<=nMaxCh; channel++){
+	  
 	  
 	  bool isTrg=false;
 	  for(auto trgCh : trigCh) { if (channel==trgCh) { isTrg=true;}}
-	  //if (point.first == channel && !isTrg) {
+	  
 	  if (!isTrg && channel<=nMaxCh) { 
 	    
 	    Waves[channel].fillWave(point.second,dim);
@@ -322,10 +312,15 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
 		counter_1p5cm=counter_1p5cm+1;
 	      }
 	      
-	    } //get the number of Signal 1cm and 2 cm channels
+	    } //get the number of Signal 1cm and 1.5 cm channels
 	    
 	  }
+	  //Waves_signal_1[channel].fillWave(FltWaves[channel].Y,FltWaves[channel].nPt());
+	  //cout << "Event: " << jentry << " Number of 1 cm channels hit: " << counter_1cm <<"\n";
+	  //cout << "Event: " << jentry << " Number of 1.5 cm channels hit: " << counter_1.5cm <<"\n";
 	}
+	
+	// End of fill of Waveforms
 	
 	for (auto point : wd->getX742Data()) {
 	  counter=counter+1;
@@ -339,11 +334,10 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
 	  } //get the number of TriggerChannels
 	  
 	  int channel = point.first;
-	  //for (int channel=0; channel<=nMaxCh; channel++){
 	  
 	  bool isTrg=false;
 	  for(auto trgCh : trigCh) { if (channel==trgCh) { isTrg=true;}}
-	  //if (point.first == channel && !isTrg) {
+	  
 	  if (!isTrg && channel<=nMaxCh) { 
 	    if ( HstPerCh.find(channel)==HstPerCh.end() ) {
 	      TDirectory *chDir = theFile->mkdir(Form("H-Ch%d_signal",channel));
@@ -351,27 +345,24 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
 	      HstPerCh.insert(make_pair(channel,new hstPerCh(channel)));
 	      theFile->cd("/");
 	    }
-	    //cout << "Channel is= " << channel << endl;
+	    //cout << "Channel is = " << channel << endl;
 	    Waves[channel].fillWave(point.second,dim);
 	    /****-------------------------------TRASFORMATA DI FOURIER---------------------------------*****/
 	    
-	    FFT(Waves[channel],Wffts[channel]);//trasformata di Fourier
+	    FFT(Waves[channel],Wffts[channel]);//trasformata di Fourier not used!!!
 	    double *realFltFFT = new double[Waves[channel].nPt()];
 	    double *imgFltFFT = new double[Waves[channel].nPt()];
 	    
-	    filterWaveBsl(Wffts[channel],realFltFFT,imgFltFFT);//filtro sulla baseline.                                        ///
+	    filterWaveBsl(Wffts[channel],realFltFFT,imgFltFFT);//Baseline filter.  not used!                                   ///
 	    InverseFFT(realFltFFT,imgFltFFT,Waves[channel].nPt(),FltWaves[channel]);//trasformata inversa
 	    for(int i=0; i<Waves[channel].nPt();i++){
 	      Waves[channel].Y[i]=Waves[channel].Y[i]-Waves[channel].bsln;
 	    }
 	    Waves_signal_1[channel].fillWave((Waves[channel].Y),Waves[channel].nPt());
 	    
-	    //Waves_signal_1[channel].fillWave(FltWaves[channel].Y,FltWaves[channel].nPt());
-	    //cout << "Event: " << jentry << " Number of 1 cm channels hit: " << counter_1cm <<"\n";
-	    //cout << "Event: " << jentry << " Number of 2 cm channels hit: " << counter_2cm <<"\n";
 	    
 	    
-	    bool saveEvents=false;
+	    bool saveEvents = false; // waveFltDir is not used!!
 	    if (saveEvents) {
 	      waveFltDir->cd();
 	      tmpCvFlt.push_back( new TCanvas(Form("CvFlt-Ch%d_ev%d",channel,jentry),Form("tmpFltWave-Ch%d_ev%d",channel,jentry)) );
@@ -391,7 +382,7 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
 	    saveEvents=false;
 	    
 	    if (saveWave) {
-	      waveDir->cd();
+	      waveDir->cd(); // waveDir is not used!!
 	      tmpCv.push_back(new TCanvas(Form("Cv-Ch%d_ev%d",channel,jentry),Form("tmpWave-Ch%d_ev%d",channel,jentry)));
 	      tmpCv.back()->cd();
 	      tmpWaves.push_back(new TGraph (dim, &X[0], &Waves[channel].Y[0]));
@@ -407,7 +398,7 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
 	}
 	    
 	    if (saveEvents) {
-	      waveDir->cd();
+	      waveDir->cd(); // waveDir is not used!!
 	      if(firstEntering){
 		tmpCv.push_back( new TCanvas(Form("Cv-ev%d",jentry),Form("tmpWave-ev%d",jentry)) );
 		tmpCv.back()->Divide(3,4);
@@ -458,7 +449,6 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
 	  vector<pair <int, int > > waveFull;
 	  waveFull.clear();
 	  pair<int,int> Full;
-	  
 	  NPeak=0;
 	  NPeak_1=0;
 	  
@@ -582,9 +572,6 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
 	//}
 	    N_signalevents[channel]= 1.0;
 	    
-	    
-	    
-	    
 	  } //if for finding peaks
 	  
       
@@ -612,9 +599,9 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
 
 	    if(uniqueCanvas){
 	      if (firstEntering_filter){
-		tmpCvsignal_1.push_back( new TCanvas(Form("CvSignal_1_ev%d",jentry),Form("tmpSignal_1_ev%d",jentry)) );
-		tmpCvsignal_1.back()->Divide(3,4);
-		firstEntering_filter=false;
+			tmpCvsignal_1.push_back( new TCanvas(Form("CvSignal_1_ev%d",jentry),Form("tmpSignal_1_ev%d",jentry)) );
+			tmpCvsignal_1.back()->Divide(3,4);
+			firstEntering_filter=false;
 	      }
 	      
 	      tmpCvsignal_1.back()->cd(channel-nTriggerChannels+1);
@@ -736,7 +723,7 @@ void read_data::Loop(Char_t *output, Int_t MidEv,Int_t eventn,  Float_t _gsample
 	      TMarker *tm_clust = new  TMarker(X[pkPos_clust[ipk]+skipFstBin[isl]]+0.5*timeRes, 0., 23);
 	      tm_clust->SetMarkerSize(1.5);
 	      tm_clust->SetMarkerColor(kBlue);
-	      //tm_clust->Draw("same");
+	      tm_clust->Draw("same");
 	    }
 	    for(int ipk=0; ipk<NPeak_clust;ipk++){
 	      if(ipk<NPeak_clust-1){
