@@ -56,7 +56,7 @@ $ ./read_data . 4 0 -10 1
 ```
 where in the last code line:
 
-- 4 is the run number
+- 4 is the run number of root files converted from binary files (request via [mail](mailto:brunella.danzi@ba.infn.it) to receive the link reaching converted root files)
 
 - 0 -10 is the number of events to be processed
 
