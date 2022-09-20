@@ -40,7 +40,9 @@ The following README could be deprecated in some parts, so please read carefully
 On Bari ReCAS and in the `testbeam_analysis\` directory of this repository:
 
 ```bash
-$ source /cvmfs/sft.cern.ch/lcg/views/LCG_98python3/x86_64-centos7-gcc10-opt/setup.sh
+$ cmsrel CMSSW_10_2_22
+$ cd CMSSW_10_2_22/src
+$ cmsenv
 $ source setDCDataReaderEnv.sh
 $ bash compile.sh
 $ ./read_data . 4 0 -10 1
@@ -67,19 +69,14 @@ For each sample and each channel it is able to count how many events with an act
 Config files and executables are created to run on more than one ROOT file (not available here, too much large in size).
 
 ```bash
-$ bash submit_root_to_histos_root.sh
+$ bash submit_root_to_histos_root_22test.sh
 ```
 
 It will produce in `executables\`:
 - executable files `submit_executable_conversion*.sh` per each `run_*.root` file that has to be converted in a root file containing histos 
 with the most important physical variables
 - config files that can be run as job in recas for accelerating the process of the histos ROOT file generation
-```bash
-$ bash submit_recas.sh 
-```
-It will produce in `executables\`::
-- executable file `submit_executable.sh`
-- config file that can be run as job in Recas
+
 ```bash
 $ bash submit_executable.sh
 ```
