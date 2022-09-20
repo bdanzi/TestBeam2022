@@ -44,60 +44,60 @@ void ReadSglChannel_test(){
   Float_t mean_clusters_1cm = 0.;
   Float_t rms_clusters_1cm = 0.;
   Float_t rms_electrons_1cm = 0.;
-  Float_t mean_electrons_2cm = 0.;
-  Float_t mean_clusters_2cm = 0.;
-  Float_t rms_clusters_2cm = 0.;
-  Float_t rms_electrons_2cm = 0.;
+  Float_t mean_electrons_1p5cm = 0.;
+  Float_t mean_clusters_1p5cm = 0.;
+  Float_t rms_clusters_1p5cm = 0.;
+  Float_t rms_electrons_1p5cm = 0.;
   Float_t maximum_1cm = 0.;
-  Float_t maximum_2cm = 0.;
+  Float_t maximum_1p5cm = 0.;
   Float_t rms_maximum_1cm = 0.;
-  Float_t rms_maximum_2cm = 0.;
+  Float_t rms_maximum_1p5cm = 0.;
   Float_t integral_1cm = 0.;
-  Float_t integral_2cm = 0.;
+  Float_t integral_1p5cm = 0.;
   Float_t epc_1cm = 0.;
-  Float_t epc_2cm = 0.;
+  Float_t epc_1p5cm = 0.;
   Float_t rms_epc_1cm = 0.;
-  Float_t rms_epc_2cm = 0.;
+  Float_t rms_epc_1p5cm = 0.;
   Float_t bsl_1cm_var = 0.;
-  Float_t bsl_2cm_var = 0.;
+  Float_t bsl_1p5cm_var = 0.;
   Float_t rms_bsl_1cm = 0.;
-  Float_t rms_bsl_2cm = 0.;
+  Float_t rms_bsl_1p5cm = 0.;
   Float_t aveph_1cm = 0.;
-  Float_t aveph_2cm = 0.;
+  Float_t aveph_1p5cm = 0.;
   Float_t rms_aveph_1cm = 0.;
-  Float_t rms_aveph_2cm = 0.;
+  Float_t rms_aveph_1p5cm = 0.;
   Float_t rms_1cm_var = 0.;
-  Float_t rms_2cm_var = 0.;
+  Float_t rms_1p5cm_var = 0.;
   Float_t rms_rms_1cm = 0.;
-  Float_t rms_rms_2cm = 0.;
+  Float_t rms_rms_1p5cm = 0.;
   Float_t rms_integral_1cm = 0.;
-  Float_t rms_integral_2cm = 0.;
+  Float_t rms_integral_1p5cm = 0.;
   Int_t counter_filling_electrons_1cm = 0;
   Int_t counter_filling_clusters_1cm = 0;
-  Int_t counter_filling_electrons_2cm = 0;
-  Int_t counter_filling_clusters_2cm = 0;
+  Int_t counter_filling_electrons_1p5cm = 0;
+  Int_t counter_filling_clusters_1p5cm = 0;
   
   TCanvas *aveph_summary_1cm = new TCanvas("aveph_summary_1cm","Aveph 1 cm cell size Drift Tubes",200,10,1500,1500);
-  TCanvas *aveph_summary_2cm = new TCanvas("aveph_summary_2cm","Aveph 1.5 cm cell size Drift Tubes",200,10,1500,1500);
+  TCanvas *aveph_summary_1p5cm = new TCanvas("aveph_summary_1p5cm","Aveph 1.5 cm cell size Drift Tubes",200,10,1500,1500);
   TGraphErrors* gr_aveph_summary_1cm = new TGraphErrors(5);
-  TGraphErrors* gr_aveph_summary_2cm = new TGraphErrors(3);
-  gr_aveph_summary_2cm->SetTitle("Aveph 1.5 cm cell size Drift Tubes");
-  gr_aveph_summary_2cm->SetMarkerColor(kBlue);
-  gr_aveph_summary_2cm->GetXaxis()->SetTitle("Track angle (deg)");
-  gr_aveph_summary_2cm->GetYaxis()->SetTitle("Average Pulse height (V)");
+  TGraphErrors* gr_aveph_summary_1p5cm = new TGraphErrors(3);
+  gr_aveph_summary_1p5cm->SetTitle("Aveph 1.5 cm cell size Drift Tubes");
+  gr_aveph_summary_1p5cm->SetMarkerColor(kBlue);
+  gr_aveph_summary_1p5cm->GetXaxis()->SetTitle("Track angle (deg)");
+  gr_aveph_summary_1p5cm->GetYaxis()->SetTitle("Average Pulse height (V)");
   gr_aveph_summary_1cm->SetTitle("Aveph 1 cm cell size Drift Tubes");
   gr_aveph_summary_1cm->SetMarkerColor(kBlue);
   gr_aveph_summary_1cm->GetYaxis()->SetTitle("Average Pulse Height (V)");
   gr_aveph_summary_1cm->GetXaxis()->SetTitle("Track angle (deg)");
   
   TCanvas *rms_summary_1cm = new TCanvas("rms_summary_1cm","Rms 1 cm cell size Drift Tubes",200,10,1500,1500);
-  TCanvas *rms_summary_2cm = new TCanvas("rms_summary_2cm","Rms 1.5 cm cell size Drift Tubes",200,10,1500,1500);
+  TCanvas *rms_summary_1p5cm = new TCanvas("rms_summary_1p5cm","Rms 1.5 cm cell size Drift Tubes",200,10,1500,1500);
   TGraphErrors* gr_rms_summary_1cm = new TGraphErrors(5);
-  TGraphErrors* gr_rms_summary_2cm = new TGraphErrors(3);
-  gr_rms_summary_2cm->SetTitle("Rms 1.5 cm cell size Drift Tubes");
-  gr_rms_summary_2cm->SetMarkerColor(kBlue);
-  gr_rms_summary_2cm->GetXaxis()->SetTitle("Track angle (deg)");
-  gr_rms_summary_2cm->GetYaxis()->SetTitle("Rms (mV)");
+  TGraphErrors* gr_rms_summary_1p5cm = new TGraphErrors(3);
+  gr_rms_summary_1p5cm->SetTitle("Rms 1.5 cm cell size Drift Tubes");
+  gr_rms_summary_1p5cm->SetMarkerColor(kBlue);
+  gr_rms_summary_1p5cm->GetXaxis()->SetTitle("Track angle (deg)");
+  gr_rms_summary_1p5cm->GetYaxis()->SetTitle("Rms (mV)");
   gr_rms_summary_1cm->SetTitle("Rms 1 cm cell size Drift Tubes");
   gr_rms_summary_1cm->SetMarkerColor(kBlue);
   gr_rms_summary_1cm->GetYaxis()->SetTitle("Rms (mV)");
@@ -105,13 +105,13 @@ void ReadSglChannel_test(){
   
 
   TCanvas *bsl_summary_1cm = new TCanvas("bsl_summary_1cm","Bsl 1 cm cell size Drift Tubes",200,10,1500,1500);
-  TCanvas *bsl_summary_2cm = new TCanvas("bsl_summary_2cm","Bsl 1.5 cm cell size Drift Tubes",200,10,1500,1500);
+  TCanvas *bsl_summary_1p5cm = new TCanvas("bsl_summary_1p5cm","Bsl 1.5 cm cell size Drift Tubes",200,10,1500,1500);
   TGraphErrors* gr_bsl_summary_1cm = new TGraphErrors(5);
-  TGraphErrors* gr_bsl_summary_2cm = new TGraphErrors(3);
-  gr_bsl_summary_2cm->SetTitle("Bsl 1.5 cm cell size Drift Tubes");
-  gr_bsl_summary_2cm->SetMarkerColor(kBlue);
-  gr_bsl_summary_2cm->GetXaxis()->SetTitle("Track angle (deg)");
-  gr_bsl_summary_2cm->GetYaxis()->SetTitle("Baseline (V)");
+  TGraphErrors* gr_bsl_summary_1p5cm = new TGraphErrors(3);
+  gr_bsl_summary_1p5cm->SetTitle("Bsl 1.5 cm cell size Drift Tubes");
+  gr_bsl_summary_1p5cm->SetMarkerColor(kBlue);
+  gr_bsl_summary_1p5cm->GetXaxis()->SetTitle("Track angle (deg)");
+  gr_bsl_summary_1p5cm->GetYaxis()->SetTitle("Baseline (V)");
   gr_bsl_summary_1cm->SetTitle("Bsl 1 cm cell size Drift Tubes");
   gr_bsl_summary_1cm->SetMarkerColor(kBlue);
   gr_bsl_summary_1cm->GetYaxis()->SetTitle("Baseline (V)");
@@ -119,39 +119,39 @@ void ReadSglChannel_test(){
   
 
   TCanvas *epc_summary_1cm = new TCanvas("epc_summary_1cm","Epc 1 cm cell size Drift Tubes",200,10,1500,1500);
-  TCanvas *epc_summary_2cm = new TCanvas("epc_summary_2cm","Epc 1.5 cm cell size Drift Tubes",200,10,1500,1500);
+  TCanvas *epc_summary_1p5cm = new TCanvas("epc_summary_1p5cm","Epc 1.5 cm cell size Drift Tubes",200,10,1500,1500);
   TGraphErrors* gr_epc_summary_1cm = new TGraphErrors(5);
-  TGraphErrors* gr_epc_summary_2cm = new TGraphErrors(3);
-  gr_epc_summary_2cm->SetTitle("Epc 1.5 cm cell size Drift Tubes");
-  gr_epc_summary_2cm->SetMarkerColor(kBlue);
-  gr_epc_summary_2cm->GetXaxis()->SetTitle("Track angle (deg)");
-  gr_epc_summary_2cm->GetYaxis()->SetTitle("Electrons per Cluster");
+  TGraphErrors* gr_epc_summary_1p5cm = new TGraphErrors(3);
+  gr_epc_summary_1p5cm->SetTitle("Epc 1.5 cm cell size Drift Tubes");
+  gr_epc_summary_1p5cm->SetMarkerColor(kBlue);
+  gr_epc_summary_1p5cm->GetXaxis()->SetTitle("Track angle (deg)");
+  gr_epc_summary_1p5cm->GetYaxis()->SetTitle("Electrons per Cluster");
   gr_epc_summary_1cm->SetTitle("Epc 1 cm cell size Drift Tubes");
   gr_epc_summary_1cm->SetMarkerColor(kBlue);
   gr_epc_summary_1cm->GetYaxis()->SetTitle("Electrons per Cluster");
   gr_epc_summary_1cm->GetXaxis()->SetTitle("Track angle (deg)");
   
   TCanvas *integral_summary_1cm = new TCanvas("integral_summary_1cm","Integral 1 cm cell size Drift Tubes",200,10,1500,1500);
-  TCanvas *integral_summary_2cm = new TCanvas("integral_summary_2cm","Integral 1.5 cm cell size Drift Tubes",200,10,1500,1500);
+  TCanvas *integral_summary_1p5cm = new TCanvas("integral_summary_1p5cm","Integral 1.5 cm cell size Drift Tubes",200,10,1500,1500);
   TGraphErrors* gr_integral_summary_1cm = new TGraphErrors(5);
-  TGraphErrors* gr_integral_summary_2cm = new TGraphErrors(3);
-  gr_integral_summary_2cm->SetTitle("Integral 1.5 cm cell size Drift Tubes");
-  gr_integral_summary_2cm->SetMarkerColor(kBlue);
-  gr_integral_summary_2cm->GetYaxis()->SetTitle("Charge (pC)");
-  gr_integral_summary_2cm->GetXaxis()->SetTitle("Track angle (deg)");
+  TGraphErrors* gr_integral_summary_1p5cm = new TGraphErrors(3);
+  gr_integral_summary_1p5cm->SetTitle("Integral 1.5 cm cell size Drift Tubes");
+  gr_integral_summary_1p5cm->SetMarkerColor(kBlue);
+  gr_integral_summary_1p5cm->GetYaxis()->SetTitle("Charge (pC)");
+  gr_integral_summary_1p5cm->GetXaxis()->SetTitle("Track angle (deg)");
   gr_integral_summary_1cm->SetTitle("Integral 1 cm cell size Drift Tubes");
   gr_integral_summary_1cm->SetMarkerColor(kBlue);
   gr_integral_summary_1cm->GetXaxis()->SetTitle("Track angle (deg)");
   gr_integral_summary_1cm->GetYaxis()->SetTitle("Charge (pC)");
   
   TCanvas *maximum_summary_1cm = new TCanvas("maximum_summary_1cm","Maximum 1 cm cell size Drift Tubes",200,10,1500,1500);
-  TCanvas *maximum_summary_2cm = new TCanvas("maximum_summary_2cm","Maximum 1.5 cm cell size Drift Tubes",200,10,1500,1500);
+  TCanvas *maximum_summary_1p5cm = new TCanvas("maximum_summary_1p5cm","Maximum 1.5 cm cell size Drift Tubes",200,10,1500,1500);
   TGraphErrors* gr_maximum_summary_1cm = new TGraphErrors(5);
-  TGraphErrors* gr_maximum_summary_2cm = new TGraphErrors(3);
-  gr_maximum_summary_2cm->SetTitle("Maximum 1.5 cm cell size Drift Tubes");
-  gr_maximum_summary_2cm->SetMarkerColor(kBlue);
-  gr_maximum_summary_2cm->GetYaxis()->SetTitle("Voltage (V)");
-  gr_maximum_summary_2cm->GetXaxis()->SetTitle("Track angle (deg)");
+  TGraphErrors* gr_maximum_summary_1p5cm = new TGraphErrors(3);
+  gr_maximum_summary_1p5cm->SetTitle("Maximum 1.5 cm cell size Drift Tubes");
+  gr_maximum_summary_1p5cm->SetMarkerColor(kBlue);
+  gr_maximum_summary_1p5cm->GetYaxis()->SetTitle("Voltage (V)");
+  gr_maximum_summary_1p5cm->GetXaxis()->SetTitle("Track angle (deg)");
   gr_maximum_summary_1cm->SetTitle("Maximum 1 cm cell size Drift Tubes");
   gr_maximum_summary_1cm->SetMarkerColor(kBlue);
   gr_maximum_summary_1cm->GetXaxis()->SetTitle("Track angle (deg)");
@@ -159,32 +159,32 @@ void ReadSglChannel_test(){
   
 
   TCanvas *efficiency_electrons_1cm = new TCanvas("efficiency_electrons_1cm","Electron Finding Efficiency 1 cm cell size Drift Tubes",200,10,1500,1500);
-  TCanvas *efficiency_electrons_2cm = new TCanvas("efficiency_electrons_2cm","Electron Finding Efficiency 1.5 cm cell size Drift Tubes",200,10,1500,1500);
+  TCanvas *efficiency_electrons_1p5cm = new TCanvas("efficiency_electrons_1p5cm","Electron Finding Efficiency 1.5 cm cell size Drift Tubes",200,10,1500,1500);
   TGraphErrors* gr_efficiency_electrons_1cm = new TGraphErrors(5);
-  TGraphErrors* gr_efficiency_electrons_2cm = new TGraphErrors(3);
+  TGraphErrors* gr_efficiency_electrons_1p5cm = new TGraphErrors(3);
   
   TCanvas *efficiency_clusters_1cm = new TCanvas("efficiency_clusters_1cm","Cluster Finding Efficiency 1 cm cell size Drift Tubes",200,10,1500,1500);
-  TCanvas *efficiency_clusters_2cm = new TCanvas("efficiency_clusters_2cm","Cluster Finding Efficiency 1.5 cm cell size Drift Tubes",200,10,1500,1500);
-  TGraphErrors* gr_efficiency_clusters_2cm = new TGraphErrors(3);
+  TCanvas *efficiency_clusters_1p5cm = new TCanvas("efficiency_clusters_1p5cm","Cluster Finding Efficiency 1.5 cm cell size Drift Tubes",200,10,1500,1500);
+  TGraphErrors* gr_efficiency_clusters_1p5cm = new TGraphErrors(3);
   TGraphErrors* gr_efficiency_clusters_1cm = new TGraphErrors(5);
   
-  gr_efficiency_electrons_2cm->SetTitle("Electrons Finding Efficiency 1.5 cm cell size Drift Tubes");
-  gr_efficiency_clusters_2cm->SetTitle("Clusters Finding Efficiency 1.5 cm cell size Drift Tubes");
+  gr_efficiency_electrons_1p5cm->SetTitle("Electrons Finding Efficiency 1.5 cm cell size Drift Tubes");
+  gr_efficiency_clusters_1p5cm->SetTitle("Clusters Finding Efficiency 1.5 cm cell size Drift Tubes");
   gr_efficiency_electrons_1cm->SetTitle("Electrons Finding Efficiency 1 cm cell size Drift Tubes");
   gr_efficiency_clusters_1cm->SetTitle("Clusters Finding Efficiency 1 cm cell size Drift Tubes");
   
-  gr_efficiency_electrons_2cm->SetMarkerColor(kBlue);
-  gr_efficiency_clusters_2cm->SetMarkerColor(kBlue);
+  gr_efficiency_electrons_1p5cm->SetMarkerColor(kBlue);
+  gr_efficiency_clusters_1p5cm->SetMarkerColor(kBlue);
   gr_efficiency_electrons_1cm->SetMarkerColor(kBlue);
   gr_efficiency_clusters_1cm->SetMarkerColor(kBlue);
   
-  gr_efficiency_electrons_2cm->GetXaxis()->SetTitle("Track Angle (deg)");
-  gr_efficiency_clusters_2cm->GetXaxis()->SetTitle("Track Angle (deg)");
+  gr_efficiency_electrons_1p5cm->GetXaxis()->SetTitle("Track Angle (deg)");
+  gr_efficiency_clusters_1p5cm->GetXaxis()->SetTitle("Track Angle (deg)");
   gr_efficiency_electrons_1cm->GetXaxis()->SetTitle("Track Angle (deg)");
   gr_efficiency_clusters_1cm->GetXaxis()->SetTitle("Track Angle (deg)");
   
-  gr_efficiency_electrons_2cm->GetYaxis()->SetTitle("Measured Average Number of Electrons / Expected Number of Electrons");
-  gr_efficiency_clusters_2cm->GetYaxis()->SetTitle("Measured Average Number of Clusters / Expected Number of Clusters");
+  gr_efficiency_electrons_1p5cm->GetYaxis()->SetTitle("Measured Average Number of Electrons / Expected Number of Electrons");
+  gr_efficiency_clusters_1p5cm->GetYaxis()->SetTitle("Measured Average Number of Clusters / Expected Number of Clusters");
   gr_efficiency_electrons_1cm->GetYaxis()->SetTitle("Measured Average Number of Electrons / Expected Number of Electrons");
   gr_efficiency_clusters_1cm->GetYaxis()->SetTitle("Measured Average Number of Clusters / Expected Number of Clusters");
   
@@ -264,34 +264,34 @@ void ReadSglChannel_test(){
       mean_clusters_1cm = 0.;
       rms_clusters_1cm = 0.;
       rms_electrons_1cm = 0.;
-      mean_electrons_2cm = 0.;
-      mean_clusters_2cm = 0.;
-      rms_clusters_2cm = 0.;
-      rms_electrons_2cm = 0.;
+      mean_electrons_1p5cm = 0.;
+      mean_clusters_1p5cm = 0.;
+      rms_clusters_1p5cm = 0.;
+      rms_electrons_1p5cm = 0.;
       maximum_1cm = 0.;
-      maximum_2cm = 0.;
+      maximum_1p5cm = 0.;
       rms_maximum_1cm = 0.;
-      rms_maximum_2cm = 0.;
+      rms_maximum_1p5cm = 0.;
       integral_1cm = 0.;
-      integral_2cm = 0.;
+      integral_1p5cm = 0.;
       epc_1cm = 0.;
-      epc_2cm = 0.;
+      epc_1p5cm = 0.;
       rms_epc_1cm = 0.;
-      rms_epc_2cm = 0.;
+      rms_epc_1p5cm = 0.;
       bsl_1cm_var = 0.;
-      bsl_2cm_var = 0.;
+      bsl_1p5cm_var = 0.;
       rms_bsl_1cm = 0.;
-      rms_bsl_2cm = 0.;
+      rms_bsl_1p5cm = 0.;
       aveph_1cm = 0.;
-      aveph_2cm = 0.;
+      aveph_1p5cm = 0.;
       rms_aveph_1cm = 0.;
-      rms_aveph_2cm = 0.;
+      rms_aveph_1p5cm = 0.;
       rms_1cm_var = 0.;
-      rms_2cm_var = 0.;
+      rms_1p5cm_var = 0.;
       rms_rms_1cm = 0.;
-      rms_rms_2cm = 0.;
+      rms_rms_1p5cm = 0.;
       rms_integral_1cm = 0.;
-      rms_integral_2cm = 0.;
+      rms_integral_1p5cm = 0.;
       
       if (stat(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/",fname.Data()), &st) == -1) {
 	mkdir(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/",fname.Data()), 0700);
@@ -303,75 +303,75 @@ void ReadSglChannel_test(){
       TFile *file = new TFile(fname.Data(),"read");
       TCanvas *max_1cm=new TCanvas("max_1","max",3500,1500);
       TCanvas *waveform=new TCanvas("waveform","waveform",3500,1500);
-      TCanvas *max_2cm=new TCanvas("max_2","max",3500,1500);
+      TCanvas *max_1p5cm=new TCanvas("max_2","max",3500,1500);
       TCanvas *min=new TCanvas("min","min",3500,1500);
       TCanvas *bsl_1cm=new TCanvas("bsl_1","bsl",3500,1500);
-      TCanvas *bsl_2cm=new TCanvas("bsl_2","bsl",3500,1500);
+      TCanvas *bsl_1p5cm=new TCanvas("bsl_2","bsl",3500,1500);
       TCanvas *npeaks_1cm= new TCanvas("npeaks_1","npeaks",3500,1500);
-      TCanvas *npeaks_2cm= new TCanvas("npeaks_2","npeaks",3500,1500);
+      TCanvas *npeaks_1p5cm= new TCanvas("npeaks_2","npeaks",3500,1500);
       TCanvas *npeaks_clustser_1cm= new TCanvas("npeaks_1_cluster","npeaks",3500,1500);
-      TCanvas *npeaks_clustser_2cm= new TCanvas("npeaks_2_cluster","npeaks",3500,1500);
+      TCanvas *npeaks_clustser_1p5cm= new TCanvas("npeaks_2_cluster","npeaks",3500,1500);
       TCanvas *hpeaks_1cm= new TCanvas("hpeaks_1","hpeaks",3500,1500);
-      TCanvas *hpeaks_2cm= new TCanvas("hpeaks_2","hpeaks",3500,1500);
+      TCanvas *hpeaks_1p5cm= new TCanvas("hpeaks_2","hpeaks",3500,1500);
       TCanvas *hnpeaks_1cm= new TCanvas("hnpeaks_1","hnpeaks",3500,1500);
-      TCanvas *hnpeaks_2cm= new TCanvas("hnpeaks_2","hnpeaks",3500,1500);
+      TCanvas *hnpeaks_1p5cm= new TCanvas("hnpeaks_2","hnpeaks",3500,1500);
       TCanvas *hncluster_1cm= new TCanvas("hncluster_1","hncluster",3500,1500);
-      TCanvas *hncluster_2cm= new TCanvas("hncluster_2","hncluster",3500,1500);
+      TCanvas *hncluster_1p5cm= new TCanvas("hncluster_2","hncluster",3500,1500);
       TCanvas *hnelectron_1cm= new TCanvas("hnelectron_1","hnelectron",3500,1500);
-      TCanvas *hnelectron_2cm= new TCanvas("hnelectron_2","hnelectron",3500,1500);
+      TCanvas *hnelectron_1p5cm= new TCanvas("hnelectron_2","hnelectron",3500,1500);
       TCanvas *tpeaks_1cm= new TCanvas("tpeaks_1","tpeaks",3500,1500);
-      TCanvas *tpeaks_2cm= new TCanvas("tpeaks_2","tpeaks",3500,1500);
+      TCanvas *tpeaks_1p5cm= new TCanvas("tpeaks_2","tpeaks",3500,1500);
       TCanvas *tfpeaks_1cm= new TCanvas("tfpeaks_1","tfpeaks",3500,1500);
-      TCanvas *tfpeaks_2cm= new TCanvas("tfpeaks_2","tfpeaks",3500,1500);
+      TCanvas *tfpeaks_1p5cm= new TCanvas("tfpeaks_2","tfpeaks",3500,1500);
       TCanvas *tlpeaks_1cm= new TCanvas("tlpeaks_1","tlpeaks",3500,1500);
-      TCanvas *tlpeaks_2cm= new TCanvas("tlpeaks_2","tlpeaks",3500,1500);
+      TCanvas *tlpeaks_1p5cm= new TCanvas("tlpeaks_2","tlpeaks",3500,1500);
       TCanvas *integ_1cm= new TCanvas("integ_1","integ",3500,1500);
-      TCanvas *integ_2cm= new TCanvas("integ_2","integ",3500,1500);
+      TCanvas *integ_1p5cm= new TCanvas("integ_2","integ",3500,1500);
       TCanvas *rms_1cm= new TCanvas("rms_1","rms",3500,1500);
-      TCanvas *rms_2cm= new TCanvas("rms_2","rms",3500,1500);
+      TCanvas *rms_1p5cm= new TCanvas("rms_2","rms",3500,1500);
       TCanvas *cluster_population_canvas_1cm= new TCanvas("cluster_population_1cm","cluster",3500,1500);
-      TCanvas *cluster_population_canvas_2cm= new TCanvas("cluster_population_2cm","cluster",3500,1500);
+      TCanvas *cluster_population_canvas_1p5cm= new TCanvas("cluster_population_1p5cm","cluster",3500,1500);
       TCanvas *timediff_1cm= new TCanvas("timediff_1","timediff",3500,1500);
-      TCanvas *timediff_2cm= new TCanvas("timediff_2","timediff",3500,1500);
+      TCanvas *timediff_1p5cm= new TCanvas("timediff_2","timediff",3500,1500);
       TCanvas *timediff_clust_1cm= new TCanvas("timediff_clust_1","timediff_clust",3500,1500);
-      TCanvas *timediff_clust_2cm= new TCanvas("timediff_clust_2","timediff_clust",3500,1500);
+      TCanvas *timediff_clust_1p5cm= new TCanvas("timediff_clust_2","timediff_clust",3500,1500);
       
 	
       cluster_population_canvas_1cm->Divide(2,4);
-      cluster_population_canvas_2cm->Divide(2,2);
+      cluster_population_canvas_1p5cm->Divide(2,2);
       timediff_clust_1cm->Divide(2,4);
-      timediff_clust_2cm->Divide(2,2);
+      timediff_clust_1p5cm->Divide(2,2);
       timediff_1cm->Divide(2,4);
-      timediff_2cm->Divide(2,2);
+      timediff_1p5cm->Divide(2,2);
       npeaks_clustser_1cm->Divide(2,4);
-      npeaks_clustser_2cm->Divide(2,2);
+      npeaks_clustser_1p5cm->Divide(2,2);
       //integ->Divide(4,2);
       //max->Divide(4,2);
       min->Divide(4,1);
       bsl_1cm->Divide(2,4);
-      bsl_2cm->Divide(2,2);
+      bsl_1p5cm->Divide(2,2);
       integ_1cm->Divide(2,4);
-      integ_2cm->Divide(2,2);
+      integ_1p5cm->Divide(2,2);
       rms_1cm->Divide(2,4);
-      rms_2cm->Divide(2,2);
+      rms_1p5cm->Divide(2,2);
       max_1cm->Divide(2,4);
-      max_2cm->Divide(2,2);
+      max_1p5cm->Divide(2,2);
       npeaks_1cm->Divide(2,4);
-      npeaks_2cm->Divide(2,2);
+      npeaks_1p5cm->Divide(2,2);
       hpeaks_1cm->Divide(2,4);
-      hpeaks_2cm->Divide(2,2);
+      hpeaks_1p5cm->Divide(2,2);
       hnpeaks_1cm->Divide(2,4);
-      hnpeaks_2cm->Divide(2,2);
+      hnpeaks_1p5cm->Divide(2,2);
       hncluster_1cm->Divide(2,4);
-      hncluster_2cm->Divide(2,2);
+      hncluster_1p5cm->Divide(2,2);
       hnelectron_1cm->Divide(2,4);
-      hnelectron_2cm->Divide(2,2);
+      hnelectron_1p5cm->Divide(2,2);
       tpeaks_1cm->Divide(2,4);
-      tpeaks_2cm->Divide(2,2);
+      tpeaks_1p5cm->Divide(2,2);
       tfpeaks_1cm->Divide(2,4);
-      tfpeaks_2cm->Divide(2,2);
+      tfpeaks_1p5cm->Divide(2,2);
       tlpeaks_1cm->Divide(2,4);
-      tlpeaks_2cm->Divide(2,2);
+      tlpeaks_1p5cm->Divide(2,2);
       
       
       if(isdoubleCanvas){
@@ -406,10 +406,10 @@ void ReadSglChannel_test(){
       for(int i = 0; i<=10; ++i){ //looping over 1cm channels
 	//for(int i =channel; i<=channel; ++i){ //looping over one channel
 	if (i == 0 || i == 4 || i == 7) {continue;}
-	//2cm/1cm 1,8/0,8 = 2,25
+	//1p5cm/1cm 1,8/0,8 = 2,25
 	
 	
-	TPaveText *diameter_1cm = new TPaveText(0.1,0.9,0.3,0.95,"NDC");
+	TPaveText *diameter_1cm = new TPaveText(0.1,0.91,0.3,0.95,"NDC");
 	diameter_1cm->SetTextSize(0.05);
 	diameter_1cm->SetTextColor(kBlue);
 	diameter_1cm->SetFillColor(0);
@@ -424,7 +424,7 @@ void ReadSglChannel_test(){
 	else if( i== 9 ||  i== 10){
 	  diameters = 25;
 	}
-	diameter_1cm->AddText(Form("1 cm cell-size, %d micrometer diameter",diameters));
+	diameter_1cm->AddText(Form("1 cm cell, %d #mum diameter",diameters));
 	
 	
 	TH1F *h17=(TH1F*)file->Get(Form("H-Ch%i_signal/hMaxVInR_ch%i",i,i));
@@ -434,11 +434,10 @@ void ReadSglChannel_test(){
 	  maximum_1cm = maximum_1cm+ h17->GetMean();
 	  rms_maximum_1cm = rms_maximum_1cm + h17->GetRMS();
 	}
-	//max->cd(2);
 	gPad->SetLogy(1);
 	gPad->SetLogx(0);
-	diameter_1cm->Draw("same");
 	h17->Draw("same");
+	diameter_1cm->Draw("same");
 	
 	TH1F *h3=(TH1F*)file->Get(Form("H-Ch%i_signal/hBsl_ch%i",i,i));
 	if (h3==0x0) { continue; }
@@ -450,8 +449,8 @@ void ReadSglChannel_test(){
 	gPad->SetLogy(0);
 	gPad->SetLogx(0);
 	h3->GetXaxis()->SetRangeUser(-0.5,-0.4);
-	diameter_1cm->Draw("same");
 	h3->Draw("same");
+	diameter_1cm->Draw("same");
 	
 	
 	TH1F *h4=(TH1F*)file->Get(Form("H-Ch%i_signal/hNPeaks_ch%i",i,i));
@@ -813,14 +812,14 @@ void ReadSglChannel_test(){
       expected_electrons = cluster_per_cm_mip * drift_size*relativistic_rise * cluster_population * 1/cos_alpha;
       expected_cluster = cluster_per_cm_mip * drift_size*relativistic_rise * 1/cos_alpha;
       int counter_1p5cm = 1;
-      for(int i = 0; i<=channel; ++i){ //looping over 2cm channels
+      for(int i = 0; i<=channel; ++i){ //looping over 1p5cm channels
 	//for(int i =channel; i<=channel; ++i){ //looping over one channel
 	
 	if (i == 1 || i == 2 || i == 3 || i == 5 || i == 8 || i == 6|| i == 9 || i == 10) {continue;}
 	
 	
 	
-	TPaveText *diameter_1p5cm = new TPaveText(0.1,0.9,0.3,0.95,"NDC");
+	TPaveText *diameter_1p5cm = new TPaveText(0.1,0.91,0.3,0.95,"NDC");
 	diameter_1p5cm->SetTextSize(0.05);
 	diameter_1p5cm->SetTextColor(kBlue);
 	diameter_1p5cm->SetFillColor(0);
@@ -835,16 +834,16 @@ void ReadSglChannel_test(){
 	else if(i == 4){
 	  diameters_1p5 = 25;
 	}
-	diameter_1p5cm->AddText(Form("1.5 cm cell-size, %d micrometer diameter",diameters_1p5));
+	diameter_1p5cm->AddText(Form("1.5 cm cell, %d #mum diameter",diameters_1p5));
 	
 
 	
 	TH1F *h17=(TH1F*)file->Get(Form("H-Ch%i_signal/hMaxVInR_ch%i",i,i));
 	if (h17==0x0) { continue; }
-	max_2cm->cd(counter_1p5cm);
+	max_1p5cm->cd(counter_1p5cm);
 	if((name_file =="histosTB_run_99.root") || (name_file == "histosTB_run_98.root") || (name_file == "histosTB_run_96.root")|| (name_file == "histosTB_run_94.root")|| (name_file == "histosTB_run_91.root")){
-	  maximum_2cm = maximum_2cm + h17->GetMean();
-	  rms_maximum_2cm = rms_maximum_2cm + h17->GetRMS();
+	  maximum_1p5cm = maximum_1p5cm + h17->GetMean();
+	  rms_maximum_1p5cm = rms_maximum_1p5cm + h17->GetRMS();
 	}
 	//max->cd(2);
 	gPad->SetLogy(1);
@@ -855,10 +854,10 @@ void ReadSglChannel_test(){
 	
 	TH1F *h3=(TH1F*)file->Get(Form("H-Ch%i_signal/hBsl_ch%i",i,i));
 	if (h3==0x0) { continue; }
-	bsl_2cm->cd(counter_1p5cm);
+	bsl_1p5cm->cd(counter_1p5cm);
 	if((name_file =="histosTB_run_99.root") || (name_file == "histosTB_run_98.root") || (name_file == "histosTB_run_96.root")|| (name_file == "histosTB_run_94.root")|| (name_file == "histosTB_run_91.root")){
-	  bsl_2cm_var = bsl_2cm_var+ h3->GetMean();
-	  rms_bsl_2cm = rms_bsl_2cm + h3->GetRMS();
+	  bsl_1p5cm_var = bsl_1p5cm_var+ h3->GetMean();
+	  rms_bsl_1p5cm = rms_bsl_1p5cm + h3->GetRMS();
 	}
 	gPad->SetLogy(0);
 	gPad->SetLogx(0);
@@ -870,127 +869,127 @@ void ReadSglChannel_test(){
 	
 	TH1F *h4=(TH1F*)file->Get(Form("H-Ch%i_signal/hNPeaks_ch%i",i,i));
 	if (h4==0x0) { continue; }
-	npeaks_2cm->cd(counter_1p5cm);
+	npeaks_1p5cm->cd(counter_1p5cm);
 	h4->GetXaxis()->SetRangeUser(0.,200.);
 	if((name_file =="histosTB_run_99.root") || (name_file == "histosTB_run_98.root") || (name_file == "histosTB_run_96.root")|| (name_file == "histosTB_run_94.root")|| (name_file == "histosTB_run_91.root")){
-	  mean_electrons_2cm = mean_electrons_2cm + h4->GetMean();
-	  rms_electrons_2cm = rms_electrons_2cm + h4->GetRMS();
+	  mean_electrons_1p5cm = mean_electrons_1p5cm + h4->GetMean();
+	  rms_electrons_1p5cm = rms_electrons_1p5cm + h4->GetRMS();
 	}
 	//h4->Fit("landau");
 	gPad->SetLogy(1);
 	h4->Draw("same");
-	TPaveText *pt_2cm = new TPaveText(0.72,0.2,0.8,0.35,"NDC");
-	pt_2cm->SetTextSize(0.04);
-	pt_2cm->SetTextColor(kRed);
-	pt_2cm->SetFillColor(0);
-	pt_2cm->SetTextAlign(12);
-	pt_2cm->AddText(Form("Expected elecrons: %.1f",expected_electrons));
-	pt_2cm->Draw("same");
-	TPaveText *pt_2cm_alpha = new TPaveText(0.72,0.13,0.8,0.17,"NDC");
-	pt_2cm_alpha->SetTextSize(0.04);
-	pt_2cm_alpha->SetTextColor(kRed);
-	pt_2cm_alpha->SetFillColor(0);
-	pt_2cm_alpha->SetTextAlign(12);
-	pt_2cm_alpha->AddText(Form("Alpha angle (deg): %.1f",alpha));
-	pt_2cm_alpha->Draw("same");
+	TPaveText *pt_1p5cm = new TPaveText(0.72,0.2,0.8,0.35,"NDC");
+	pt_1p5cm->SetTextSize(0.04);
+	pt_1p5cm->SetTextColor(kRed);
+	pt_1p5cm->SetFillColor(0);
+	pt_1p5cm->SetTextAlign(12);
+	pt_1p5cm->AddText(Form("Expected elecrons: %.1f",expected_electrons));
+	pt_1p5cm->Draw("same");
+	TPaveText *pt_1p5cm_alpha = new TPaveText(0.72,0.13,0.8,0.17,"NDC");
+	pt_1p5cm_alpha->SetTextSize(0.04);
+	pt_1p5cm_alpha->SetTextColor(kRed);
+	pt_1p5cm_alpha->SetFillColor(0);
+	pt_1p5cm_alpha->SetTextAlign(12);
+	pt_1p5cm_alpha->AddText(Form("Alpha angle (deg): %.1f",alpha));
+	pt_1p5cm_alpha->Draw("same");
 	diameter_1p5cm->Draw("same");
 	
 	TH1F *h5=(TH1F*)file->Get(Form("H-Ch%i_signal/hHPeaks_ch%i",i,i));
 	if (h5==0x0) { continue; }
-	hpeaks_2cm->cd(counter_1p5cm);
+	hpeaks_1p5cm->cd(counter_1p5cm);
 	if((name_file =="histosTB_run_99.root") || (name_file == "histosTB_run_98.root") || (name_file == "histosTB_run_96.root")|| (name_file == "histosTB_run_94.root")|| (name_file == "histosTB_run_91.root")){
-	  aveph_2cm = aveph_2cm+ h5->GetMean();
-	  rms_aveph_2cm = rms_aveph_2cm + h5->GetRMS();
+	  aveph_1p5cm = aveph_1p5cm+ h5->GetMean();
+	  rms_aveph_1p5cm = rms_aveph_1p5cm + h5->GetRMS();
 	}
 	h5->Draw("same");
 	diameter_1p5cm->Draw("same");
 	
 	TH2F *h6=(TH2F*)file->Get(Form("H-Ch%i_signal/hHNPeaks_ch%i",i,i));
 	if (h6==0x0) { continue; }
-	hnpeaks_2cm->cd(counter_1p5cm);
+	hnpeaks_1p5cm->cd(counter_1p5cm);
 	h6->GetYaxis()->SetTitle("Height of Peaks found [V]");
 	h6->GetXaxis()->SetRangeUser(0.,200.);
 	h6->Draw( "colz");
 	gPad->Update();
-	TPaveStats *st_2cm = (TPaveStats*)h6->FindObject("stats");
-	st_2cm->SetX1NDC(0.75); //new x start position
-	st_2cm->SetX2NDC(0.85); //new x end position
-	st_2cm->SetY1NDC(0.65); //new x start position
-	st_2cm->SetY2NDC(0.85); //new x end position
+	TPaveStats *st_1p5cm = (TPaveStats*)h6->FindObject("stats");
+	st_1p5cm->SetX1NDC(0.75); //new x start position
+	st_1p5cm->SetX2NDC(0.85); //new x end position
+	st_1p5cm->SetY1NDC(0.65); //new x start position
+	st_1p5cm->SetY2NDC(0.85); //new x end position
 	diameter_1p5cm->Draw("same");
 	
 	TH2F *h40=(TH2F*)file->Get(Form("H-Ch%i_signal/hNClusterFCluster_ch%i",i,i));
 	if (h40==0x0) { continue; }
-	hncluster_2cm->cd(counter_1p5cm);
+	hncluster_1p5cm->cd(counter_1p5cm);
 	auto prof_px2_2 = h40->ProfileX();
 	prof_px2_2->GetYaxis()->SetTitle("Number of Clusters found");
    	prof_px2_2->Draw("same");
-	TF1 *fit_2cm=new TF1("fit_2cm","pol1",20,450.);       
-	prof_px2_2->Fit("fit_2cm","R");
+	TF1 *fit_1p5cm=new TF1("fit_1p5cm","pol1",20,450.);       
+	prof_px2_2->Fit("fit_1p5cm","R");
 	//h40->Draw("colz");
 	gPad->Update();
 	diameter_1p5cm->Draw("same");
-	//TPaveStats *st_cluster_2cm = (TPaveStats*)h40->FindObject("stats");
-	//st_cluster_2cm->SetX1NDC(0.75); //new x start position
-	//st_cluster_2cm->SetX2NDC(0.85); //new x end position
-	//st_cluster_2cm->SetY1NDC(0.65); //new x start position
-	//st_cluster_2cm->SetY2NDC(0.85); //new x end position
+	//TPaveStats *st_cluster_1p5cm = (TPaveStats*)h40->FindObject("stats");
+	//st_cluster_1p5cm->SetX1NDC(0.75); //new x start position
+	//st_cluster_1p5cm->SetX2NDC(0.85); //new x end position
+	//st_cluster_1p5cm->SetY1NDC(0.65); //new x start position
+	//st_cluster_1p5cm->SetY2NDC(0.85); //new x end position
 
 	TH2F *h41=(TH2F*)file->Get(Form("H-Ch%i_signal/hNPeakFPeak_ch%i",i,i));
 	if (h41==0x0) { continue; }
-	hnelectron_2cm->cd(counter_1p5cm);
+	hnelectron_1p5cm->cd(counter_1p5cm);
 	auto prof_px_2 = h41->ProfileX();
 	prof_px_2->GetYaxis()->SetTitle("Number of Electron Peaks found");
    	prof_px_2->Draw("same");
-	TF1 *fit2_2cm=new TF1("fit2_2cm","pol1",20,450.);       
-	prof_px_2->Fit("fit2_2cm","R");
+	TF1 *fit2_1p5cm=new TF1("fit2_1p5cm","pol1",20,450.);       
+	prof_px_2->Fit("fit2_1p5cm","R");
 	//h41->Draw("colz");
 	gPad->Update();
 	diameter_1p5cm->Draw("same");
-	//TPaveStats *st_electron_2cm = (TPaveStats*)h41->FindObject("stats");
-	//st_electron_2cm->SetX1NDC(0.75); //new x start position
-	//st_electron_2cm->SetX2NDC(0.85); //new x end position
-	//st_electron_2cm->SetY1NDC(0.65); //new x start position
-	//st_electron_2cm->SetY2NDC(0.85); //new x end position
+	//TPaveStats *st_electron_1p5cm = (TPaveStats*)h41->FindObject("stats");
+	//st_electron_1p5cm->SetX1NDC(0.75); //new x start position
+	//st_electron_1p5cm->SetX2NDC(0.85); //new x end position
+	//st_electron_1p5cm->SetY1NDC(0.65); //new x start position
+	//st_electron_1p5cm->SetY2NDC(0.85); //new x end position
 
 	TH1F *h7=(TH1F*)file->Get(Form("H-Ch%i_signal/hTPeaks_ch%i",i,i));
 	if (h7==0x0) { continue; }
-	tpeaks_2cm->cd(counter_1p5cm);
+	tpeaks_1p5cm->cd(counter_1p5cm);
 	h7->Draw( "same");
 	diameter_1p5cm->Draw("same");
 	
 	TH1F *h8=(TH1F*)file->Get(Form("H-Ch%i_signal/hTFstPeaks_ch%i",i,i));
 	if (h8==0x0) { continue; }
-	tfpeaks_2cm->cd(counter_1p5cm);
+	tfpeaks_1p5cm->cd(counter_1p5cm);
 	h8->Draw("same" );
 	diameter_1p5cm->Draw("same");
 	
 	TH1F *h9=(TH1F*)file->Get(Form("H-Ch%i_signal/hNPeaks_1_ch%i",i,i));
 	if (h9==0x0) { continue; }
-	tlpeaks_2cm->cd(counter_1p5cm);
+	tlpeaks_1p5cm->cd(counter_1p5cm);
 	h9->Draw( "same");
 	diameter_1p5cm->Draw("same");
 	
 	TH1F *h33=(TH1F*)file->Get(Form("H-Ch%i_signal/hTimeDifference_clust_ch%i",i,i));
 	if (h33==0x0) { continue; }
-	timediff_clust_2cm->cd(counter_1p5cm);
+	timediff_clust_1p5cm->cd(counter_1p5cm);
 	TF1  *f2 = new TF1("f2","[0]*exp(-x/[1])",10,40);
 	f2->SetParameters(0,4000);
 	f2->SetParameters(1,10);
 	h33->Fit("f2","R");
 	gPad->SetLogy(1);
-	//pt_2cm_alpha->Draw("same");
+	//pt_1p5cm_alpha->Draw("same");
 	//h33->Fit("expo");
 	h33->Draw("same");
-	pt_2cm_alpha->Draw("same");
+	pt_1p5cm_alpha->Draw("same");
 	diameter_1p5cm->Draw("same");
 	
 	TH1F *h12=(TH1F*)file->Get(Form("H-Ch%i_signal/hIntegInR_ch%i",i,i));
 	if (h12==0x0) { continue; }
-	integ_2cm->cd(counter_1p5cm);
+	integ_1p5cm->cd(counter_1p5cm);
 	if((name_file =="histosTB_run_99.root") || (name_file == "histosTB_run_98.root") || (name_file == "histosTB_run_96.root")|| (name_file == "histosTB_run_94.root")|| (name_file == "histosTB_run_91.root")){
-	  integral_2cm = integral_2cm + h12->GetMean();
-	  rms_integral_2cm = rms_integral_2cm + h12->GetRMS();
+	  integral_1p5cm = integral_1p5cm + h12->GetMean();
+	  rms_integral_1p5cm = rms_integral_1p5cm + h12->GetRMS();
 	}
 	
 	//integ->cd(3);
@@ -1000,21 +999,21 @@ void ReadSglChannel_test(){
 	
 	TH1F *h16=(TH1F*)file->Get(Form("H-Ch%i_signal/hRms_ch%i",i,i));
 	if (h16==0x0) { continue; }
-	rms_2cm->cd(counter_1p5cm);
+	rms_1p5cm->cd(counter_1p5cm);
 	if((name_file =="histosTB_run_99.root") || (name_file == "histosTB_run_98.root") || (name_file == "histosTB_run_96.root")|| (name_file == "histosTB_run_94.root")|| (name_file == "histosTB_run_91.root")){
-	  rms_2cm_var = rms_2cm_var + h16->GetMean();
-	  rms_rms_2cm = rms_rms_2cm + h16->GetRMS();
+	  rms_1p5cm_var = rms_1p5cm_var + h16->GetMean();
+	  rms_rms_1p5cm = rms_rms_1p5cm + h16->GetRMS();
 	}
 	h16->Draw("same");
 	diameter_1p5cm->Draw("same");
 	
 	TH1F *h20=(TH1F*)file->Get(Form("H-Ch%i_signal/hNPeaks_clust_ch%i",i,i));
 	if (h20==0x0) { continue; }
-	npeaks_clustser_2cm->cd(counter_1p5cm);
+	npeaks_clustser_1p5cm->cd(counter_1p5cm);
 	h20->GetXaxis()->SetRangeUser(0.,90.);
 	if((name_file =="histosTB_run_99.root") || (name_file == "histosTB_run_98.root") || (name_file == "histosTB_run_96.root")|| (name_file == "histosTB_run_94.root")|| (name_file == "histosTB_run_91.root")){
-	  mean_clusters_2cm = mean_clusters_2cm + h20->GetMean();
-	  rms_clusters_2cm = rms_clusters_2cm + h20->GetRMS();
+	  mean_clusters_1p5cm = mean_clusters_1p5cm + h20->GetMean();
+	  rms_clusters_1p5cm = rms_clusters_1p5cm + h20->GetRMS();
 	}
 	if(expected_cluster>0){
 	  h20->Fit("gaus");
@@ -1030,42 +1029,42 @@ void ReadSglChannel_test(){
 	}
 	gPad->SetLogy(1);
 	h20->Draw("same");
-	TPaveText *pt_2cm_cluster = new TPaveText(0.72,0.2,0.8,0.35,"NDC");
-	pt_2cm_cluster->SetTextSize(0.04);
-	pt_2cm_cluster->SetTextColor(kRed);
-	pt_2cm_cluster->SetFillColor(0);
-	pt_2cm_cluster->SetTextAlign(12);
-	pt_2cm_cluster->AddText(Form("Expected Clusters: %.1f",expected_cluster));
-	pt_2cm_cluster->Draw("same");
-	pt_2cm_alpha->Draw("same");
+	TPaveText *pt_1p5cm_cluster = new TPaveText(0.72,0.2,0.8,0.35,"NDC");
+	pt_1p5cm_cluster->SetTextSize(0.04);
+	pt_1p5cm_cluster->SetTextColor(kRed);
+	pt_1p5cm_cluster->SetFillColor(0);
+	pt_1p5cm_cluster->SetTextAlign(12);
+	pt_1p5cm_cluster->AddText(Form("Expected Clusters: %.1f",expected_cluster));
+	pt_1p5cm_cluster->Draw("same");
+	pt_1p5cm_alpha->Draw("same");
 	diameter_1p5cm->Draw("same");
 	
 	TH1F *h31=(TH1F*)file->Get(Form("H-Ch%i_signal/hNElectrons_per_cluster_ch%i",i,i));
 	if (h31==0x0) { continue; }
-	cluster_population_canvas_2cm->cd(counter_1p5cm);
+	cluster_population_canvas_1p5cm->cd(counter_1p5cm);
 	if((name_file =="histosTB_run_99.root") || (name_file == "histosTB_run_98.root") || (name_file == "histosTB_run_96.root")|| (name_file == "histosTB_run_94.root")|| (name_file == "histosTB_run_91.root")){
-	  epc_2cm = epc_2cm+ h31->GetMean();
-	  rms_epc_2cm = rms_epc_2cm + h31->GetRMS();
+	  epc_1p5cm = epc_1p5cm+ h31->GetMean();
+	  rms_epc_1p5cm = rms_epc_1p5cm + h31->GetRMS();
 	}
 	//h31->GetXaxis()->SetRangeUser(0.,5.);
 	//h31->Fit("expo");
 	h31->Draw("same");
-	TPaveText *cluster_population_2cm = new TPaveText(0.72,0.2,0.8,0.35,"NDC");
+	TPaveText *cluster_population_1p5cm = new TPaveText(0.72,0.2,0.8,0.35,"NDC");
 	gPad->SetLogy(1);
-	cluster_population_2cm->SetTextSize(0.04);
-	cluster_population_2cm->SetTextColor(kRed);
-	cluster_population_2cm->SetTextAlign(12);
-	cluster_population_2cm->SetFillColor(0);
-	cluster_population_2cm->AddText(Form("Expected Electrons per Cluster: %.1f",cluster_population));
+	cluster_population_1p5cm->SetTextSize(0.04);
+	cluster_population_1p5cm->SetTextColor(kRed);
+	cluster_population_1p5cm->SetTextAlign(12);
+	cluster_population_1p5cm->SetFillColor(0);
+	cluster_population_1p5cm->AddText(Form("Expected Electrons per Cluster: %.1f",cluster_population));
 	gPad->SetLogy(1);
-	pt_2cm_alpha->Draw("same");
-	cluster_population_2cm->Draw("same");
+	pt_1p5cm_alpha->Draw("same");
+	cluster_population_1p5cm->Draw("same");
 	diameter_1p5cm->Draw("same");
 	
 	
 	TH1F *h32=(TH1F*)file->Get(Form("H-Ch%i_signal/hTimeDifference_ch%i",i,i));
 	if (h32==0x0) { continue; }
-	timediff_2cm->cd(counter_1p5cm);
+	timediff_1p5cm->cd(counter_1p5cm);
 	TF1  *f3 = new TF1("f3","[p0]*exp(-x/[p1])",0,10);
 	//TF1  *f3 = new TF1("f3","[0]*exp(-x/[1])",0,12);
 	f3->SetParameters(0,4000.);
@@ -1073,106 +1072,106 @@ void ReadSglChannel_test(){
 	h32->Fit("f3","R");
 	h32->Draw("same");
 	gPad->SetLogy(1);
-	pt_2cm_alpha->Draw("same");
+	pt_1p5cm_alpha->Draw("same");
 	diameter_1p5cm->Draw("same");
 	//h31->GetXaxis()->SetRangeUser(0.,5.);
 	//h31->Fit("expo");
 	counter_1p5cm = counter_1p5cm +1;
       }
       if((name_file =="histosTB_run_99.root") || (name_file == "histosTB_run_98.root") || (name_file == "histosTB_run_96.root")|| (name_file == "histosTB_run_94.root")|| (name_file == "histosTB_run_91.root")){
-	aveph_2cm = aveph_2cm/3.;
-	rms_aveph_2cm = rms_aveph_2cm/3.;
+	aveph_1p5cm = aveph_1p5cm/3.;
+	rms_aveph_1p5cm = rms_aveph_1p5cm/3.;
 	
-	epc_2cm = epc_2cm/3.;
-	rms_epc_2cm = rms_epc_2cm/3.;
+	epc_1p5cm = epc_1p5cm/3.;
+	rms_epc_1p5cm = rms_epc_1p5cm/3.;
 	
-	integral_2cm = (integral_2cm/3.)* (1000/500);
-	rms_integral_2cm = (rms_integral_2cm/3.)* (1000/500);
+	integral_1p5cm = (integral_1p5cm/3.)* (1000/500);
+	rms_integral_1p5cm = (rms_integral_1p5cm/3.)* (1000/500);
 	
-	bsl_2cm_var = bsl_2cm_var/3.;
-	rms_bsl_2cm = rms_bsl_2cm/3.;
+	bsl_1p5cm_var = bsl_1p5cm_var/3.;
+	rms_bsl_1p5cm = rms_bsl_1p5cm/3.;
 
-	rms_2cm_var = rms_2cm_var/3.;
-	rms_rms_2cm = rms_rms_2cm/3.;
+	rms_1p5cm_var = rms_1p5cm_var/3.;
+	rms_rms_1p5cm = rms_rms_1p5cm/3.;
 	
-	mean_clusters_2cm = mean_clusters_2cm/3.;
-	rms_clusters_2cm = rms_clusters_2cm/3.;
+	mean_clusters_1p5cm = mean_clusters_1p5cm/3.;
+	rms_clusters_1p5cm = rms_clusters_1p5cm/3.;
 	
-	mean_electrons_2cm = mean_electrons_2cm/3.;
-	rms_electrons_2cm = rms_electrons_2cm/3.;
+	mean_electrons_1p5cm = mean_electrons_1p5cm/3.;
+	rms_electrons_1p5cm = rms_electrons_1p5cm/3.;
 
-	maximum_2cm = maximum_2cm/3.;
-	rms_maximum_2cm = rms_maximum_2cm/3.;
+	maximum_1p5cm = maximum_1p5cm/3.;
+	rms_maximum_1p5cm = rms_maximum_1p5cm/3.;
 	//Normalization
 
-	mean_clusters_2cm = mean_clusters_2cm/expected_cluster;
-	mean_electrons_2cm = mean_electrons_2cm/expected_electrons;
-	rms_clusters_2cm = rms_clusters_2cm/expected_cluster;
-	rms_electrons_2cm = rms_electrons_2cm/expected_electrons;
-	aveph_summary_2cm->cd();  
-	gr_aveph_summary_2cm->SetPoint(counter_filling_electrons_2cm,alpha,aveph_2cm);
-	gr_aveph_summary_2cm->SetPointError(counter_filling_electrons_2cm,0.,rms_aveph_2cm);
-	gr_aveph_summary_2cm->Draw("sameAC*");
+	mean_clusters_1p5cm = mean_clusters_1p5cm/expected_cluster;
+	mean_electrons_1p5cm = mean_electrons_1p5cm/expected_electrons;
+	rms_clusters_1p5cm = rms_clusters_1p5cm/expected_cluster;
+	rms_electrons_1p5cm = rms_electrons_1p5cm/expected_electrons;
+	aveph_summary_1p5cm->cd();  
+	gr_aveph_summary_1p5cm->SetPoint(counter_filling_electrons_1p5cm,alpha,aveph_1p5cm);
+	gr_aveph_summary_1p5cm->SetPointError(counter_filling_electrons_1p5cm,0.,rms_aveph_1p5cm);
+	gr_aveph_summary_1p5cm->Draw("sameAC*");
 
 	
-	rms_summary_2cm->cd();  
-	gr_rms_summary_2cm->SetPoint(counter_filling_electrons_2cm,alpha,rms_2cm_var);
-	gr_rms_summary_2cm->SetPointError(counter_filling_electrons_2cm,0.,rms_rms_2cm);
-	gr_rms_summary_2cm->Draw("sameAC*");
+	rms_summary_1p5cm->cd();  
+	gr_rms_summary_1p5cm->SetPoint(counter_filling_electrons_1p5cm,alpha,rms_1p5cm_var);
+	gr_rms_summary_1p5cm->SetPointError(counter_filling_electrons_1p5cm,0.,rms_rms_1p5cm);
+	gr_rms_summary_1p5cm->Draw("sameAC*");
 	
 	
-	epc_summary_2cm->cd();  
-	gr_epc_summary_2cm->SetPoint(counter_filling_electrons_2cm,alpha,epc_2cm);
-	gr_epc_summary_2cm->SetPointError(counter_filling_electrons_2cm,0.,rms_epc_2cm);
-	gr_epc_summary_2cm->Draw("sameAC*");
+	epc_summary_1p5cm->cd();  
+	gr_epc_summary_1p5cm->SetPoint(counter_filling_electrons_1p5cm,alpha,epc_1p5cm);
+	gr_epc_summary_1p5cm->SetPointError(counter_filling_electrons_1p5cm,0.,rms_epc_1p5cm);
+	gr_epc_summary_1p5cm->Draw("sameAC*");
 	
-	integral_summary_2cm->cd();
+	integral_summary_1p5cm->cd();
 	//gPad->SetLogy(1); 
-	gr_integral_summary_2cm->SetPoint(counter_filling_electrons_2cm,alpha,integral_2cm);
-	gr_integral_summary_2cm->SetPointError(counter_filling_electrons_2cm,0.,rms_integral_2cm);
-	gr_integral_summary_2cm->Draw("sameAC*");
+	gr_integral_summary_1p5cm->SetPoint(counter_filling_electrons_1p5cm,alpha,integral_1p5cm);
+	gr_integral_summary_1p5cm->SetPointError(counter_filling_electrons_1p5cm,0.,rms_integral_1p5cm);
+	gr_integral_summary_1p5cm->Draw("sameAC*");
 	
-	maximum_summary_2cm->cd();	 
-	gr_maximum_summary_2cm->SetPoint(counter_filling_electrons_2cm,alpha,maximum_2cm);
-	gr_maximum_summary_2cm->SetPointError(counter_filling_electrons_2cm,0.,rms_maximum_2cm);
-	gr_maximum_summary_2cm->Draw("sameAC*");
+	maximum_summary_1p5cm->cd();	 
+	gr_maximum_summary_1p5cm->SetPoint(counter_filling_electrons_1p5cm,alpha,maximum_1p5cm);
+	gr_maximum_summary_1p5cm->SetPointError(counter_filling_electrons_1p5cm,0.,rms_maximum_1p5cm);
+	gr_maximum_summary_1p5cm->Draw("sameAC*");
 	
-	bsl_summary_2cm->cd();  
-	gr_bsl_summary_2cm->SetPoint(counter_filling_electrons_2cm,alpha,bsl_2cm_var);
-	gr_bsl_summary_2cm->SetPointError(counter_filling_electrons_2cm,0.,rms_bsl_2cm);
-	gr_bsl_summary_2cm->Draw("sameAC*");
+	bsl_summary_1p5cm->cd();  
+	gr_bsl_summary_1p5cm->SetPoint(counter_filling_electrons_1p5cm,alpha,bsl_1p5cm_var);
+	gr_bsl_summary_1p5cm->SetPointError(counter_filling_electrons_1p5cm,0.,rms_bsl_1p5cm);
+	gr_bsl_summary_1p5cm->Draw("sameAC*");
 	
 	
-	efficiency_electrons_2cm->cd();  
-	gr_efficiency_electrons_2cm->SetPoint(counter_filling_electrons_2cm,alpha,mean_electrons_2cm);
-	gr_efficiency_electrons_2cm->SetPointError(counter_filling_electrons_2cm,0.,rms_electrons_2cm);
-	gr_efficiency_electrons_2cm->Draw("sameAC*");
+	efficiency_electrons_1p5cm->cd();  
+	gr_efficiency_electrons_1p5cm->SetPoint(counter_filling_electrons_1p5cm,alpha,mean_electrons_1p5cm);
+	gr_efficiency_electrons_1p5cm->SetPointError(counter_filling_electrons_1p5cm,0.,rms_electrons_1p5cm);
+	gr_efficiency_electrons_1p5cm->Draw("sameAC*");
 	
-	efficiency_clusters_2cm->cd();
-	gr_efficiency_clusters_2cm->SetPoint(counter_filling_clusters_2cm,alpha,mean_clusters_2cm);
-	gr_efficiency_clusters_2cm->SetPointError(counter_filling_clusters_2cm,0.,rms_clusters_2cm);
-	counter_filling_clusters_2cm = counter_filling_clusters_2cm +1;
-	counter_filling_electrons_2cm = counter_filling_electrons_2cm +1;
-	gr_efficiency_clusters_2cm->Draw("sameAC*");
+	efficiency_clusters_1p5cm->cd();
+	gr_efficiency_clusters_1p5cm->SetPoint(counter_filling_clusters_1p5cm,alpha,mean_clusters_1p5cm);
+	gr_efficiency_clusters_1p5cm->SetPointError(counter_filling_clusters_1p5cm,0.,rms_clusters_1p5cm);
+	counter_filling_clusters_1p5cm = counter_filling_clusters_1p5cm +1;
+	counter_filling_electrons_1p5cm = counter_filling_electrons_1p5cm +1;
+	gr_efficiency_clusters_1p5cm->Draw("sameAC*");
 	
 	if(name_file =="histosTB_run_99.root"){
-	  efficiency_clusters_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_clusters_2cm.pdf",fname.Data());
-	  efficiency_electrons_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_electrons_2cm.pdf",fname.Data()); 
-	  integral_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/integral_summary_2cm.pdf",fname.Data());
-	  maximum_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/maximum_summary_2cm.pdf",fname.Data());
-	  epc_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/epc_summary_2cm.pdf",fname.Data());
-	  bsl_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_2cm.pdf",fname.Data());
-	  rms_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_2cm.pdf",fname.Data());
-	  aveph_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_2cm.pdf",fname.Data());
+	  efficiency_clusters_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_clusters_1p5cm.pdf",fname.Data());
+	  efficiency_electrons_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_electrons_1p5cm.pdf",fname.Data()); 
+	  integral_summary_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/integral_summary_1p5cm.pdf",fname.Data());
+	  maximum_summary_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/maximum_summary_1p5cm.pdf",fname.Data());
+	  epc_summary_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/epc_summary_1p5cm.pdf",fname.Data());
+	  bsl_summary_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_1p5cm.pdf",fname.Data());
+	  rms_summary_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_1p5cm.pdf",fname.Data());
+	  aveph_summary_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_1p5cm.pdf",fname.Data());
 	  
-	  efficiency_clusters_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_clusters_2cm.png",fname.Data());
-	  efficiency_electrons_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_electrons_2cm.png",fname.Data()); 
-	  integral_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/integral_summary_2cm.png",fname.Data());
-	  maximum_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/maximum_summary_2cm.png",fname.Data());
-	  epc_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/epc_summary_2cm.png",fname.Data());
-	  bsl_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_2cm.png",fname.Data());
-	  rms_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_2cm.png",fname.Data());
-	  aveph_summary_2cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_2cm.png",fname.Data());
+	  efficiency_clusters_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_clusters_1p5cm.png",fname.Data());
+	  efficiency_electrons_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_electrons_1p5cm.png",fname.Data()); 
+	  integral_summary_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/integral_summary_1p5cm.png",fname.Data());
+	  maximum_summary_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/maximum_summary_1p5cm.png",fname.Data());
+	  epc_summary_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/epc_summary_1p5cm.png",fname.Data());
+	  bsl_summary_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_1p5cm.png",fname.Data());
+	  rms_summary_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_1p5cm.png",fname.Data());
+	  aveph_summary_1p5cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_1p5cm.png",fname.Data());
 	  
 	  
 
@@ -1184,42 +1183,42 @@ void ReadSglChannel_test(){
       
       
       if(savePlots){
-	timediff_clust_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/clust_difference_2cm.pdf",fname.Data()));
-	timediff_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/electrons_difference_2cm.pdf",fname.Data()));
-	npeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/npeaks_2cm.pdf",fname.Data()));
-	tpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tpeaks_2cm.pdf",fname.Data()));
-	tfpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tfpeaks_2cm.pdf",fname.Data()));
-	tlpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tlpeaks_2cm.pdf",fname.Data()));
-	hnpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_2cm.pdf",fname.Data()));
-	hncluster_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hncluster_2cm.pdf",fname.Data()));
-	npeaks_clustser_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_cluster_2cm.pdf",fname.Data()));
-	hpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hpeaks_2cm.pdf",fname.Data()));
-	bsl_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/bsl_2cm.pdf",fname.Data()));
-	max_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/max_2cm.pdf",fname.Data()));
-	integ_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/integ_2cm.pdf",fname.Data()));
-	rms_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/rms_2cm.pdf",fname.Data()));
-	cluster_population_canvas_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/cluster_population_2cm.pdf",fname.Data()));
+	timediff_clust_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/clust_difference_1p5cm.pdf",fname.Data()));
+	timediff_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/electrons_difference_1p5cm.pdf",fname.Data()));
+	npeaks_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/npeaks_1p5cm.pdf",fname.Data()));
+	tpeaks_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tpeaks_1p5cm.pdf",fname.Data()));
+	tfpeaks_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tfpeaks_1p5cm.pdf",fname.Data()));
+	tlpeaks_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tlpeaks_1p5cm.pdf",fname.Data()));
+	hnpeaks_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_1p5cm.pdf",fname.Data()));
+	hncluster_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hncluster_1p5cm.pdf",fname.Data()));
+	npeaks_clustser_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_cluster_1p5cm.pdf",fname.Data()));
+	hpeaks_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hpeaks_1p5cm.pdf",fname.Data()));
+	bsl_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/bsl_1p5cm.pdf",fname.Data()));
+	max_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/max_1p5cm.pdf",fname.Data()));
+	integ_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/integ_1p5cm.pdf",fname.Data()));
+	rms_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/rms_1p5cm.pdf",fname.Data()));
+	cluster_population_canvas_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/cluster_population_1p5cm.pdf",fname.Data()));
 	//min->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/min_ch%i.pdf",fname.Data(),i));
-	hnelectron_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_2cm.pdf",fname.Data()));
+	hnelectron_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_1p5cm.pdf",fname.Data()));
 
 	
-	timediff_clust_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/clust_difference_2cm.png",fname.Data()));
-	timediff_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/electrons_difference_2cm.png",fname.Data()));
-	npeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/npeaks_2cm.png",fname.Data()));
-	tpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tpeaks_2cm.png",fname.Data()));
-	tfpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tfpeaks_2cm.png",fname.Data()));
-	tlpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tlpeaks_2cm.png",fname.Data()));
-	hncluster_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hncluster_2cm.png",fname.Data()));
-	hnpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_2cm.png",fname.Data()));
-	npeaks_clustser_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_cluster_2cm.png",fname.Data()));
-	hpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hpeaks_2cm.png",fname.Data()));
-	bsl_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/bsl_2cm.png",fname.Data()));
-	max_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/max_2cm.png",fname.Data()));
-	integ_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/integ_2cm.png",fname.Data()));
-	rms_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/rms_2cm.png",fname.Data()));
-	cluster_population_canvas_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/cluster_population_2cm.png",fname.Data()));
+	timediff_clust_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/clust_difference_1p5cm.png",fname.Data()));
+	timediff_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/electrons_difference_1p5cm.png",fname.Data()));
+	npeaks_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/npeaks_1p5cm.png",fname.Data()));
+	tpeaks_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tpeaks_1p5cm.png",fname.Data()));
+	tfpeaks_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tfpeaks_1p5cm.png",fname.Data()));
+	tlpeaks_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tlpeaks_1p5cm.png",fname.Data()));
+	hncluster_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hncluster_1p5cm.png",fname.Data()));
+	hnpeaks_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_1p5cm.png",fname.Data()));
+	npeaks_clustser_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_cluster_1p5cm.png",fname.Data()));
+	hpeaks_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hpeaks_1p5cm.png",fname.Data()));
+	bsl_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/bsl_1p5cm.png",fname.Data()));
+	max_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/max_1p5cm.png",fname.Data()));
+	integ_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/integ_1p5cm.png",fname.Data()));
+	rms_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/rms_1p5cm.png",fname.Data()));
+	cluster_population_canvas_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/cluster_population_1p5cm.png",fname.Data()));
 	//min->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/min_ch%i.png",fname.Data(),i));
-	hnelectron_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_2cm.png",fname.Data()));
+	hnelectron_1p5cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_1p5cm.png",fname.Data()));
 	
 	
 	
