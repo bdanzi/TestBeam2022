@@ -96,7 +96,7 @@ per each event in the third column some physical quantities which are related to
 
 - 1,2,3,5,6,8,9,10 : 8 Drift Tubes of 1 cm cell size respectively:
   - Channel 2,3 Wire diameter of 15 micrometer 
-  - Channel 1,5,6,8 and 7 Wire diameter of 20 micrometer 
+  - Channel 1,5,6,8 Wire diameter of 20 micrometer 
   - Channel 9 and 10 Wire diameter of 25 micrometer 
 - 0,4,7,11 : 4 Drift Tubes of 1.5 cm cell size respectively:
   - Channel 7,11 Wire diameter of 15 micrometer 
