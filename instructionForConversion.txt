@@ -1,0 +1,15 @@
+You are supposed to be in ConversionCode
+______________________________________________
+Instruction for the first time you run the code:
+
+- Substitute the correct path in the setDCDataReaderEnv.sh
+- source setDCDataReaderEnv.sh
+- source env.sh
+- make clean in WaveData directory
+- make in WaveData directory
+- make clean in ConversionCode directory
+- make in ConversionCode directory
+
+./test.out run number #events name of the input file
+Example: ./test.out 1 50000 tbdata_1
+cp the run_*.root in the converted_data directory

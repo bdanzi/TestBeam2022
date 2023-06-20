@@ -1,0 +1,38 @@
+# Note to run the analysis in interactive mode
+
+Brunella D'Anzi 9 July 2022
+
+First you should have ROOT files already converted!! Go to instructionsForConversion.txt
+________________________________________________________________________________________________________
+In general the run number refers to a particular configuration which is written in the excel file.
+________________________________________________________________________________________________________
+Here the line command for the analysis code:
+
+IMPORTANT : open another Terminal SHELL w.r.t. where you are doing the root file conversion
+IMPORTANT: change the path to your LOCAL AREA!!!
+cd dchdatareade_test_beam/WaveData
+make clean
+make
+cd dchdatareade_test_beam/
+make clean
+make
+cmsrel CMSSW_10_6_22
+cd CMSSW_10_6_22/src
+cmsenv
+NOTE on cmsenv command: IF it doens't work, on lxplus do the following command: cmsrel CMSSW_10_6_22 and go to src subdirectory and do cmsenv again
+cd testbeam_analysis
+source setDCDataReaderEnv.sh
+bash compile.sh
+bash submit_first_RatioGasMixtures.sh
+
+( within it you run on multiple root files a command similar to this one - with some additional parameters explained there: ./read_data . 91 0 -1 1.2 4 0 1.0 0.5 25.0 1024
+where in the last code line: 
+
+- 91 is the run number
+
+- 0 -10 is the number of events to be processed (-1 to process the whole data set)
+
+- 1.2 is the sampling rate
+
+- 4, 0, 1.0, 0.5 are the cuts on the signal amplitude, first and second derivatives before starting the search for electron peaks (see FindPeak-algo.C))
+bash submit_second_RatioGasMixtures.sh is (This command is used to produce the correspoding plots, please change the path to your favourite directory to store them!!)
