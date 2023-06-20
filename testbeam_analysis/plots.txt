@@ -1,6 +1,0 @@
-histosTB_run_10.root 11 10000
-histosTB_run_39.root 11 10000
-histosTB_run_41.root 11 10000
-histosTB_run_63.root 11 10000
-
-
