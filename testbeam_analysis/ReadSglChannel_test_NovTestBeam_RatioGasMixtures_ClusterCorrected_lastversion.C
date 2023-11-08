@@ -28,7 +28,7 @@
 
 using namespace std;
 
-void ReadSglChannel_test_NovTestBeam_RatioGasMixtures_ClusterCorrected_updatedFromWalaa(){
+void ReadSglChannel_test_NovTestBeam_RatioGasMixtures_ClusterCorrected_lastversion(){
   
   gStyle->SetOptFit(1111);
   // For the axis titles:
@@ -487,11 +487,11 @@ void ReadSglChannel_test_NovTestBeam_RatioGasMixtures_ClusterCorrected_updatedFr
     scanf("%d",&channel);
     printf("Enter the number of events (waveForms) to be shown:");
     scanf("%d",&ev);
-    if (stat(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/",fname.Data()), &st) == -1) {
-      mkdir(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/",fname.Data()), 0700);
+    if (stat(Form("Plots/%s/",fname.Data()), &st) == -1) {
+      mkdir(Form("Plots/%s/",fname.Data()), 0700);
     }
-    if (stat(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/Waves/",fname.Data()), &st) == -1) {
-      mkdir(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/Waves/",fname.Data()), 0700);
+    if (stat(Form("Plots/%s/Waves/",fname.Data()), &st) == -1) {
+      mkdir(Form("Plots/%s/Waves/",fname.Data()), 0700);
     }
   }
   else{
@@ -815,11 +815,11 @@ void ReadSglChannel_test_NovTestBeam_RatioGasMixtures_ClusterCorrected_updatedFr
       rms_integral_2cm = 0.;
       
       
-      if (stat(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/",fname.Data()), &st) == -1) {
-	mkdir(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/",fname.Data()), 0700);
+      if (stat(Form("Plots/%s/",fname.Data()), &st) == -1) {
+	mkdir(Form("Plots/%s/",fname.Data()), 0700);
       }
-      if (stat(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/Waves/",fname.Data()), &st) == -1) {
-	mkdir(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/Waves/",fname.Data()), 0700);
+      if (stat(Form("Plots/%s/Waves/",fname.Data()), &st) == -1) {
+	mkdir(Form("Plots/%s/Waves/",fname.Data()), 0700);
       }
       
       
@@ -947,7 +947,7 @@ void ReadSglChannel_test_NovTestBeam_RatioGasMixtures_ClusterCorrected_updatedFr
 	for(int i =0; i<ev; ++i){
 	  TGraph *h1=(TGraph*)file->Get(Form("signal_Afterflt/CvSignal_1_ev%i",i));
 	  if (h1==0x0) { continue; }
-	  //h1->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/Waves/waves_ev%i.pdf",fname.Data(),i));
+	  //h1->SaveAs(Form("Plots/%s/Waves/waves_ev%i.pdf",fname.Data(),i));
 	  //h1->SaveAs(Form("/lustrehome/bdanzi/offline_analysis/testbeam_analysis/Plots/%s/Waves/waves_ev%i.png",fname.Data(),i));
 	}
       }
@@ -957,7 +957,7 @@ void ReadSglChannel_test_NovTestBeam_RatioGasMixtures_ClusterCorrected_updatedFr
 	  for(int j = 0; j<=channel; ++j){
 	    TGraph *h1=(TGraph*)file->Get(Form("signal_Afterflt/CvSignal_1_Ch%i_ev%i",j,i));
 	    if (h1==0x0) { continue; }
-	    //h1->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/Waves/waves_ev%i_Ch%i.pdf",fname.Data(),i,j));
+	    //h1->SaveAs(Form("Plots/%s/Waves/waves_ev%i_Ch%i.pdf",fname.Data(),i,j));
 	    // h1->SaveAs(Form("/lustrehome/bdanzi/offline_analysis/testbeam_analysis/Plots/%s/Waves/waves_ev%i_Ch%i.png",fname.Data(),i,j));
 	    
 	  }
@@ -1654,23 +1654,23 @@ void ReadSglChannel_test_NovTestBeam_RatioGasMixtures_ClusterCorrected_updatedFr
 	
 	
 	if(savePlot_effsummary && ((name_file_compact == Runs_90_10[Runs_90_10_size - 1]) || (name_file_compact == Runs_80_20[Runs_80_20_size - 1]) || (name_file_compact == Runs_85_15[Runs_85_15_size - 1]))){
-	  efficiency_clusters_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_clusters_1cm.pdf");
-	  efficiency_electrons_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_electrons_1cm.pdf");
-	  epc_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/epc_summary_1cm.pdf");
-	  integral_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/integral_summary_1cm.pdf");
-	  maximum_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/maximum_summary_1cm.pdf");
-	  bsl_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_1cm.pdf");
-	  rms_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_1cm.pdf");
-	  aveph_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_1cm.pdf");
+	  efficiency_clusters_1cm->SaveAs("Plots/efficiency_clusters_1cm.pdf");
+	  efficiency_electrons_1cm->SaveAs("Plots/efficiency_electrons_1cm.pdf");
+	  epc_summary_1cm->SaveAs("Plots/epc_summary_1cm.pdf");
+	  integral_summary_1cm->SaveAs("Plots/integral_summary_1cm.pdf");
+	  maximum_summary_1cm->SaveAs("Plots/maximum_summary_1cm.pdf");
+	  bsl_summary_1cm->SaveAs("Plots/bsl_summary_1cm.pdf");
+	  rms_summary_1cm->SaveAs("Plots/rms_summary_1cm.pdf");
+	  aveph_summary_1cm->SaveAs("Plots/aveph_summary_1cm.pdf");
 	  
-	  efficiency_clusters_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_clusters_1cm.png");
-	  efficiency_electrons_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_electrons_1cm.png");
-	  epc_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/epc_summary_1cm.png");
-	  integral_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/integral_summary_1cm.png");
-	  maximum_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/maximum_summary_1cm.png");
-	  bsl_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_1cm.png");
-	  rms_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_1cm.png");
-	  aveph_summary_1cm->SaveAs("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_1cm.png");
+	  efficiency_clusters_1cm->SaveAs("Plots/efficiency_clusters_1cm.png");
+	  efficiency_electrons_1cm->SaveAs("Plots/efficiency_electrons_1cm.png");
+	  epc_summary_1cm->SaveAs("Plots/epc_summary_1cm.png");
+	  integral_summary_1cm->SaveAs("Plots/integral_summary_1cm.png");
+	  maximum_summary_1cm->SaveAs("Plots/maximum_summary_1cm.png");
+	  bsl_summary_1cm->SaveAs("Plots/bsl_summary_1cm.png");
+	  rms_summary_1cm->SaveAs("Plots/rms_summary_1cm.png");
+	  aveph_summary_1cm->SaveAs("Plots/aveph_summary_1cm.png");
 	  
 	}
       }
@@ -1682,44 +1682,44 @@ void ReadSglChannel_test_NovTestBeam_RatioGasMixtures_ClusterCorrected_updatedFr
 	//////////////
 	// Save pdf //
 	//////////////
-	ncluster_corrected_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/ncluster_corrected_1cm.pdf",fname.Data()));
-	timediff_clust_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/clust_difference_1cm.pdf",fname.Data()));
-	timediff_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/electrons_difference_1cm.pdf",fname.Data()));
-	npeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/nelectrons_1cm.pdf",fname.Data()));
-	tpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tpeaks_1cm.pdf",fname.Data()));
-	tfpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tfpeaks_1cm.pdf",fname.Data()));
-	tlpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tlpeaks_1cm.pdf",fname.Data()));
-	hnpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_1cm.pdf",fname.Data()));
-	hncluster_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hncluster_1cm.pdf",fname.Data()));
-	hpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hpeaks_1cm.pdf",fname.Data()));
-	bsl_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/bsl_1cm.pdf",fname.Data()));
-	max_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/max_1cm.pdf",fname.Data()));
-	integ_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/integ_1cm.pdf",fname.Data()));
-	rms_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/rms_1cm.pdf",fname.Data()));
-	//min->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/min_ch%i.pdf",fname.Data(),i));
-	npeaks_clustser_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/nclusters_1cm.pdf",fname.Data()));
-	cluster_population_canvas_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/cluster_population_1cm.pdf",fname.Data()));
-	hnelectron_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_1cm.pdf",fname.Data()));
+	ncluster_corrected_1cm->SaveAs(Form("Plots/%s/ncluster_corrected_1cm.pdf",fname.Data()));
+	timediff_clust_1cm->SaveAs(Form("Plots/%s/clust_difference_1cm.pdf",fname.Data()));
+	timediff_1cm->SaveAs(Form("Plots/%s/electrons_difference_1cm.pdf",fname.Data()));
+	npeaks_1cm->SaveAs(Form("Plots/%s/nelectrons_1cm.pdf",fname.Data()));
+	tpeaks_1cm->SaveAs(Form("Plots/%s/tpeaks_1cm.pdf",fname.Data()));
+	tfpeaks_1cm->SaveAs(Form("Plots/%s/tfpeaks_1cm.pdf",fname.Data()));
+	tlpeaks_1cm->SaveAs(Form("Plots/%s/tlpeaks_1cm.pdf",fname.Data()));
+	hnpeaks_1cm->SaveAs(Form("Plots/%s/hnpeaks_1cm.pdf",fname.Data()));
+	hncluster_1cm->SaveAs(Form("Plots/%s/hncluster_1cm.pdf",fname.Data()));
+	hpeaks_1cm->SaveAs(Form("Plots/%s/hpeaks_1cm.pdf",fname.Data()));
+	bsl_1cm->SaveAs(Form("Plots/%s/bsl_1cm.pdf",fname.Data()));
+	max_1cm->SaveAs(Form("Plots/%s/max_1cm.pdf",fname.Data()));
+	integ_1cm->SaveAs(Form("Plots/%s/integ_1cm.pdf",fname.Data()));
+	rms_1cm->SaveAs(Form("Plots/%s/rms_1cm.pdf",fname.Data()));
+	//min->SaveAs(Form("Plots/%s/min_ch%i.pdf",fname.Data(),i));
+	npeaks_clustser_1cm->SaveAs(Form("Plots/%s/nclusters_1cm.pdf",fname.Data()));
+	cluster_population_canvas_1cm->SaveAs(Form("Plots/%s/cluster_population_1cm.pdf",fname.Data()));
+	hnelectron_1cm->SaveAs(Form("Plots/%s/hnelectron_1cm.pdf",fname.Data()));
 	//////////////
 	// Save png //
 	//////////////
-	timediff_clust_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/clust_difference_1cm.png",fname.Data()));
-	timediff_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/electrons_difference_1cm.png",fname.Data()));
-	npeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/nelectrons_1cm.png",fname.Data()));
-	tpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tpeaks_1cm.pdf",fname.Data()));
-	tfpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tfpeaks_1cm.png",fname.Data()));
-	tlpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tlpeaks_1cm.png",fname.Data()));
-	hnpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_1cm.pdf",fname.Data()));
-	hncluster_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hncluster_1cm.png",fname.Data()));
-	hpeaks_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hpeaks_1cm.png",fname.Data()));
-	bsl_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/bsl_1cm.png",fname.Data()));
-	max_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/max_1cm.png",fname.Data()));
-	integ_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/integ_1cm.png",fname.Data()));
-	rms_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/rms_1cm.png",fname.Data()));
-	//min->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/min_ch%i.pdf",fname.Data(),i));
-	npeaks_clustser_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/nclusters_1cm.png",fname.Data()));
-	cluster_population_canvas_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/cluster_population_1cm.png",fname.Data()));
-	hnelectron_1cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_1cm.png",fname.Data()));
+	timediff_clust_1cm->SaveAs(Form("Plots/%s/clust_difference_1cm.png",fname.Data()));
+	timediff_1cm->SaveAs(Form("Plots/%s/electrons_difference_1cm.png",fname.Data()));
+	npeaks_1cm->SaveAs(Form("Plots/%s/nelectrons_1cm.png",fname.Data()));
+	tpeaks_1cm->SaveAs(Form("Plots/%s/tpeaks_1cm.pdf",fname.Data()));
+	tfpeaks_1cm->SaveAs(Form("Plots/%s/tfpeaks_1cm.png",fname.Data()));
+	tlpeaks_1cm->SaveAs(Form("Plots/%s/tlpeaks_1cm.png",fname.Data()));
+	hnpeaks_1cm->SaveAs(Form("Plots/%s/hnpeaks_1cm.pdf",fname.Data()));
+	hncluster_1cm->SaveAs(Form("Plots/%s/hncluster_1cm.png",fname.Data()));
+	hpeaks_1cm->SaveAs(Form("Plots/%s/hpeaks_1cm.png",fname.Data()));
+	bsl_1cm->SaveAs(Form("Plots/%s/bsl_1cm.png",fname.Data()));
+	max_1cm->SaveAs(Form("Plots/%s/max_1cm.png",fname.Data()));
+	integ_1cm->SaveAs(Form("Plots/%s/integ_1cm.png",fname.Data()));
+	rms_1cm->SaveAs(Form("Plots/%s/rms_1cm.png",fname.Data()));
+	//min->SaveAs(Form("Plots/%s/min_ch%i.pdf",fname.Data(),i));
+	npeaks_clustser_1cm->SaveAs(Form("Plots/%s/nclusters_1cm.png",fname.Data()));
+	cluster_population_canvas_1cm->SaveAs(Form("Plots/%s/cluster_population_1cm.png",fname.Data()));
+	hnelectron_1cm->SaveAs(Form("Plots/%s/hnelectron_1cm.png",fname.Data()));
 	
       }
       
@@ -2443,34 +2443,34 @@ void ReadSglChannel_test_NovTestBeam_RatioGasMixtures_ClusterCorrected_updatedFr
 	//////////////
 	// Save pdf //
 	//////////////
-	  efficiency_clusters_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_clusters_%scm.pdf",tubes.Data()));
-	  efficiency_electrons_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_electrons_%scm.pdf",tubes.Data())); 
-	  integral_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/integral_summary_%scm.pdf",tubes.Data()));
-	  maximum_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/maximum_summary_%scm.pdf",tubes.Data()));
-	  epc_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/epc_summary_%scm.pdf",tubes.Data()));
-	  bsl_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_%scm.pdf",tubes.Data()));
-	  rms_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_%scm.pdf",tubes.Data()));
-	  aveph_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_%scm.pdf",tubes.Data()));
+	  efficiency_clusters_2cm->SaveAs(Form("Plots/efficiency_clusters_%scm.pdf",tubes.Data()));
+	  efficiency_electrons_2cm->SaveAs(Form("Plots/efficiency_electrons_%scm.pdf",tubes.Data())); 
+	  integral_summary_2cm->SaveAs(Form("Plots/integral_summary_%scm.pdf",tubes.Data()));
+	  maximum_summary_2cm->SaveAs(Form("Plots/maximum_summary_%scm.pdf",tubes.Data()));
+	  epc_summary_2cm->SaveAs(Form("Plots/epc_summary_%scm.pdf",tubes.Data()));
+	  bsl_summary_2cm->SaveAs(Form("Plots/bsl_summary_%scm.pdf",tubes.Data()));
+	  rms_summary_2cm->SaveAs(Form("Plots/rms_summary_%scm.pdf",tubes.Data()));
+	  aveph_summary_2cm->SaveAs(Form("Plots/aveph_summary_%scm.pdf",tubes.Data()));
 	//////////////
 	// Save png //
 	//////////////
-	  efficiency_clusters_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_clusters_%scm.png",tubes.Data()));
-	  efficiency_electrons_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_electrons_%scm.png",tubes.Data())); 
-	  integral_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/integral_summary_%scm.png",tubes.Data()));
-	  maximum_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/maximum_summary_%scm.png",tubes.Data()));
-	  epc_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/epc_summary_%scm.png",tubes.Data()));
-	  bsl_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_%scm.png",tubes.Data()));
-	  rms_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_%scm.png",tubes.Data()));
-	  aveph_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_%scm.png",tubes.Data()));
+	  efficiency_clusters_2cm->SaveAs(Form("Plots/efficiency_clusters_%scm.png",tubes.Data()));
+	  efficiency_electrons_2cm->SaveAs(Form("Plots/efficiency_electrons_%scm.png",tubes.Data())); 
+	  integral_summary_2cm->SaveAs(Form("Plots/integral_summary_%scm.png",tubes.Data()));
+	  maximum_summary_2cm->SaveAs(Form("Plots/maximum_summary_%scm.png",tubes.Data()));
+	  epc_summary_2cm->SaveAs(Form("Plots/epc_summary_%scm.png",tubes.Data()));
+	  bsl_summary_2cm->SaveAs(Form("Plots/bsl_summary_%scm.png",tubes.Data()));
+	  rms_summary_2cm->SaveAs(Form("Plots/rms_summary_%scm.png",tubes.Data()));
+	  aveph_summary_2cm->SaveAs(Form("Plots/aveph_summary_%scm.png",tubes.Data()));
 	  
-	   efficiency_clusters_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_clusters_%scm.root",tubes.Data()));
-	  efficiency_electrons_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/efficiency_electrons_%scm.root",tubes.Data())); 
-	  integral_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/integral_summary_%scm.root",tubes.Data()));
-	  maximum_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/maximum_summary_%scm.root",tubes.Data()));
-	  epc_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/epc_summary_%scm.root",tubes.Data()));
-	  bsl_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/bsl_summary_%scm.root",tubes.Data()));
-	  rms_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/rms_summary_%scm.root",tubes.Data()));
-	  aveph_summary_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/aveph_summary_%scm.root",tubes.Data()));
+	   efficiency_clusters_2cm->SaveAs(Form("Plots/efficiency_clusters_%scm.root",tubes.Data()));
+	  efficiency_electrons_2cm->SaveAs(Form("Plots/efficiency_electrons_%scm.root",tubes.Data())); 
+	  integral_summary_2cm->SaveAs(Form("Plots/integral_summary_%scm.root",tubes.Data()));
+	  maximum_summary_2cm->SaveAs(Form("Plots/maximum_summary_%scm.root",tubes.Data()));
+	  epc_summary_2cm->SaveAs(Form("Plots/epc_summary_%scm.root",tubes.Data()));
+	  bsl_summary_2cm->SaveAs(Form("Plots/bsl_summary_%scm.root",tubes.Data()));
+	  rms_summary_2cm->SaveAs(Form("Plots/rms_summary_%scm.root",tubes.Data()));
+	  aveph_summary_2cm->SaveAs(Form("Plots/aveph_summary_%scm.root",tubes.Data()));
 
 	  
 	}
@@ -2484,44 +2484,44 @@ void ReadSglChannel_test_NovTestBeam_RatioGasMixtures_ClusterCorrected_updatedFr
 	//////////////
 	// Save pdf //
 	//////////////
-	ncluster_corrected_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/ncluster_corrected_%scm.pdf",fname.Data(),tubes.Data()));
-	timediff_clust_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/clust_difference_%scm.pdf",fname.Data(),tubes.Data()));
-	timediff_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/electrons_difference_%scm.pdf",fname.Data(),tubes.Data()));
-	npeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/nelectrons_%scm.pdf",fname.Data(),tubes.Data()));
-	tpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tpeaks_%scm.pdf",fname.Data(),tubes.Data()));
-	tfpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tfpeaks_%scm.pdf",fname.Data(),tubes.Data()));
-	tlpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tlpeaks_%scm.pdf",fname.Data(),tubes.Data()));
-	hnpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_%scm.pdf",fname.Data(),tubes.Data()));
-	hncluster_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hncluster_%scm.pdf",fname.Data(),tubes.Data()));
-	npeaks_clustser_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/nclusters_%scm.pdf",fname.Data(),tubes.Data()));
-	hpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hpeaks_%scm.pdf",fname.Data(),tubes.Data()));
-	bsl_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/bsl_%scm.pdf",fname.Data(),tubes.Data()));
-	max_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/max_%scm.pdf",fname.Data(),tubes.Data()));
-	integ_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/integ_%scm.pdf",fname.Data(),tubes.Data()));
-	rms_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/rms_%scm.pdf",fname.Data(),tubes.Data()));
-	cluster_population_canvas_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/cluster_population_%scm.pdf",fname.Data(),tubes.Data()));
+	ncluster_corrected_2cm->SaveAs(Form("Plots/%s/ncluster_corrected_%scm.pdf",fname.Data(),tubes.Data()));
+	timediff_clust_2cm->SaveAs(Form("Plots/%s/clust_difference_%scm.pdf",fname.Data(),tubes.Data()));
+	timediff_2cm->SaveAs(Form("Plots/%s/electrons_difference_%scm.pdf",fname.Data(),tubes.Data()));
+	npeaks_2cm->SaveAs(Form("Plots/%s/nelectrons_%scm.pdf",fname.Data(),tubes.Data()));
+	tpeaks_2cm->SaveAs(Form("Plots/%s/tpeaks_%scm.pdf",fname.Data(),tubes.Data()));
+	tfpeaks_2cm->SaveAs(Form("Plots/%s/tfpeaks_%scm.pdf",fname.Data(),tubes.Data()));
+	tlpeaks_2cm->SaveAs(Form("Plots/%s/tlpeaks_%scm.pdf",fname.Data(),tubes.Data()));
+	hnpeaks_2cm->SaveAs(Form("Plots/%s/hnpeaks_%scm.pdf",fname.Data(),tubes.Data()));
+	hncluster_2cm->SaveAs(Form("Plots/%s/hncluster_%scm.pdf",fname.Data(),tubes.Data()));
+	npeaks_clustser_2cm->SaveAs(Form("Plots/%s/nclusters_%scm.pdf",fname.Data(),tubes.Data()));
+	hpeaks_2cm->SaveAs(Form("Plots/%s/hpeaks_%scm.pdf",fname.Data(),tubes.Data()));
+	bsl_2cm->SaveAs(Form("Plots/%s/bsl_%scm.pdf",fname.Data(),tubes.Data()));
+	max_2cm->SaveAs(Form("Plots/%s/max_%scm.pdf",fname.Data(),tubes.Data()));
+	integ_2cm->SaveAs(Form("Plots/%s/integ_%scm.pdf",fname.Data(),tubes.Data()));
+	rms_2cm->SaveAs(Form("Plots/%s/rms_%scm.pdf",fname.Data(),tubes.Data()));
+	cluster_population_canvas_2cm->SaveAs(Form("Plots/%s/cluster_population_%scm.pdf",fname.Data(),tubes.Data()));
 	//min->SaveAs(Form("/lustrehome/bdanzi/offline_analysis/testbeam_analysis/Plots/%s/min_ch%i.pdf",fname.Data(),i));
-	hnelectron_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_%scm.pdf",fname.Data(),tubes.Data()));
+	hnelectron_2cm->SaveAs(Form("Plots/%s/hnelectron_%scm.pdf",fname.Data(),tubes.Data()));
 	//////////////
 	// Save png //
 	//////////////
-	timediff_clust_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/clust_difference_%scm.png",fname.Data(),tubes.Data()));
-	timediff_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/electrons_difference_%scm.png",fname.Data(),tubes.Data()));
-	npeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/nelectrons_%scm.png",fname.Data(),tubes.Data()));
-	tpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tpeaks_%scm.pdf",fname.Data(),tubes.Data()));
-	tfpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tfpeaks_%scm.png",fname.Data(),tubes.Data()));
-	tlpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/tlpeaks_%scm.png",fname.Data(),tubes.Data()));
-	hnpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnpeaks_%scm.pdf",fname.Data(),tubes.Data()));
-	hncluster_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hncluster_%scm.png",fname.Data(),tubes.Data()));
-	npeaks_clustser_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/nclusters_%scm.png",fname.Data(),tubes.Data()));
-	hpeaks_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hpeaks_%scm.png",fname.Data(),tubes.Data()));
-	bsl_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/bsl_%scm.png",fname.Data(),tubes.Data()));
-	max_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/max_%scm.png",fname.Data(),tubes.Data()));
-	integ_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/integ_%scm.png",fname.Data(),tubes.Data()));
-	rms_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/rms_%scm.png",fname.Data(),tubes.Data()));
-	cluster_population_canvas_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/cluster_population_%scm.png",fname.Data(),tubes.Data()));
+	timediff_clust_2cm->SaveAs(Form("Plots/%s/clust_difference_%scm.png",fname.Data(),tubes.Data()));
+	timediff_2cm->SaveAs(Form("Plots/%s/electrons_difference_%scm.png",fname.Data(),tubes.Data()));
+	npeaks_2cm->SaveAs(Form("Plots/%s/nelectrons_%scm.png",fname.Data(),tubes.Data()));
+	tpeaks_2cm->SaveAs(Form("Plots/%s/tpeaks_%scm.pdf",fname.Data(),tubes.Data()));
+	tfpeaks_2cm->SaveAs(Form("Plots/%s/tfpeaks_%scm.png",fname.Data(),tubes.Data()));
+	tlpeaks_2cm->SaveAs(Form("Plots/%s/tlpeaks_%scm.png",fname.Data(),tubes.Data()));
+	hnpeaks_2cm->SaveAs(Form("Plots/%s/hnpeaks_%scm.pdf",fname.Data(),tubes.Data()));
+	hncluster_2cm->SaveAs(Form("Plots/%s/hncluster_%scm.png",fname.Data(),tubes.Data()));
+	npeaks_clustser_2cm->SaveAs(Form("Plots/%s/nclusters_%scm.png",fname.Data(),tubes.Data()));
+	hpeaks_2cm->SaveAs(Form("Plots/%s/hpeaks_%scm.png",fname.Data(),tubes.Data()));
+	bsl_2cm->SaveAs(Form("Plots/%s/bsl_%scm.png",fname.Data(),tubes.Data()));
+	max_2cm->SaveAs(Form("Plots/%s/max_%scm.png",fname.Data(),tubes.Data()));
+	integ_2cm->SaveAs(Form("Plots/%s/integ_%scm.png",fname.Data(),tubes.Data()));
+	rms_2cm->SaveAs(Form("Plots/%s/rms_%scm.png",fname.Data(),tubes.Data()));
+	cluster_population_canvas_2cm->SaveAs(Form("Plots/%s/cluster_population_%scm.png",fname.Data(),tubes.Data()));
 	//min->SaveAs(Form("/lustrehome/bdanzi/offline_analysis/testbeam_analysis/Plots/%s/min_ch%i.pdf",fname.Data(),i));
-	hnelectron_2cm->SaveAs(Form("/lustrehome/bdanzi/TestBeam2022/analysistestbeam2022/analysis_2021/drifttubes_offline_analysis/testbeam_analysis/Plots/%s/hnelectron_%scm.png",fname.Data(),tubes.Data()));
+	hnelectron_2cm->SaveAs(Form("Plots/%s/hnelectron_%scm.png",fname.Data(),tubes.Data()));
       }
       number_of_trials = number_of_trials + 1;  
     }

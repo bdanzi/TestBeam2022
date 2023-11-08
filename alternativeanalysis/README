@@ -1,0 +1,19 @@
+SETUP 
+
+source /cvmfs/sft.cern.ch/lcg/views/LCG_98python3/x86_64-centos7-gcc10-opt/setup.sh
+
+STEP 1
+
+mkdir outfolder
+
+g++ -std=c++17 -I`root-config --incdir` -L`root-config --libdir` `root-config --libs` `root-config --cflags` read_binary_comp.C -o decode.exe
+
+./decode 4Nov2021_Run1_Cosmics_10K/testBeam_cosmics_2 outfolder
+
+STEP 2
+
+python pkl_conversion.py  --input outfolder/root_file
+
+STEP 3
+
+python landau_fit.py --input outfolder/pkl_file

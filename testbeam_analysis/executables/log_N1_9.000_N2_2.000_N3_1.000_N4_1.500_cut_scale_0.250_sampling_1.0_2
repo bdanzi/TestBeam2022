@@ -1,0 +1,26 @@
+Error in cling::AutoloadingVisitor::InsertIntoAutoloadingState:
+   Missing FileEntry for inc/./WaveData.h
+   requested to autoload type RunHeader
+Error in cling::AutoloadingVisitor::InsertIntoAutoloadingState:
+   Missing FileEntry for inc/./WaveData.h
+   requested to autoload type WaveData
+Warning in <TFile::Init>: no StreamerInfo found in /eos/home-b/bdanzi/TestBeam2023/testbeam_analysis/../dchdatareade_test_beam/WaveData/lib/WaveDataDict_rdict.pcm therefore preventing schema evolution when reading this file.
+Read file with name: ./run_2.root
+Run number: 2
+Read file from ith-event (MidEv): 0
+Read file to the n-th event (nEv): -1
+Read file with Sampling rate: 1
+Read file with N1 (cut on Rms): 9
+Read file with N2 (cut on amplitude): 2
+Read file with N3 (cut on First Derivative): 1
+Read file with N4 (cut on Second Derivative): 1.5
+Bsln Time Interval (in ns): 25
+Number of bins: 1024
+Read file with Scale cut (in ns): 0.25
+Basename run_2.root
+The output file is histosTB_run_2_N1_9.000_N2_2.000_N3_1.000_N4_1.500_cut_scale_0.250_sampling_1.0.root
+Total Number of entries: 100
+Gas mixture changed to 90/10 with Number of Cluster/cm (MIP) to be 12.0!
+Track Angle Changed to be 0.0!
+Event analyzed: #0Event analyzed: #1Event analyzed: #2Event analyzed: #3Event analyzed: #4Event analyzed: #5Event analyzed: #6Event analyzed: #7Event analyzed: #8Event analyzed: #9Event analyzed: #10Event analyzed: #11Event analyzed: #12Event analyzed: #13Event analyzed: #14Event analyzed: #15Event analyzed: #16Event analyzed: #17Event analyzed: #18Event analyzed: #19Event analyzed: #20Event analyzed: #21Event analyzed: #22Event analyzed: #23Event analyzed: #24Event analyzed: #25Event analyzed: #26Event analyzed: #27Event analyzed: #28Event analyzed: #29Event analyzed: #30Event analyzed: #31Event analyzed: #32Event analyzed: #33Event analyzed: #34Event analyzed: #35Event analyzed: #36Event analyzed: #37Event analyzed: #38Event analyzed: #39Event analyzed: #40Event analyzed: #41Event analyzed: #42Event analyzed: #43Event analyzed: #44Event analyzed: #45Event analyzed: #46Event analyzed: #47Event analyzed: #48Event analyzed: #49Event analyzed: #50Event analyzed: #51Event analyzed: #52Event analyzed: #53Event analyzed: #54Event analyzed: #55Event analyzed: #56Event analyzed: #57Event analyzed: #58Event analyzed: #59Event analyzed: #60Event analyzed: #61Event analyzed: #62Event analyzed: #63Event analyzed: #64Event analyzed: #65Event analyzed: #66Event analyzed: #67Event analyzed: #68Event analyzed: #69Event analyzed: #70Event analyzed: #71Event analyzed: #72Event analyzed: #73Event analyzed: #74Event analyzed: #75Event analyzed: #76Event analyzed: #77Event analyzed: #78Event analyzed: #79Event analyzed: #80Event analyzed: #81Event analyzed: #82Event analyzed: #83Event analyzed: #84Event analyzed: #85Event analyzed: #86Event analyzed: #87Event analyzed: #88Event analyzed: #89Event analyzed: #90Event analyzed: #91Event analyzed: #92Event analyzed: #93Event analyzed: #94Event analyzed: #95Event analyzed: #96Event analyzed: #97Event analyzed: #98Event analyzed: #99
+ WELL DONE YOU HAVE FINISHED! 

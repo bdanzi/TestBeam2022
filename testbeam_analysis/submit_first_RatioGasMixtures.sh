@@ -1,10 +1,13 @@
 #create sh script for histos root file creation
 path="/eos/user/b/bdanzi/TestBeam2023/testbeam_analysis/executables"
 pathf="/eos/user/b/bdanzi/TestBeam2023/testbeam_analysis"
+### TestBeam2023 ######
+runinputsevents_1_gsample=("2")
+
 #############################################################################################
 ############### Gas Gain Study without efficiency or Ratio plots ############################
 #runinputsevents_2_gsample=("40" "41" "42" "43" "54" "55" "56" "65" "69" "70" "71") # Study July 2022 Test Beam Scan in HV all gas mixtures and HV
-runinputsevents_2_gsample=("43")
+#runinputsevents_2_gsample=("43")
 #####################################################################################################################################
 ############################## HV Study with all Gas Mixtures at 180 GeV ############################################################
 #####################################################################################################################################
@@ -75,7 +78,7 @@ do
                 #for gsample in 1 2 0 # Scan HV
                 #for gsample in 1 0 2 # Scan Sampling Rate
                 #for gsample in 0 2 # Scan Angle
-                for gsample in 2 # Run 43
+                for gsample in 1 # Run 43
                     do
                         runinputs=()
                         if [ $gsample -eq 0 ]
@@ -116,7 +119,7 @@ do
                         echo 'eval `scramv1 runtime -sh`' >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
                         echo "cd ${pathf}/" >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
                         echo "source setDCDataReaderEnv.sh" >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
-                        echo "./read_data /eos/user/b/bdanzi/TestBeam2022/converted_data  $i 0 -1 $sampling $N_1 $N_2 $N_3 $N_4 $binTimeInterval $dim $cut_scale >&  ${path}/log_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i &" >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
+                        echo "./read_data .  $i 0 -1 $sampling $N_1 $N_2 $N_3 $N_4 $binTimeInterval $dim $cut_scale >&  ${path}/log_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i &" >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
                         chmod +x ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
                         echo "histosTB_run_${i}_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}.root ${N_1} ${N_2} ${N_3} ${N_4} ${cut_scale} ${sampling} histosTB_run_${i}.root 16 100000" >> ${pathf}/plots_oldTestBeam.txt
 

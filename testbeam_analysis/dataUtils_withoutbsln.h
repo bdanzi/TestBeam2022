@@ -22,13 +22,10 @@ static int skipLstBin[5] = {10,10,10,10,10};  //475 for El Cal   //50	dati proto
 // else if(isJune2023TestBeamFirstDRS){ 16 channels
 //static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022/
 //static float ChannelCellSize[16] = {1.0,1.0,1.0,1.0,1.0,1.0,1.5,1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0}; // Old test beam Nov 2022
-static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022                   
-static float ChannelCellSize[16] = {1.0,1.0,1.0,1.0,1.0,1.0,1.5,1.5,1.5,1.5,-1.0,1.0,-1.0,-1.0,-1.0,-1.0};
-
 // }
 // else if(isJune2023TestBeamSecondDRS){ 4 channels
-//static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022             
-//static float ChannelCellSize[16] = {-1.0,1.5,1.5,1.5,1.0,1.0,1.0,1.0,1.5,1.5,1.5,1.5,-1.0,-1.0,-1.0,-1.0}; 
+static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022             
+static float ChannelCellSize[16] = {-1.0,1.5,1.5,1.5,1.0,1.0,1.0,1.0,1.5,1.5,1.5,1.5,-1.0,-1.0,-1.0,-1.0}; 
 
 // static int ChannelDiameter[16] = {-1,20,20,20,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}; // Old test beam Nov 2022
 // static float ChannelCellSize[16] = {-1.0,1.0,1.5,1.5,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0}; // Old test beam Nov 2022
@@ -109,12 +106,12 @@ wave() : bsln(0.0), rms(0.0), integ(0.0), max(-9999), integInR(0.0), maxInR(-999
   
   int nPt() { return Y.size(); }
   int nPtInR() { return (Y.size()-(skipFstBin[isl]+skipLstBin[isl])); }
-  float nInteg() {return (integ-bsln*((float)nPt()));}//funzione float che deve ritornare l'integrale  a cui togliamo la baseline. ////
+  float nInteg() {return integ;}//funzione float che deve ritornare l'integrale  a cui togliamo la baseline. ////
   float nIntegInR() { return (integInR); }//funzione float che deve ritornare l'integrale  a cui togliamo la baseline. ////
-  float nMax() { return (max-bsln); }
-  float nMaxInR() { return (maxInR-bsln); }
-  float nMin() {return (min-bsln);}
-  float nMinInR(){return (minInR-bsln);}
+  float nMax() { return (max); }
+  float nMaxInR() { return (maxInR); }
+  float nMin() {return (min);}
+  float nMinInR(){return (minInR);}
   
   float n1Integ() { return (integ-norm1(0.0,(float)(nPt()-1))); }//funzione float che deve ritornare l'integrale  a cui togliamo la baseline. ////
   float n1IntegInR() { return (integInR-norm1((float)skipFstBin[isl],(float)(nPt()-1-skipLstBin[isl]))); }//funzione float che deve ritornare l'integrale  a cui togliamo la baseline. ////
@@ -125,7 +122,7 @@ wave() : bsln(0.0), rms(0.0), integ(0.0), max(-9999), integInR(0.0), maxInR(-999
   float norm1(float x1, float x2) { return (RegA()*(x2-x1)+0.5*RegB()*(x2*x2-x1*x1)); }
   
   float n1At(int i) { return (Y[i]-(RegA()+RegB()*((float)i))); }
-  float nAt(int i) { return (Y[i]-bsln); }
+  float nAt(int i) { return (Y[i]); }
   
   float nnAt(int i, float cut=0.05) { //0.05 proto_cosmic
     if (nMaxInR()>cut) { return nAt(i); }
@@ -180,7 +177,7 @@ wave() : bsln(0.0), rms(0.0), integ(0.0), max(-9999), integInR(0.0), maxInR(-999
     for (int ipt=skipFstBin[isl]; ipt<fbin_rms+skipFstBin[isl]; ++ipt) {
       tmpval=((1.0/65536.0)*arr[ipt]-0.5);//Volt from DRS
       tmpval*=-1;//Volt from DRS
-      rms+=(tmpval - bsln)*(tmpval - bsln);
+      rms+=(tmpval )*(tmpval );
     }
     rms = sqrt((rms)/(fbin_rms)); // Volt / number of bins
     //std::cout << "Rms first function: " << rms <<"\n";
@@ -188,7 +185,7 @@ wave() : bsln(0.0), rms(0.0), integ(0.0), max(-9999), integInR(0.0), maxInR(-999
       tmpval=((1.0/65536.0)*arr[ipt]-0.5);
       tmpval*=-1;
       //std::cout << "i-th point "<<ipt<< "tmpval: " << tmpval <<"\n";
-      Y.push_back(tmpval-bsln);
+      Y.push_back(tmpval);
       integ+=(Y.back());   // Volt        //l'integrale è in sostanza una somma, integ � inizializzata a zero e poi viene incrementata.
       //Rms somma Y nei primi 100 bin
       // if (ipt==fbin_rms[isl]-1) {
@@ -249,7 +246,7 @@ wave() : bsln(0.0), rms(0.0), integ(0.0), max(-9999), integInR(0.0), maxInR(-999
     for (int ipt=skipFstBin[isl]; ipt<fbin_rms+skipFstBin[isl]; ++ipt) {
       tmpval=((1.0/65536.0)*arr[ipt]-0.5);
       tmpval*=-1;
-      rms+=(tmpval - bsln)*(tmpval - bsln);
+      rms+=(tmpval )*(tmpval );
     }
     rms = sqrt((rms)/(fbin_rms));
     //std::cout << "Rms second function: " << rms <<"\n";

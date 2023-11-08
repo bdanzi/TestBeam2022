@@ -53,6 +53,10 @@ class read_data {
   double _tmax;
   bool isNov2021TestBeam;
   bool isJuly2022TestBeam;
+  bool isJune2023TestBeamFirstDRS; // 16 channels
+  bool isJune2023TestBeamSecondDRS;
+  bool isJune2023TestBeamThirdDRS;
+  bool isJune2023TestBeamFourthDRS;
   int dim;
   int nMaxCh;
   int run;

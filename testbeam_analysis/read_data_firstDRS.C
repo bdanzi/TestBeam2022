@@ -86,8 +86,8 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
 {
   isNov2021TestBeam = false;
   isJuly2022TestBeam = false;
-  isJune2023TestBeamFirstDRS = true; // 16 channels
-  isJune2023TestBeamSecondDRS = false;
+  isJune2023TestBeamFirstDRS = false; // 16 channels
+  isJune2023TestBeamSecondDRS = true;
   isJune2023TestBeamThirdDRS = false;
   isJune2023TestBeamFourthDRS = false;
   dim = _dim; // to be changed
@@ -102,7 +102,7 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
     nMaxCh = 15;
   }
   else if(isJune2023TestBeamFirstDRS){
-    nMaxCh = 8;
+    nMaxCh = 7;
   }
   else if(isJune2023TestBeamSecondDRS){
     nMaxCh = 11;
@@ -192,8 +192,7 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
     trigCh.push_back(15);
   }
   else if(isJune2023TestBeamFirstDRS){
-	   trigCh.push_back(14);
-	   trigCh.push_back(15);
+	   trigCh.push_back(16);
   }
   else if(isJune2023TestBeamSecondDRS){
     trigCh.push_back(0);
@@ -486,14 +485,14 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
     // int Channel_1p5cm[] = {0,4,7,11}; // New Test Beam
     // }
     // else if(isJune2023TestBeamFirstDRS) // 16 channels
-    int Channel_1cm[] = {0,1,2,3,4,5}; // July 2023 Test Beam
-     int Channel_2cm[] = {20}; // NO in July 2022 Test Beam
-     int Channel_1p5cm[] = {6,7,8,9}; // New Test Beam 
+    // int Channel_1cm[] = {0,1,2,3,4,5,7}; // July 2023 Test Beam
+    // int Channel_2cm[] = {16}; // NO in July 2022 Test Beam
+    // int Channel_1p5cm[] = {6}; // New Test Beam 
 	//}
 	// // else if(isJune2023TestBeamSecondDRS)// 4 channels x 3
-     //       int Channel_1cm[] = {4,5,6,7}; // July 2023 Test Beam
-     //int Channel_2cm[] = {15}; // NO in 2023 Test Beam
-     //int Channel_1p5cm[] = {1,2,3,8,9,10,11}; // 2023 Test Beam 
+     int Channel_1cm[] = {4,5,6,7}; // July 2023 Test Beam
+     int Channel_2cm[] = {15}; // NO in 2023 Test Beam
+     int Channel_1p5cm[] = {1,2,3,8,9,10,11}; // 2023 Test Beam 
 
     int Channel_1cm_size = sizeof Channel_1cm / sizeof Channel_1cm[0];
     int Channel_2cm_size = sizeof Channel_2cm / sizeof Channel_2cm[0];
@@ -506,17 +505,17 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
      int top_second_driftTubes_line[] = {13,14}; // 2021 Nov Test Beam
      int top_third_driftTubes_line[] = {10,11,12}; // 2021 Nov Test Beam*/
     // }
-    // else if(isJune2023TestBeamFirstDRS){
-    int top_first_driftTubes_line[] = {0,1,2,3,4,5}; // 2023 July Test Beam all 1.0 cm upstream downstream
-    int top_second_driftTubes_line[] = {6,7,8,9}; // 2023 July Test Beam 1.5 cm
-    int top_third_driftTubes_line[] = {20}; // 2022 July Test Beam 1.0 cm
-    int top_fourth_driftTubes_line[] = {20};
+    // else if(isJuly2023TestBeamFirstDRS){
+    /*int top_first_driftTubes_line[] = {0,1}; // 2023 July Test Beam all 1.0 cm upstream downstream
+    int top_second_driftTubes_line[] = {16}; // 2023 July Test Beam 1.5 cm
+    int top_third_driftTubes_line[] = {6}; // 2022 July Test Beam 1.0 cm
+    int top_fourth_driftTubes_line[] = {2,3,4,5,7};*/
     // }
-	// else if(isJune2023TestBeamSecondDRS){
-    /*int top_first_driftTubes_line[] = {8,9,10,11}; // 2023 July Test Beam all 1.0 cm upstream downstream
+	// else if(isJuly2023TestBeamSecondDRS){
+    int top_first_driftTubes_line[] = {8,9,10,11}; // 2023 July Test Beam all 1.0 cm upstream downstream
     int top_second_driftTubes_line[] = {4,5,6,7}; // 2023 July Test Beam 1.5 cm
     int top_third_driftTubes_line[] = {1,2,3}; // 2022 July Test Beam 1.0 cm
-    int top_fourth_driftTubes_line[] = {50}; */
+      int top_fourth_driftTubes_line[] = {50};
       
     int top_first_driftTubes_line_size = sizeof top_first_driftTubes_line / sizeof top_first_driftTubes_line[0];
     int top_second_driftTubes_line_size = sizeof top_second_driftTubes_line / sizeof top_second_driftTubes_line[0];
@@ -987,8 +986,8 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
 	  //static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022
 	  //static float ChannelCellSize[16] = {1.0,1.0,1.0,1.0,1.0,1.0,1.5,1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0};
 	  // Second DRS 2023 4 DRS channels
-	   static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022 
-	   static float ChannelCellSize[16] = {1.0,1.0,1.0,1.0,1.0,1.0,1.5,1.5,1.5,1.5,-1.0,1.0,-1.0,-1.0,-1.0,-1.0}; 
+	  	  static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022                
+      static float ChannelCellSize[16] = {-1.0,1.5,1.5,1.5,1.0,1.0,1.0,1.0,1.5,1.5,1.5,1.5,-1.0,-1.0,-1.0,-1.0}; 
 	  //else if(!uniqueCanvas && (X[pkPos[NPeak-1]< 20 || X[pkPos[NPeak-1]> 250 || X[pkPos[0]>350)){
 	  tmpCvsignal_1.push_back( new TCanvas(Form("CvSignal_1_Ch%d_ev%d",channel,jentry),Form("tmpSignal_1_Ch%d_ev%d",channel,jentry)) );
 	  tmpCvsignal_1.back()->cd();

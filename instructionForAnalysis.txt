@@ -1,6 +1,6 @@
 # Note to run the analysis in interactive mode
 
-Brunella D'Anzi 9 July 2022
+Brunella D'Anzi 22 June 2023
 
 First you should have ROOT files already converted!! Go to instructionsForConversion.txt
 ________________________________________________________________________________________________________
@@ -19,7 +19,7 @@ make
 cmsrel CMSSW_10_6_22
 cd CMSSW_10_6_22/src
 cmsenv
-NOTE on cmsenv command: IF it doens't work, on lxplus do the following command: cmsrel CMSSW_10_6_22 and go to src subdirectory and do cmsenv again
+NOTE on cmsenv command: IF it doens't work on your local farm, on lxplus do the following command: cmsrel CMSSW_10_6_22 and go to src subdirectory and do cmsenv again
 cd testbeam_analysis
 source setDCDataReaderEnv.sh
 bash compile.sh
@@ -35,4 +35,6 @@ where in the last code line:
 - 1.2 is the sampling rate
 
 - 4, 0, 1.0, 0.5 are the cuts on the signal amplitude, first and second derivatives before starting the search for electron peaks (see FindPeak-algo.C))
-bash submit_second_RatioGasMixtures.sh is (This command is used to produce the correspoding plots, please change the path to your favourite directory to store them!!)
+
+
+bash submit_second_RatioGasMixtures.sh (This command is used to produce the correspoding plots, please change the path to your favourite directory to store them!!)

@@ -440,7 +440,7 @@ namespace {
     };
     static const char* includePaths[] = {
 "/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.14.09-pafccj6/include",
-"/eos/home-b/bdanzi/TestBeam2023/ConversionCode/WaveData/",
+"/eos/home-b/bdanzi/TestBeam2023/ConversionCodeThreeDRS4Channels/WaveData/",
 0
     };
     static const char* fwdDeclCode = R"DICTFWDDCLS(

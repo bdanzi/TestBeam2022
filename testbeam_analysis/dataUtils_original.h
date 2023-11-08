@@ -22,13 +22,10 @@ static int skipLstBin[5] = {10,10,10,10,10};  //475 for El Cal   //50	dati proto
 // else if(isJune2023TestBeamFirstDRS){ 16 channels
 //static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022/
 //static float ChannelCellSize[16] = {1.0,1.0,1.0,1.0,1.0,1.0,1.5,1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0}; // Old test beam Nov 2022
-static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022                   
-static float ChannelCellSize[16] = {1.0,1.0,1.0,1.0,1.0,1.0,1.5,1.5,1.5,1.5,-1.0,1.0,-1.0,-1.0,-1.0,-1.0};
-
 // }
 // else if(isJune2023TestBeamSecondDRS){ 4 channels
-//static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022             
-//static float ChannelCellSize[16] = {-1.0,1.5,1.5,1.5,1.0,1.0,1.0,1.0,1.5,1.5,1.5,1.5,-1.0,-1.0,-1.0,-1.0}; 
+static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022             
+static float ChannelCellSize[16] = {-1.0,1.5,1.5,1.5,1.0,1.0,1.0,1.0,1.5,1.5,1.5,1.5,-1.0,-1.0,-1.0,-1.0}; 
 
 // static int ChannelDiameter[16] = {-1,20,20,20,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}; // Old test beam Nov 2022
 // static float ChannelCellSize[16] = {-1.0,1.0,1.5,1.5,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0}; // Old test beam Nov 2022
