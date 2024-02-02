@@ -16,7 +16,7 @@ import argparse
 parser = argparse.ArgumentParser(description='Process integral charge data.')
 
 # Add an argument for cut percentage
-parser.add_argument('--cut_percentage', type=float, default=0.70,
+parser.add_argument('--cut_percentage', type=float, default=0.70, # cut on dE/dx can be changed from here
                     help='Percentage of events to keep for integral charge distribution')
 parser.add_argument('--filename', type=str, default="output.txt",
                     help='Filename from which take data')
