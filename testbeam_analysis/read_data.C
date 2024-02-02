@@ -8,9 +8,6 @@
 #include "read_data.h"
 #include "funcUtils.h"
 #include "FindPeak-algo.C"
-//#include "FindPeak-algo_TA_old.C"
-//#include "FindPeak-algo_TAlgo.C"
-//#include "FindPeak-algo_TAlgo_bck.C"
 #include "Clusterization.C"
 #include "TPaveText.h"
 #include <TH2.h>
@@ -22,20 +19,17 @@
 #include<TVector.h>
 #include "TF1.h"
 #include "TDirectory.h"    
-//#include "TVirtualFFT.h"
 
 #include "TMath.h"
 #include "TFitResult.h"
 #include "TMinuit.h"
 #include "TGraphErrors.h"
-//#include <map>
 #include <fstream>
 #include <string>
 #include "TSpectrum.h"
 #include "TAxis.h"
 #include "TVirtualFitter.h"
 #include "TMarker.h"
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 														Define Data Containers															////////////
@@ -51,12 +45,9 @@ std::vector<TGraph *> tmpFFTphi;      //grafico per la fase
 std::vector<TCanvas *> tmpCvFFT;      //canvas per la fft
 std::vector<TGraph *> tmpFltWaves;    //grafici per funzioni d'onda filtrate (primo filtro:retta lineare di taglio)
 std::vector<TCanvas *> tmpCvFlt;
-//canvas forme d'onda filtrate(primo filtro:retta lineare di taglio)
 std::vector<TH1F *>  tmpFFTAmplPeak;  //grafico per lo spettro in frequenza dell'ampiezza con filtro di smooth
 std::vector<TCanvas *> tmpCvPeak_1;
 std::vector<TH1F *>  tmpFFTAmplPeak_1;  //grafico per lo spettro in frequenza dell'ampiezza con filtro di smooth (0-50MHz)
-//std::vector<TGraph *> tmpnoise_1;   //grafici per il noise individuato dal filtro RC.(singolo filtro)
-//std::vector<TCanvas *>tmpCvnoise_1; //canvas per il noise individuato dal filtro RC(singolo filtro).
 std::vector<TGraph *> tmpflt_batt;    //grafici per il segnale con noise di battimento+fitt
 std::vector<TCanvas *> tmpCvflt_batt; //canvas per il segnale con noise di battimento+fitt
 std::vector<TCanvas *> tmpCvPeak;
@@ -73,7 +64,6 @@ std::vector< TGraphErrors *> tmpNegBatt; //grafico per le wave di battimento neg
 std::vector<TCanvas *> tmpCvNegBatt;
 std::vector<TCanvas *> tmpCvMidNotch;
 std::vector<TGraph *> tmpMid_Notch;
-std::vector<float> N_signalevents;
 std::vector<float>::iterator it; 
 
 
@@ -85,8 +75,8 @@ std::vector<float>::iterator it;
 void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,  Float_t _gsample, Float_t N_1, Float_t N_2, Float_t N_3, Float_t N_4, Float_t bslnTimeInterval, Int_t _dim, Float_t _scale_cut)
 {
   isNov2021TestBeam = false;
-  isJuly2022TestBeam = false;
-  isJune2023TestBeamFirstDRS = true; // 16 channels
+  isJuly2022TestBeam = true;
+  isJune2023TestBeamFirstDRS = false; // 16 channels
   isJune2023TestBeamSecondDRS = false;
   isJune2023TestBeamThirdDRS = false;
   isJune2023TestBeamFourthDRS = false;
@@ -160,12 +150,6 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
   
   /***********Directory creation***********/
   theFile->cd("/");
-  TDirectory *waveDir = theFile->mkdir("Waves");
-  theFile->cd("/");
-  TDirectory *waveFFTDir = theFile->mkdir("WavesFFT");
-  theFile->cd("/");
-  TDirectory *waveFltDir = theFile->mkdir("WavesFlt");//reham 
-  theFile->cd("/");
   TDirectory *signal = theFile->mkdir("signal_Afterflt"); //directory per la waveform di segnale dopo tutti i filtri
   
  
@@ -210,7 +194,6 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
 #endif
   
   
-  int nSig=3; // numero di sigma, not used
   std::map<int, int> nSelEv;
   nSelEv.clear();
   
@@ -222,7 +205,6 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
   
   Int_t firstEv=0;                              //inizializzo il primo evento a zero
   Int_t lastEv=nentries;                        //l'ultimo evento coincide con le nentries, che si prende con la funzione get...sopra
-  //Int_t MidEv;
   if (eventn>=0&&eventn<lastEv) {
     firstEv=eventn;
     lastEv=eventn+1;
@@ -260,6 +242,8 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
    string Runs_alpha_45[] = {"histosTB_run_94.root", "histosTB_run_89.root", "histosTB_run_93.root"}; // 2021 Nov Test Beam
    string Runs_alpha_60[] = {"histosTB_run_91.root", "histosTB_run_127.root", "histosTB_run_90.root" ,"histosTB_run_92.root"}; // 2021 Nov Test Beam
   // }*/
+
+
   ///////////////////////////////////
   //   else if(isJuly2022TestBeam){//
   ///////////////////////////////////
@@ -284,16 +268,14 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
   ////////////////////////////////////////////////////////////////////////////////////////
   // Scan Study for 80_20, 85/15, and 90/10 Gas Mixture Superimposed 45 Angle Track: HV 180 GeV//
   //////////////////////////////////////////////////////////////////////////////////////
- //  string Runs_85_15[] = {"histosTB_run_65.root","histosTB_run_71.root","histosTB_run_69.root","histosTB_run_70.root"};
-  string Runs_85_15[] = {"histosTB_run_0.root"};
+   string Runs_85_15[] = {"histosTB_run_65.root","histosTB_run_71.root","histosTB_run_69.root","histosTB_run_70.root"};
+  //string Runs_85_15[] = {"histosTB_run_0.root"};
  // string Runs_80_20[] = {"histosTB_run_44.root","histosTB_run_45.root","histosTB_run_41.root","histosTB_run_46.root"}; //July Angle scan GSa 2
-// string Runs_80_20[] = {"histosTB_run_40.root","histosTB_run_41.root","histosTB_run_42.root","histosTB_run_43.root"}; //July HV scan GSa 2
-// string Runs_80_20[] = {"histosTB_run_26.root","histosTB_run_23.root","histosTB_run_24.root","histosTB_run_25.root"}; //July HV scan GSa 1
- string Runs_80_20[] = {"histosTB_run_31.root","histosTB_run_33.root","histosTB_run_32.root"}; //July Angle scan GSa 1
- string Runs_90_10[] = {"histosTB_run_2.root"};
- //  string Runs_90_10[] = {"histosTB_run_0.root"};
-  
-//  string Runs_90_10[] = {"histosTB_run_54.root","histosTB_run_53.root","histosTB_run_55.root","histosTB_run_56.root"};
+ string Runs_80_20[] = {"histosTB_run_40.root","histosTB_run_41.root","histosTB_run_42.root","histosTB_run_43.root"}; //July HV scan GSa 2
+ // string Runs_80_20[] = {"histosTB_run_26.root","histosTB_run_23.root","histosTB_run_24.root","histosTB_run_25.root"}; //July HV scan GSa 1
+ // string Runs_80_20[] = {"histosTB_run_31.root","histosTB_run_33.root","histosTB_run_32.root"}; //July Angle scan GSa 1
+ string Runs_90_10[] = {"histosTB_run_54.root","histosTB_run_53.root","histosTB_run_55.root","histosTB_run_56.root"};
+ 
  string Runs_alpha_0[] = {"histosTB_run_44.root","histosTB_run_2.root"}; // 2022 July Test Beam
   string Runs_alpha_15[] = {"histosTB_run_0.root"}; // We didn't take data at 15°, 2022 July Test Beam
   string Runs_alpha_30[] = { "histosTB_run_31.root", "histosTB_run_45.root"}; // 2022 July Test Beam
@@ -418,21 +400,9 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
   
   for (Long64_t jentry=firstEv; jentry<lastEv;jentry++) {
     
-  //  if (jentry >1) break;
-    N_signalevents.assign(nMaxCh+1,0.0);
-    
-    
-    
-    //cout << jentry << "\n" << endl;
-    //cout << "Initial channel hits: \n"; 
-    // for (int i = 0; i < N_signalevents.size(); i++) 
-    //   cout << "Ch: " << i << " Hits: " << N_signalevents[i] << "\n"; 
-    // cout << "\n";
-    
-    
+
     Long64_t ientry = LoadTree(jentry); //The function finds the corresponding Tree and returns the entry number in this tree.  
     if (ientry < 0) break;
-    //nb = fChain->GetEntry(jentry);   nbytes += nb;
     fChain->GetEntry(jentry);
     WvCont Waves;
     WvCont FltWaves;
@@ -481,14 +451,14 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
      int Channel_1p5cm[] = {0}; // NO Nov 2021 Test Beam*/
     // }
     // else if(isJuly2022TestBeam){
-    // int Channel_1cm[] = {1,2,3,5,6,8,9,10}; // July 2022 Test Beam
-    // int Channel_2cm[] = {15}; // NO in July 2022 Test Beam
-    // int Channel_1p5cm[] = {0,4,7,11}; // New Test Beam
+    int Channel_1cm[] = {1,2,3,5,6,8,9,10}; // July 2022 Test Beam
+    int Channel_2cm[] = {15}; // NO in July 2022 Test Beam
+    int Channel_1p5cm[] = {0,4,7,11}; // New Test Beam
     // }
     // else if(isJune2023TestBeamFirstDRS) // 16 channels
-    int Channel_1cm[] = {0,1,2,3,4,5}; // July 2023 Test Beam
-     int Channel_2cm[] = {20}; // NO in July 2022 Test Beam
-     int Channel_1p5cm[] = {6,7,8,9}; // New Test Beam 
+    // int Channel_1cm[] = {0,1,2,3,4,5}; // July 2023 Test Beam
+    //  int Channel_2cm[] = {20}; // NO in July 2022 Test Beam
+    //  int Channel_1p5cm[] = {6,7,8,9}; // New Test Beam 
 	//}
 	// // else if(isJune2023TestBeamSecondDRS)// 4 channels x 3
      //       int Channel_1cm[] = {4,5,6,7}; // July 2023 Test Beam
@@ -506,16 +476,22 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
      int top_second_driftTubes_line[] = {13,14}; // 2021 Nov Test Beam
      int top_third_driftTubes_line[] = {10,11,12}; // 2021 Nov Test Beam*/
     // }
-    // else if(isJune2023TestBeamFirstDRS){
-    int top_first_driftTubes_line[] = {0,1,2,3,4,5}; // 2023 July Test Beam all 1.0 cm upstream downstream
-    int top_second_driftTubes_line[] = {6,7,8,9}; // 2023 July Test Beam 1.5 cm
-    int top_third_driftTubes_line[] = {20}; // 2022 July Test Beam 1.0 cm
+	// else if(isJuly2022TestBeam){ // TO be CHECKED
+   	int top_first_driftTubes_line[] = {4,5,6,7,8,9}; // 2021 Nov Test Beam
+    int top_second_driftTubes_line[] = {13,14}; // 2021 Nov Test Beam
+    int top_third_driftTubes_line[] = {10,11,12}; // 2021 Nov Test Beam*/
     int top_fourth_driftTubes_line[] = {20};
+	// }
+    // else if(isJune2023TestBeamFirstDRS){
+    // int top_first_driftTubes_line[] = {0,1,2,3,4,5}; // 2023 July Test Beam all 1.0 cm upstream downstream
+    // int top_second_driftTubes_line[] = {6,7,8,9}; // 2023 July Test Beam 1.5 cm
+    // int top_third_driftTubes_line[] = {20}; // 2022 July Test Beam 1.0 cm
+    // int top_fourth_driftTubes_line[] = {20};
     // }
 	// else if(isJune2023TestBeamSecondDRS){
     /*int top_first_driftTubes_line[] = {8,9,10,11}; // 2023 July Test Beam all 1.0 cm upstream downstream
     int top_second_driftTubes_line[] = {4,5,6,7}; // 2023 July Test Beam 1.5 cm
-    int top_third_driftTubes_line[] = {1,2,3}; // 2022 July Test Beam 1.0 cm
+    int top_third_driftTubes_line[] = {1,2,3}; // 2023 July Test Beam 1.0 cm
     int top_fourth_driftTubes_line[] = {50}; */
       
     int top_first_driftTubes_line_size = sizeof top_first_driftTubes_line / sizeof top_first_driftTubes_line[0];
@@ -702,76 +678,7 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
 	  theFile->cd("/");
 	}
 	//cout << "Channel is = " << channel << endl;
-	Waves[channel].fillWave(point.second,dim,_gsample, bslnTimeInterval);
-	/****-------------------------------TRASFORMATA DI FOURIER---------------------------------*****/
-	
-	//FFT(Waves[channel],Wffts[channel]);//trasformata di Fourier not used!!!
-	//double *realFltFFT = new double[Waves[channel].nPt()];
-	//double *imgFltFFT = new double[Waves[channel].nPt()];
-	//
-	//filterWaveBsl(Wffts[channel],realFltFFT,imgFltFFT);//Baseline filter.  not used!                                   ///
-	//InverseFFT(realFltFFT,imgFltFFT,Waves[channel].nPt(),FltWaves[channel]);//trasformata inversa
-	//for(int i=0; i<Waves[channel].nPt();i++){
-	//  Waves[channel].Y[i]=Waves[channel].Y[i]-Waves[channel].bsln;
-	//}
-	//Waves[channel].fillWave((Waves[channel].Y),Waves[channel].nPt(),_gsample);
-	bool saveEvents = false; // waveFltDir is not used!!
-	if (saveEvents) {
-	  waveFltDir->cd();
-	  tmpCvFlt.push_back( new TCanvas(Form("CvFlt-Ch%d_ev%d",channel,jentry),Form("tmpFltWave-Ch%d_ev%d",channel,jentry)) );
-	  tmpCvFlt.back()->cd();
-	  tmpFltWaves.push_back( new TGraph ( dim, &X[0], &FltWaves[channel].Y[0]) );
-	  tmpFltWaves.back()->GetXaxis()->SetTitle("time [ns]");
-	  tmpFltWaves.back()->SetTitle(Form("tmpFltWave-Ch%d_ev%d",channel,jentry));
-	  tmpFltWaves.back()->GetYaxis()->SetTitleOffset(1.4);
-	  tmpFltWaves.back()->GetYaxis()->SetTitle("Volt");
-	  tmpFltWaves.back()->GetYaxis()->SetRangeUser(-0.1,0.4);
-	  tmpFltWaves.back()->Draw("AP");
-	  tmpCvFlt.back()->Write();
-	  theFile->cd("/");
-	  
-	} 
-	bool saveWave=false; //non salvo, quindi non vediamo l'out di questo pezzo di codice.
-	saveEvents=false;
-	
-	if (saveWave) {
-	  waveDir->cd(); // waveDir is not used!!
-	  tmpCv.push_back(new TCanvas(Form("Cv-Ch%d_ev%d",channel,jentry),Form("tmpWave-Ch%d_ev%d",channel,jentry)));
-	  tmpCv.back()->cd();
-	  tmpWaves.push_back(new TGraph (dim, &X[0], &Waves[channel].Y[0]));
-	  tmpWaves.back()->GetXaxis()->SetTitle("time [ns]");
-	  tmpWaves.back()->SetTitle(Form("tmpWave-Ch%d_ev%d",channel,jentry));
-	  tmpWaves.back()->GetYaxis()->SetTitleOffset(1.4);
-	  tmpWaves.back()->GetYaxis()->SetTitle("Voltage [V]");
-	  tmpWaves.back()->SetMarkerSize(1);
-	  tmpWaves.back()->SetMarkerStyle(2);
-	  tmpWaves.back()->Draw("APL");
-	  tmpCv.back()->Write();
-	  theFile->cd("/");
-	}
-	
-	if (saveEvents) {
-	  waveDir->cd(); // waveDir is not used!!
-	  if(firstEntering){
-	    tmpCv.push_back( new TCanvas(Form("Cv-ev%d",jentry),Form("tmpWave-ev%d",jentry)) );
-	    tmpCv.back()->Divide(3,4);
-	    firstEntering=false;
-	  }
-	  tmpCv.back()->cd(channel-nTriggerChannels+1);
-	  //cout<< "nTriggerchannels"<<nTriggerChannels<<" event "<<jentry<<endl;
-	  //cout<< "channel"<<channel<<" event "<<jentry<<endl;
-	  tmpWaves.push_back( new TGraph ( dim, &X[0], &Waves[channel].Y[0]) );
-	  tmpWaves.back()->GetXaxis()->SetTitle("time [ns]");
-	  tmpWaves.back()->SetTitle(Form("tmpWave-Ch%d_ev%d",channel,jentry));
-	  tmpWaves.back()->GetYaxis()->SetTitleOffset(1.4);
-	  tmpWaves.back()->GetYaxis()->SetTitle("Voltage [V]");
-	  tmpWaves.back()->Draw("AP");
-	  counting++;
-	  if(counting==(nMaxCh-nTriggerChannels+1)){
-	    tmpCv.back()->Write();
-	  }
-	  theFile->cd("/");
-	}
+	Waves[channel].fillWave(point.second,dim,_gsample, bslnTimeInterval);	
 	
 	
       } //if !nottrigger
@@ -803,45 +710,21 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
       pair<int,int> Full;
       NPeak=0;
       
-      /* Adding SG filter smoothing
-	 int m,k;
-	 m=13; //number of bin interested by the SG smoothing 
-	 k=3; //order of the polinomial used
-	 std::vector<float> tmpWSG_signal_23=smoothSG(Waves[channel].Y,m,k);
-	 tmpWSG_signal[channel].fillWave(tmpWSG_signal_23);
-      */
-      
-    //   float scaleInt=1.0;
-      
-      //if(!isTrg && Waves[channel].max>10*(Waves[channel].rms) && channel<=nMaxCh && ((channel<=9 && counter_1cm>=4) || (channel>=10 && counter_2cm>=3))&&((wave)Waves[channel]).nnIntegInR()>0.1){ //nPtInR == Y.size - first,lastBin; search peak when max amplitude > 5 mV
-      //if(!isTrg && Waves[channel].max>10 * Waves[channel].rms){ //nPtInR == Y.size - first,lastBin; search peak when max amplitude > 5 mV
-      //if(!isTrg && Waves[channel].max> 10 * Waves[channel].rms ){
       //cout << "Waveform max:" << Waves[channel].max << endl; 
 		//cout << "Waveform rms x 10:" << 10 * Waves[channel].rms << endl; 
       //if(!isTrg && Waves[channel].max > 0.05 && ((isChannel_1cm && Waves[channel].charge_integInR > 20 && Waves[channel].charge_integInR < 160) || ((isChannel_2cm || isChannel_1p5cm) && Waves[channel].charge_integInR > 60 && Waves[channel].charge_integInR < 200)) && (counter_top_first_driftTubes_line_size>=2 || counter_top_third_driftTubes_line_size>=2 || counter_top_second_driftTubes_line_size>=2)){  // we are dealing with Volts , charge in pC
       //    if(!isTrg && Waves[channel].max > 0.05 && ((isChannel_1cm && Waves[channel].charge_integInR > 20 ) || ((isChannel_1p5cm) && Waves[channel].charge_integInR > 30) || (isChannel_2cm && Waves[channel].charge_integInR > 45 )) && (counter_top_first_driftTubes_line_size>=2 || counter_top_third_driftTubes_line_size>=2 || counter_top_second_driftTubes_line_size>=2)){  // we are dealing with Volts , charge in pC
-	if(!isTrg && ((isChannel_1cm  ) || ((isChannel_1p5cm)) || (isChannel_2cm )) && channel<=nMaxCh && Waves[channel].max > 0.005 && ((isChannel_1cm && Waves[channel].charge_integInR > 8 ) || (isChannel_1p5cm && Waves[channel].charge_integInR > 12 ))){
+	if(!isTrg && ((isChannel_1cm  ) || ((isChannel_1p5cm)) || (isChannel_2cm )) && channel<=nMaxCh && Waves[channel].maxInR > 0.02 && Waves[channel].min > -0.005 && ((isChannel_1cm && Waves[channel].charge_integInR > 60 ) || (isChannel_1p5cm && Waves[channel].charge_integInR > 12 ))){
 	//   if(!isTrg && Waves[channel].max > 10*Waves[channel].rms && (counter_top_first_driftTubes_line_size>=2 || counter_top_third_driftTubes_line_size>=2 || counter_top_second_driftTubes_line_size>=2)){  // we are dealing with Volts , charge in pC
 
-	N_signalevents[channel]= 1.0;
-	//cout << channel << endl; 
-	//cout <<"\n";  
-	((hstPerCh*)HstPerCh[channel])->hNeventSignals->Fill(1.0);
-	
-//	NPeak = FindPeaks(jentry,channel,((wave)Waves[channel]).nPt(),&((wave)Waves[channel]).Y[0],((wave)Waves[channel]).rms,pkPos,pkHgt, isChannel_1cm, isChannel_2cm, isChannel_1p5cm);
-
 	NPeak = FindPeaks(jentry,skipFstBin[isl],channel,((wave)Waves[channel]).nPt(),&((wave)Waves[channel]).Y[0],((wave)Waves[channel]).rms,&((wave)Waves[channel]).deriv[0],&((wave)Waves[channel]).sderiv[0],pkPos,pkHgt, timeRes, N_1, N_2, N_3, N_4, bslnTimeInterval, isChannel_1cm, isChannel_2cm, isChannel_1p5cm);
-	//npt, Float_t *amplitude, Float_t sig, Int_t nrise,Int_t checkUpTo, Int_t *pkPos, Float_t *pkHgt) {
-	//cout<<"rms "<<((wave)Waves[channel]).rms<<endl;
-	//0.625*rms= 2 sigma
-	//cout <<"Is signal"<<endl;
-	//cout <<"NPeak "<<NPeak <<endl;
 	
 	NPeak_clust = ClusterizationFindPeaks(cut_cluster_ns,nElectrons_per_cluster,jentry,skipFstBin[isl],channel,((wave)Waves[channel]).nPt(),((wave)Waves[channel]).rms,pkPos_clust,pkHgt_clust,pkPos,pkHgt,NPeak,timeRes, isChannel_1cm, isChannel_2cm, isChannel_1p5cm, scale_cut, isRuns_90_10, isRuns_85_15, isRuns_80_20);
-	// cout <<"NPeak_clust" << NPeak_clust <<endl;
+
 	//if(NPeak_clust > 2 && ((float) X[pkPos_clust[0]] > 30. && (float) X[pkPos_clust[NPeak_clust - 1]]< 800.) && ((isChannel_1cm && (float) X[pkPos_clust[NPeak_clust-1]] - (float) X[pkPos_clust[0]]< 270.) || ((isChannel_2cm) && (float) X[pkPos_clust[NPeak_clust-1]] - (float) X[pkPos_clust[0]]< 580.) || ((isChannel_1p5cm) && (float) X[pkPos_clust[NPeak_clust-1]] - (float) X[pkPos_clust[0]]< 800.))){
 	((hstPerCh*)HstPerCh[channel])->hRms->Fill(((wave)Waves[channel]).rms*1000);
 	((hstPerCh*)HstPerCh[channel])->hMaxVInR->Fill(((wave)Waves[channel]).maxInR);
+  ((hstPerCh*)HstPerCh[channel])->hMinVInR->Fill(((wave)Waves[channel]).min);
 	((hstPerCh*)HstPerCh[channel])->hBsl->Fill(((wave)Waves[channel]).bsln);
 	((hstPerCh*)HstPerCh[channel])->hIntegN->Fill(((wave)Waves[channel]).charge_integInR);
 	if(NPeak_clust > 2){																						 
@@ -875,58 +758,35 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
 	    ((hstPerCh*)HstPerCh[channel])->hTPeaks->Fill(X[pkPos[ipk]]);
 	    
 	  }
-	  /*  ((hstPerCh*)HstPerCh[channel])->hRms->Fill(((wave)Waves[channel]).rms*1000);      
-	  ((hstPerCh*)HstPerCh[channel])->hMaxVInR->Fill(((wave)Waves[channel]).maxInR);
-	  ((hstPerCh*)HstPerCh[channel])->hBsl->Fill(((wave)Waves[channel]).bsln);
-	  ((hstPerCh*)HstPerCh[channel])->hIntegN->Fill(((wave)Waves[channel]).charge_integInR); */
-	}
-	/*		((hstPerCh*)HstPerCh[channel])->hRms->Fill(((wave)Waves[channel]).rms*1000);
-		((hstPerCh*)HstPerCh[channel])->hMaxVInR->Fill(((wave)Waves[channel]).maxInR);
-		((hstPerCh*)HstPerCh[channel])->hBsl->Fill(((wave)Waves[channel]).bsln);
-		((hstPerCh*)HstPerCh[channel])->hIntegN->Fill(((wave)Waves[channel]).charge_integInR); */
 
-	//((hstPerCh*)HstPerCh[channel])->hMaxVNSmooth->Fill(((wave)tmpWSG_signal[channel]).nMax());
-	//((hstPerCh*)HstPerCh[channel])->hInteg->Fill(((wave)Waves[channel]).integ);
-	//((hstPerCh*)HstPerCh[channel])->hIntegInR->Fill(((wave)Waves[channel]).integInR);
-	//((hstPerCh*)HstPerCh[channel])->hIntegNInRC1->Fill(((wave)Waves[channel]).nnIntegInR()/((float)NPeak));
-	//istogrammi rms wave non filtrate      
-	//((hstPerCh*)HstPerCh[channel])->hRmsOriginalW->Fill(((wave)Waves[channel]).rms);
-	//((hstPerCh*)HstPerCh[channel])->hIntegNInRC2->Fill( ( ((wave)Waves[channel]).nnIntegInR()/((float)NPeak) )/scaleInt );   
+    // Study on dE/dx over dN/dx resolution should be two times better
+    // File to store information
+    std::ofstream outputFile("output.txt", std::ios::app);
+
+    // Check if yourVariable is equal to any value in the list
+    if(channel == 1 || channel == 5 || channel == 6 || channel == 8){
+    //if(isChannel_1cm){
+            // Write information to the file
+            outputFile << "Integral Charge (pC): " << ((wave)Waves[channel]).charge_integInR;
+            outputFile << " NPeak Clust: " << NPeak_clust << std::endl;
+       
+    }
+
+    // Close the file
+    outputFile.close();
+
+
+
+	}
 	
-	//if ((NPeak<10 || ((X[pkPos[0]+skipFstBin[isl]])< 20. || (X[pkPos[NPeak-1]+skipFstBin[isl]])> 300. || (X[pkPos[0]+skipFstBin[isl]])>350.)) && channel <= 10 && channel != 4 && channel != 0 && channel !=7) {
-	//    
-	//  cout << "Event 1cm tube having low NPeak || Wrong Peak position: " << jentry << " Ch: " << channel << " NPeaks: " <<NPeak<< " First Peak Position:"<< X[pkPos[0]+skipFstBin[isl]] <<" Last peak position:"<<X[pkPos[NPeak-1]+skipFstBin[isl]]<<endl; 
-	//}
-	//
-	//if ((NPeak<20 || ((X[pkPos[0]+skipFstBin[isl]])< 20. || (X[pkPos[NPeak-1]+skipFstBin[isl]])> 650. || (X[pkPos[0]+skipFstBin[isl]])>600.)) && channel == 0 || channel == 4 || channel == 7 || channel == 11) {
-	//    
-	//  cout << "Event 1.5cm tube having low NPeak || Wrong Peak position: " << jentry << " Ch: " << channel << " NPeaks: " <<NPeak<< " First Peak Position:"<< X[pkPos[0]+skipFstBin[isl]] <<" Last peak position:"<<X[pkPos[NPeak-1]+skipFstBin[isl]]<<endl; 
-	//}
-	N_signalevents[channel]= 1.0;
 	
       } //if for finding peaks
       
       
-      
-      //if(!isTrg && Waves[channel].max<=10*(Waves[channel].rms) && channel<=nMaxCh ){
-      //  //cout <<"Is NOT a signal channel"<<endl;
-      //  N_signalevents[channel]= 0.0; 
-      //  //cout << channel << endl; 
-      //  //cout <<"\n";   
-      //  ((hstPerCh*)HstPerCh[channel])->hNeventSignals->Fill(0.0);//(Double_t) N_signalevents[channel]);;
-      //}
-      
-      // cout << "\nAfter the threshold voltage is set, the channel hits are: \n"; 
-      //for (int i = 0; i < N_signalevents.size(); i++) 
-      //cout << "Event: " << jentry << " Ch: " << i << " Hits: " << N_signalevents[i] << "\n"; 
-      //cout << "\n"; 
-      
       bool savesignal_1 = true;
       bool uniqueCanvas = false;
-      //Waves.clear();
       if (savesignal_1 && !isTrg && channel <=nMaxCh) { 
-	//if (savesignal_1 && !isTrg && point.first == channel ) { //new graphs with arrows on the found peaks
-	//Waves[channel].fillWave(point.second,dim,_gsample);
+
 	signal->cd();
 	
 	if(uniqueCanvas){
@@ -943,7 +803,6 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
 	  tmpsignal_1.back()->SetTitle("");
 	  tmpsignal_1.back()->GetYaxis()->SetTitleOffset(1.4);
 	  tmpsignal_1.back()->GetYaxis()->SetTitle("Volt [V]");
-	  //tmpsignal_1.back()->GetXaxis()->SetRangeUser(0.,400.);
 	  tmpsignal_1.back()->GetYaxis()->SetRangeUser(-0.1,0.4);
 	  tmpsignal_1.back()->SetMarkerStyle(21);
 	  tmpsignal_1.back()->Draw("APL");
@@ -977,7 +836,7 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
 	  counting_filter++;
 	}
 	//if(!uniqueCanvas && jentry<=200 && NPeak>0 && ((wave)Waves[channel]).nnIntegInR()>0.1 && ((channel <= 10 && channel != 4 && channel != 0 && channel !=7 && counter_1cm>=4) || (channel == 0 || channel == 4 || channel == 7 || channel == 11 && counter_1p5cm>=3))){
-	if(!uniqueCanvas && NPeak>0 && NPeak_clust>0 && jentry<=1000 &&  ((isChannel_1cm) || ((isChannel_2cm || isChannel_1p5cm))) && channel<=nMaxCh && Waves[channel].max > 0.005 && ((isChannel_1cm && Waves[channel].charge_integInR > 8 ) || (isChannel_1p5cm && Waves[channel].charge_integInR > 12 ))){
+	if(!uniqueCanvas && NPeak>0 && NPeak_clust>0 && jentry<=3000 &&  ((isChannel_1cm) || ((isChannel_2cm || isChannel_1p5cm))) && channel<=nMaxCh && Waves[channel].maxInR > 0.02 && Waves[channel].min > -0.005 && ((isChannel_1cm && Waves[channel].charge_integInR > 60 ) || (isChannel_1p5cm && Waves[channel].charge_integInR > 12 ))){
 //	  if(!uniqueCanvas && NPeak>0 && NPeak_clust>0 && jentry<=1000  && ((isChannel_1cm) || ((isChannel_2cm || isChannel_1p5cm)))){
 	  bool Studies = false;
 	  // Nov2021
@@ -1113,86 +972,19 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
 	}
 	//else if(!uniqueCanvas && jentry<=200 && NPeak>0 && ((wave)Waves[channel]).nnIntegInR()>0.1 && ((channel <= 10 && channel != 4 && channel != 0 && channel !=7 && counter_1cm>=4) || (channel == 0 || channel == 4 || channel == 7 || channel == 11 && counter_1p5cm>=3))){
 	//if(!uniqueCanvas  && jentry<=1000 &&  ((isChannel_1cm) || ((isChannel_2cm || isChannel_1p5cm))) && channel<=nMaxCh){
-	if(!uniqueCanvas && NPeak>0 && NPeak_clust>0 && jentry<=1000 &&  ((isChannel_1cm) || ((isChannel_2cm || isChannel_1p5cm))) && channel<=nMaxCh && Waves[channel].max > 0.005 && ((isChannel_1cm && Waves[channel].charge_integInR > 8 ) || (isChannel_1p5cm && Waves[channel].charge_integInR > 12 ))){
+	if(!uniqueCanvas && NPeak>0 && NPeak_clust>0 && jentry<=3000 &&  ((isChannel_1cm) || ((isChannel_2cm || isChannel_1p5cm))) && channel<=nMaxCh && Waves[channel].maxInR > 0.02 && Waves[channel].minInR > -0.005 && ((isChannel_1cm && Waves[channel].charge_integInR > 60 ) || (isChannel_1p5cm && Waves[channel].charge_integInR > 12 ))){
 	  //else if(!uniqueCanvas && NPeak>0 && NPeak_clust>0 && jentry<=200 && Waves[channel].max > 0.05 && ((isChannel_1cm && Waves[channel].charge_integInR > 20 ) || ((isChannel_2cm || isChannel_1p5cm) && Waves[channel].charge_integInR > 60)) && (counter_top_first_driftTubes_line_size>=3 || counter_top_third_driftTubes_line_size>=2 || counter_top_second_driftTubes_line_size>=2)){
 	  
 	  tmpCvsignal_1.back()->Write();          
 	}
 	theFile->cd("/");
       } //if on representing the found peaks 
-      
-      
-    //   if (!isTrg && channel<=nMaxCh && NPeak>0) { 
-	
-	// if(false){
-	//   string nn_file = "";
-	//   nn_file = Form("nn_ch%d_alpha%.1f",channel,alpha);
-	//   nn_file = nn_file + out.Data() + ".txt";
-	//   ofstream myfile_nn (nn_file,ios::app);
-	//   if (myfile_nn.is_open())
-	//     {
-	//       drift_size = 0.8;
-	      
-	//       //δ cluster/cm (M.I.P.) * drift tube size [cm] * 1.3 (relativisticrise) * 1.6 electrons/cluster * 1/cos(α)
-	//       expected_electrons = cluster_per_cm_mip * drift_size * relativistic_rise * cluster_population * 1/cos_alpha;
-	//       if(Waves[channel].max<=10*(Waves[channel].rms)&& channel<=nMaxCh ){
-	// 	expected_electrons = 0;
-	// 	myfile_nn << expected_electrons;
-	// 	myfile_nn << " ";
-	// 	//myfile_nn << NPeak;
-	// 	//myfile_nn << " ";
-	//       }
-	//       if(Waves[channel].max>10*(Waves[channel].rms)&& channel<=nMaxCh){
-	// 	myfile_nn << expected_electrons;
-	// 	myfile_nn << " ";
-	// 	//myfile_nn << NPeak;
-	// 	//myfile_nn << " ";
-	//       }
-	      
-	//       if(channel <= 10 && channel != 4 && channel != 0 && channel !=7){
-	// 	//for(int i=0; i<(Waves[channel].nPt()-424);i++){
-	// 	for(int i=29; i<(Waves[channel].nPt()-64);i++){
-	// 	  if(i==29 || (i==Waves[channel].nPt()-65)){
-	// 	    myfile_nn<<(Waves[channel].Y[i]);
-	// 	    myfile_nn << " ";
-	// 	  }
-	// 	  if(i<Waves[channel].nPt()-65){
-	// 	    myfile_nn<<(Waves[channel].Y[i+1]-Waves[channel].Y[i]);
-	// 	    myfile_nn << " ";
-	// 	  }
-	// 	}
-	//       }
-	//       if(channel == 0 || channel == 4 || channel == 7 || channel == 11 ){
-	// 	for(int i=29; i<(Waves[channel].nPt()-64);i++){
-	// 	  //for(int i=0; i<(Waves[channel].nPt()-64);i++){
-	// 	  if(i==29 || (i==Waves[channel].nPt()-65)){
-	// 	    myfile_nn<<(Waves[channel].Y[i]);
-	// 	    myfile_nn << " ";
-	// 	  }
-	// 	  if(i<Waves[channel].nPt()-65){
-	// 	    myfile_nn<<(Waves[channel].Y[i+1]-Waves[channel].Y[i]);
-	// 	    myfile_nn << " ";
-	// 	  }
-	// 	}
-	//       }
-	      
-	//       myfile_nn << "\n";
-	//       myfile_nn.close();
-	//     }
-	  
-	//   else cout << "Unable to open file"; 
-	// }
-	
-	
-    //   }
-       //cout << "Ciao sono nel loop getX742Data" << "\n";
+    
     } //getX742Data() loop
-   // cout << "Ciao sono nel loop delle entries" << "\n";
   } //entries loop
   
   
   theFile->cd();
-  //cout << "Ciao sto scrivendo file" << "\n";
   theFile->Write();
   theFile->Close();
   cout << "\n WELL DONE YOU HAVE FINISHED! \n"; 
