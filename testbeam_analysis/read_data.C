@@ -65,7 +65,8 @@ std::vector<TCanvas *> tmpCvNegBatt;
 std::vector<TCanvas *> tmpCvMidNotch;
 std::vector<TGraph *> tmpMid_Notch;
 std::vector<float>::iterator it; 
-
+int fileCount = 0;
+int lineCount = 1;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,7 +99,7 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
     nMaxCh = 11;
   }
   else if(isJune2023TestBeamThirdDRS){
-	  nMaxCh = 3;
+    nMaxCh = 3;
   }
   else if(isJune2023TestBeamFourthDRS){
     nMaxCh = 3;
@@ -152,8 +153,8 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
   theFile->cd("/");
   TDirectory *signal = theFile->mkdir("signal_Afterflt"); //directory per la waveform di segnale dopo tutti i filtri
   
- 
-
+  
+  
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
   //                                               //  Loop on entries //                                                  //
@@ -183,7 +184,7 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
     trigCh.push_back(0);
   }
   else if(isJune2023TestBeamThirdDRS){
- 	trigCh.push_back(16);
+    trigCh.push_back(16);
   }
   else if(isJune2023TestBeamFourthDRS){
     trigCh.push_back(16);
@@ -206,14 +207,15 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
   Int_t firstEv=0;                              //inizializzo il primo evento a zero
   Int_t lastEv=nentries;                        //l'ultimo evento coincide con le nentries, che si prende con la funzione get...sopra
   if (eventn>=0&&eventn<lastEv) {
-    firstEv=eventn;
+    firstEv=MidEv;
     lastEv=eventn+1;
   }else if(MidEv>=0&&eventn<-1 ){
     firstEv=MidEv;
     lastEv=-eventn+firstEv;
   }else if (eventn<-1 && eventn>-nentries){
+    firstEv=MidEv;
     lastEv=-eventn;}
-  //cout<< " MidEv "<< MidEv<< "lastEv "<<lastEv<<endl;
+  cout<< "First Event: " << firstEv << " last Event: "<<lastEv<<endl;
   
   Float_t alpha= 0.;
   Float_t cos_alpha = 0.;
@@ -225,40 +227,33 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
   Float_t cluster_population = 1.6;
   Int_t NPeak;
   string name_file_compact = outChar;
-  /////////////////////////////
-  //   if(isNov2021TestBeam) //
-  
-  /////////////////////////////
- //  string Runs_80_20[] = {"histosTB_run_127.root", "histosTB_run_117.root"}; // 2021 Nov Test Beam
- //string Runs_90_10[] = {"histosTB_run_99.root"};
-/*   string Runs_90_10[] = {"histosTB_run_99.root", "histosTB_run_98.root", "histosTB_run_96.root", "histosTB_run_94.root", "histosTB_run_91.root"};
-   string Runs_80_20[] = {"histosTB_run_0.root"};
-   string Runs_85_15[] = {"histosTB_run_0.root"};
+  // if(isNov2021TestBeam){
+  // string Runs_80_20[] = {"histosTB_run_127.root", "histosTB_run_117.root"}; // 2021 Nov Test Beam
   // string Runs_90_10[] = {"histosTB_run_72.root", "histosTB_run_73.root", "histosTB_run_74.root", "histosTB_run_86.root", "histosTB_run_87.root", "histosTB_run_88.root", "histosTB_run_89.root", "histosTB_run_90.root", "histosTB_run_91.root", "histosTB_run_92.root", "histosTB_run_93.root", "histosTB_run_94.root", "histosTB_run_95.root", "histosTB_run_96.root", "histosTB_run_97.root" ,"histosTB_run_98.root", "histosTB_run_99.root", "histosTB_run_100.root", "histosTB_run_101.root"};
   // string Runs_85_15[] = {"histosTB_run_0.root"}; // No data for Nov 2021, 2022 Test Beam to be inserted
-   string Runs_alpha_0[] = {"histosTB_run_99.root", "histosTB_run_117.root", "histosTB_run_86.root", "histosTB_run_100.root", "histosTB_run_72.root", "histosTB_run_73.root", "histosTB_run_74.root"}; // 2021 Test Beam
-   string Runs_alpha_15[] = {"histosTB_run_98.root", "histosTB_run_87.root", "histosTB_run_97.root"}; // 2021 Nov Test Beam
-   string Runs_alpha_30[] = {"histosTB_run_96.root", "histosTB_run_88.root", "histosTB_run_95.root"}; // 2021 Nov Test Beam
-   string Runs_alpha_45[] = {"histosTB_run_94.root", "histosTB_run_89.root", "histosTB_run_93.root"}; // 2021 Nov Test Beam
-   string Runs_alpha_60[] = {"histosTB_run_91.root", "histosTB_run_127.root", "histosTB_run_90.root" ,"histosTB_run_92.root"}; // 2021 Nov Test Beam
-  // }*/
+  // string Runs_alpha_0[] = {"histosTB_run_99.root", "histosTB_run_117.root", "histosTB_run_86.root", "histosTB_run_100.root", "histosTB_run_72.root", "histosTB_run_73.root", "histosTB_run_74.root"}; // 2021 Test Beam
+  // string Runs_alpha_15[] = {"histosTB_run_98.root", "histosTB_run_87.root", "histosTB_run_97.root"}; // 2021 Nov Test Beam
+  // string Runs_alpha_30[] = {"histosTB_run_96.root", "histosTB_run_88.root", "histosTB_run_95.root"}; // 2021 Nov Test Beam
+  // string Runs_alpha_45[] = {"histosTB_run_94.root", "histosTB_run_89.root", "histosTB_run_93.root"}; // 2021 Nov Test Beam
+  // string Runs_alpha_60[] = {"histosTB_run_91.root", "histosTB_run_127.root", "histosTB_run_90.root" ,"histosTB_run_92.root"}; // 2021 Nov Test Beam
+  // }
 
-
+  
   ///////////////////////////////////
   //   else if(isJuly2022TestBeam){//
   ///////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Rapid Study for Franco 														  /////////////////////
+  // Rapid Study for Franco 														  /////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   string Runs_85_15[] = {"histosTB_run_62.root"};
-//   string Runs_80_20[] = {"histosTB_run_41.root", "histosTB_run_44.root"};
-//   string Runs_90_10[] = {"histosTB_run_58.root"};
-//   string Runs_alpha_0[] = {"histosTB_run_62.root","histosTB_run_41.root", "histosTB_run_44.root","histosTB_run_52.root"}; // 2022 July Test Beam
- //  string Runs_alpha_15[] = {"histosTB_run_0.root"}; // We didn't take data at 15°, 2022 July Test Beam
- //  string Runs_alpha_30[] = {"histosTB_run_0.root"}; // 2022 July Test Beam
- //  string Runs_alpha_45[] = {"histosTB_run_58.root"}; // 2022 July Test Beam
- //  string Runs_alpha_60[] = {"histosTB_run_0.root"}; // 2022 July Test Beam
-
+  //   string Runs_85_15[] = {"histosTB_run_62.root"};
+  //   string Runs_80_20[] = {"histosTB_run_41.root", "histosTB_run_44.root"};
+  //   string Runs_90_10[] = {"histosTB_run_58.root"};
+  //   string Runs_alpha_0[] = {"histosTB_run_62.root","histosTB_run_41.root", "histosTB_run_44.root","histosTB_run_52.root"}; // 2022 July Test Beam
+  //  string Runs_alpha_15[] = {"histosTB_run_0.root"}; // We didn't take data at 15°, 2022 July Test Beam
+  //  string Runs_alpha_30[] = {"histosTB_run_0.root"}; // 2022 July Test Beam
+  //  string Runs_alpha_45[] = {"histosTB_run_58.root"}; // 2022 July Test Beam
+  //  string Runs_alpha_60[] = {"histosTB_run_0.root"}; // 2022 July Test Beam
+  
   ////////////////////
   // Gas Gain Study//
   //////////////////
@@ -268,48 +263,48 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
   ////////////////////////////////////////////////////////////////////////////////////////
   // Scan Study for 80_20, 85/15, and 90/10 Gas Mixture Superimposed 45 Angle Track: HV 180 GeV//
   //////////////////////////////////////////////////////////////////////////////////////
-   string Runs_85_15[] = {"histosTB_run_65.root","histosTB_run_71.root","histosTB_run_69.root","histosTB_run_70.root"};
+  string Runs_85_15[] = {"histosTB_run_65.root","histosTB_run_71.root","histosTB_run_69.root","histosTB_run_70.root"};
   //string Runs_85_15[] = {"histosTB_run_0.root"};
- // string Runs_80_20[] = {"histosTB_run_44.root","histosTB_run_45.root","histosTB_run_41.root","histosTB_run_46.root"}; //July Angle scan GSa 2
- string Runs_80_20[] = {"histosTB_run_40.root","histosTB_run_41.root","histosTB_run_42.root","histosTB_run_43.root"}; //July HV scan GSa 2
- // string Runs_80_20[] = {"histosTB_run_26.root","histosTB_run_23.root","histosTB_run_24.root","histosTB_run_25.root"}; //July HV scan GSa 1
- // string Runs_80_20[] = {"histosTB_run_31.root","histosTB_run_33.root","histosTB_run_32.root"}; //July Angle scan GSa 1
- string Runs_90_10[] = {"histosTB_run_54.root","histosTB_run_53.root","histosTB_run_55.root","histosTB_run_56.root"};
- 
- string Runs_alpha_0[] = {"histosTB_run_44.root","histosTB_run_2.root"}; // 2022 July Test Beam
+  // string Runs_80_20[] = {"histosTB_run_44.root","histosTB_run_45.root","histosTB_run_41.root","histosTB_run_46.root"}; //July Angle scan GSa 2
+  string Runs_80_20[] = {"histosTB_run_40.root","histosTB_run_41.root","histosTB_run_42.root","histosTB_run_43.root"}; //July HV scan GSa 2
+  // string Runs_80_20[] = {"histosTB_run_26.root","histosTB_run_23.root","histosTB_run_24.root","histosTB_run_25.root"}; //July HV scan GSa 1
+  // string Runs_80_20[] = {"histosTB_run_31.root","histosTB_run_33.root","histosTB_run_32.root"}; //July Angle scan GSa 1
+  string Runs_90_10[] = {"histosTB_run_16.root","histosTB_run_54.root","histosTB_run_53.root","histosTB_run_55.root","histosTB_run_56.root"};
+  
+  string Runs_alpha_0[] = {"histosTB_run_44.root","histosTB_run_2.root"}; // 2022 July Test Beam
   string Runs_alpha_15[] = {"histosTB_run_0.root"}; // We didn't take data at 15°, 2022 July Test Beam
   string Runs_alpha_30[] = { "histosTB_run_31.root", "histosTB_run_45.root"}; // 2022 July Test Beam
-  string Runs_alpha_45[] = {"histosTB_run_33.root", "histosTB_run_39.root","histosTB_run_40.root", "histosTB_run_41.root", "histosTB_run_42.root","histosTB_run_43.root","histosTB_run_9.root","histosTB_run_10.root","histosTB_run_63.root","histosTB_run_54.root","histosTB_run_53.root","histosTB_run_55.root","histosTB_run_56.root","histosTB_run_71.root","histosTB_run_65.root","histosTB_run_69.root","histosTB_run_70.root"}; // 2022 July Test Beam
+  string Runs_alpha_45[] = {"histosTB_run_16.root","histosTB_run_33.root", "histosTB_run_39.root","histosTB_run_40.root", "histosTB_run_41.root", "histosTB_run_42.root","histosTB_run_43.root","histosTB_run_9.root","histosTB_run_10.root","histosTB_run_63.root","histosTB_run_54.root","histosTB_run_53.root","histosTB_run_55.root","histosTB_run_56.root","histosTB_run_71.root","histosTB_run_65.root","histosTB_run_69.root","histosTB_run_70.root"}; // 2022 July Test Beam
   string Runs_alpha_60[] = {"histosTB_run_32.root","histosTB_run_46.root"}; // 2022 July Test Beam
-
-//////////////////////////////////////////////////////////////////////////////////////////
-	  // Scan Study for 80_20, 85/15, and 90/10 Gas Mixture Superimposed Nom HV: Angle 180 GeV//
-	  /////////////////////////////////////////////////////////////////////////////////////////
-	//   string Runs_85_15[] = {"histosTB_run_62.root","histosTB_run_71.root"};
-   //    string Runs_80_20[] = {"histosTB_run_44.root" ,"histosTB_run_45.root" ,"histosTB_run_41.root" ,"histosTB_run_46.root"};
-	//   string Runs_90_10[] = {"histosTB_run_11.root", "histosTB_run_51.root" ,"histosTB_run_10.root", "histosTB_run_47.root"};
-	//   string Runs_alpha_0[] = {"histosTB_run_62.root","histosTB_run_44.root","histosTB_run_11.root"}; // 2022 July Test Beam
+  
+  //////////////////////////////////////////////////////////////////////////////////////////
+  // Scan Study for 80_20, 85/15, and 90/10 Gas Mixture Superimposed Nom HV: Angle 180 GeV//
+  /////////////////////////////////////////////////////////////////////////////////////////
+  //   string Runs_85_15[] = {"histosTB_run_62.root","histosTB_run_71.root"};
+  //    string Runs_80_20[] = {"histosTB_run_44.root" ,"histosTB_run_45.root" ,"histosTB_run_41.root" ,"histosTB_run_46.root"};
+  //   string Runs_90_10[] = {"histosTB_run_11.root", "histosTB_run_51.root" ,"histosTB_run_10.root", "histosTB_run_47.root"};
+  //   string Runs_alpha_0[] = {"histosTB_run_62.root","histosTB_run_44.root","histosTB_run_11.root"}; // 2022 July Test Beam
   //	   string Runs_alpha_15[] = {"histosTB_run_0.root"}; // We didn't take data at 15°, 2022 July Test Beam
   //	   string Runs_alpha_30[] = {"histosTB_run_45.root","histosTB_run_51.root"}; // 2022 July Test Beam
   //	   string Runs_alpha_45[] = {"histosTB_run_71.root","histosTB_run_41.root","histosTB_run_10.root"}; // 2022 July Test Beam
- // 	   string Runs_alpha_60[] = {"histosTB_run_46.root","histosTB_run_47.root"}; // 2022 July Test Beam
-
-	  
+  // 	   string Runs_alpha_60[] = {"histosTB_run_46.root","histosTB_run_47.root"}; // 2022 July Test Beam
+  
+  
   // All Runs
   //string Runs_80_20[] = {"histosTB_run_39.root","histosTB_run_40.root", "histosTB_run_41.root", "histosTB_run_42.root","histosTB_run_43.root","histosTB_run_44.root","histosTB_run_45.root","histosTB_run_46.root"}; // 2022 July Test Beam
   //Scan Study: HV
- // string Runs_80_20[] = {"histosTB_run_40.root","histosTB_run_41.root","histosTB_run_42.root","histosTB_run_43.root"};
+  // string Runs_80_20[] = {"histosTB_run_40.root","histosTB_run_41.root","histosTB_run_42.root","histosTB_run_43.root"};
   //Scan Study: Angle
- // string Runs_80_20[] = {"histosTB_run_44.root", "histosTB_run_45.root","histosTB_run_41.root","histosTB_run_46.root"};
+  // string Runs_80_20[] = {"histosTB_run_44.root", "histosTB_run_45.root","histosTB_run_41.root","histosTB_run_46.root"};
   //string Runs_90_10[] = {"histosTB_run_0.root"};
   //  string Runs_80_20[] = {"histosTB_run_0.root"};
-   // string Runs_85_15[] = {"histosTB_run_0.root"};
-   // string Runs_90_10[] = {"histosTB_run_99.root","histosTB_run_98.root", "histosTB_run_96.root", "histosTB_run_94.root","histosTB_run_91.root"};  //For Nov
-
+  // string Runs_85_15[] = {"histosTB_run_0.root"};
+  // string Runs_90_10[] = {"histosTB_run_99.root","histosTB_run_98.root", "histosTB_run_96.root", "histosTB_run_94.root","histosTB_run_91.root"};  //For Nov
+  
   //Scan Study: gas mixture
- //  string Runs_80_20[] = {"histosTB_run_41.root"};
-//   string Runs_90_10[] = {/*"histosTB_run_9.root",*/"histosTB_run_10.root"}; // 2022 July Test Beam
-//   string Runs_85_15[] = {"histosTB_run_63.root"}; // 2022 July Test Beam
+  //  string Runs_80_20[] = {"histosTB_run_41.root"};
+  //   string Runs_90_10[] = {/*"histosTB_run_9.root",*/"histosTB_run_10.root"}; // 2022 July Test Beam
+  //   string Runs_85_15[] = {"histosTB_run_63.root"}; // 2022 July Test Beam
   // Scan Study: Sampling rate
   //string Runs_90_10[] = {"histosTB_run_9.root","histosTB_run_10.root"}; // 2022 July Test Beam
   //string Runs_85_15[] = {"histosTB_run_63.root"}; // 2022 July Test Beam
@@ -396,13 +391,22 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
   }
   
   cos_alpha = TMath::Cos(alpha*TMath::DegToRad());
-  
+  std::cout << "1/cos_alpha: " << 1/cos_alpha << std::endl;
+  std::cout << "Relativistic rise: " << relativistic_rise << std::endl;
+  std::cout << "Expected Clusters for 1 cm Tubes: " << cluster_per_cm_mip * 0.8 * relativistic_rise * 1/cos_alpha <<std::endl;
+  std::cout << "Expected Clusters for 2 cm Tubes: " << cluster_per_cm_mip * 1.8 * relativistic_rise * 1/cos_alpha <<std::endl;
+  std::cout << "Expected Clusters for 1.5 cm Tubes: " << cluster_per_cm_mip * 1.2 * relativistic_rise * 1/cos_alpha <<std::endl;
+  std::cout << "Expected Electrons for 1 cm Tubes: " << cluster_per_cm_mip * 0.8 * relativistic_rise * 1/cos_alpha * cluster_population <<std::endl;
+  std::cout << "Expected Electrons for 2 cm Tubes: " << cluster_per_cm_mip * 1.8 * relativistic_rise * 1/cos_alpha * cluster_population <<std::endl;
+  std::cout << "Expected Electrons for 1.5 cm Tubes: " << cluster_per_cm_mip * 1.2 * relativistic_rise * 1/cos_alpha * cluster_population <<std::endl;
   
   for (Long64_t jentry=firstEv; jentry<lastEv;jentry++) {
     
-
+    
     Long64_t ientry = LoadTree(jentry); //The function finds the corresponding Tree and returns the entry number in this tree.  
-    if (ientry < 0) break;
+    if (ientry < 0) {
+      printf("ientry < 0 : %d \n", ientry);
+      break;}
     fChain->GetEntry(jentry);
     WvCont Waves;
     WvCont FltWaves;
@@ -446,9 +450,9 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
     int counter_1p5cm=0;
     int counter_2cm=0;
     // if(isNov2021TestBeam){
-  /*   int Channel_1cm[] = {4,5,6,7,8,9}; // Nov 2021 Test Beam
-     int Channel_2cm[] = {10,11,12}; // Nov 2021 Test Beam
-     int Channel_1p5cm[] = {0}; // NO Nov 2021 Test Beam*/
+    // int Channel_1cm[] = {4,5,6,7,8,9}; // Nov 2021 Test Beam
+    // int Channel_2cm[] = {10,11,12}; // Nov 2021 Test Beam
+    // int Channel_1p5cm[] = {0}; // NO Nov 2021 Test Beam
     // }
     // else if(isJuly2022TestBeam){
     int Channel_1cm[] = {1,2,3,5,6,8,9,10}; // July 2022 Test Beam
@@ -459,12 +463,12 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
     // int Channel_1cm[] = {0,1,2,3,4,5}; // July 2023 Test Beam
     //  int Channel_2cm[] = {20}; // NO in July 2022 Test Beam
     //  int Channel_1p5cm[] = {6,7,8,9}; // New Test Beam 
-	//}
-	// // else if(isJune2023TestBeamSecondDRS)// 4 channels x 3
-     //       int Channel_1cm[] = {4,5,6,7}; // July 2023 Test Beam
-     //int Channel_2cm[] = {15}; // NO in 2023 Test Beam
-     //int Channel_1p5cm[] = {1,2,3,8,9,10,11}; // 2023 Test Beam 
-
+    //}
+    // // else if(isJune2023TestBeamSecondDRS)// 4 channels x 3
+    //       int Channel_1cm[] = {4,5,6,7}; // July 2023 Test Beam
+    //int Channel_2cm[] = {15}; // NO in 2023 Test Beam
+    //int Channel_1p5cm[] = {1,2,3,8,9,10,11}; // 2023 Test Beam 
+    
     int Channel_1cm_size = sizeof Channel_1cm / sizeof Channel_1cm[0];
     int Channel_2cm_size = sizeof Channel_2cm / sizeof Channel_2cm[0];
     int Channel_1p5cm_size = sizeof Channel_1p5cm / sizeof Channel_1p5cm[0];
@@ -472,40 +476,41 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
     int isChannel_2cm = 0;
     int isChannel_1p5cm = 0;
     // if(isNov2021TestBeam){
- /*    int top_first_driftTubes_line[] = {4,5,6,7,8,9}; // 2021 Nov Test Beam
-     int top_second_driftTubes_line[] = {13,14}; // 2021 Nov Test Beam
-     int top_third_driftTubes_line[] = {10,11,12}; // 2021 Nov Test Beam*/
+    // int top_first_driftTubes_line[] = {4,5,6,7,8,9}; // 2021 Nov Test Beam
+    // int top_second_driftTubes_line[] = {13,14}; // 2021 Nov Test Beam
+    // int top_third_driftTubes_line[] = {10,11,12}; // 2021 Nov Test Beam
     // }
-	// else if(isJuly2022TestBeam){ // TO be CHECKED
-   	int top_first_driftTubes_line[] = {4,5,6,7,8,9}; // 2021 Nov Test Beam
-    int top_second_driftTubes_line[] = {13,14}; // 2021 Nov Test Beam
-    int top_third_driftTubes_line[] = {10,11,12}; // 2021 Nov Test Beam*/
+    // else if(isJuly2022TestBeam){
+    int top_first_driftTubes_line[] = {8,6,5,1}; // 2022 July Test Beam all 1.0 cm upstream downstream
+    int top_second_driftTubes_line[] = {7,4,11}; // 2022 July Test Beam 1.5 cm
+    //int top_third_driftTubes_line[] = {0}; // 2022 July Test Beam 1.5 cm
+    int top_third_driftTubes_line[] = {3,2,10,9}; // 2022 July Test Beam 1.0 cm
     int top_fourth_driftTubes_line[] = {20};
-	// }
+    // }
     // else if(isJune2023TestBeamFirstDRS){
     // int top_first_driftTubes_line[] = {0,1,2,3,4,5}; // 2023 July Test Beam all 1.0 cm upstream downstream
     // int top_second_driftTubes_line[] = {6,7,8,9}; // 2023 July Test Beam 1.5 cm
     // int top_third_driftTubes_line[] = {20}; // 2022 July Test Beam 1.0 cm
     // int top_fourth_driftTubes_line[] = {20};
     // }
-	// else if(isJune2023TestBeamSecondDRS){
+    // else if(isJune2023TestBeamSecondDRS){
     /*int top_first_driftTubes_line[] = {8,9,10,11}; // 2023 July Test Beam all 1.0 cm upstream downstream
     int top_second_driftTubes_line[] = {4,5,6,7}; // 2023 July Test Beam 1.5 cm
     int top_third_driftTubes_line[] = {1,2,3}; // 2023 July Test Beam 1.0 cm
     int top_fourth_driftTubes_line[] = {50}; */
-      
+    
     int top_first_driftTubes_line_size = sizeof top_first_driftTubes_line / sizeof top_first_driftTubes_line[0];
     int top_second_driftTubes_line_size = sizeof top_second_driftTubes_line / sizeof top_second_driftTubes_line[0];
     int top_third_driftTubes_line_size = sizeof top_third_driftTubes_line / sizeof top_third_driftTubes_line[0];
-	int top_fourth_driftTubes_line_size = sizeof top_fourth_driftTubes_line / sizeof top_fourth_driftTubes_line[0];
+    int top_fourth_driftTubes_line_size = sizeof top_fourth_driftTubes_line / sizeof top_fourth_driftTubes_line[0];
     int istop_first_driftTubes_line = 0;
     int istop_second_driftTubes_line = 0;
     int istop_third_driftTubes_line = 0;
-	int istop_fourth_driftTubes_line = 0;
+    int istop_fourth_driftTubes_line = 0;
     int counter_top_first_driftTubes_line_size = 0;
     int counter_top_second_driftTubes_line_size = 0;
     int counter_top_third_driftTubes_line_size = 0;
-	int counter_top_fourth_driftTubes_line_size = 0;
+    int counter_top_fourth_driftTubes_line_size = 0;
     // Loop to fill the waveforms  - Customization for Jul 2022 and Nov 2021 Beam Tests
     for (auto point : wd->getX742Data()) {
       
@@ -612,7 +617,7 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
 	  if(istop_fourth_driftTubes_line){
             counter_top_fourth_driftTubes_line_size = counter_top_fourth_driftTubes_line_size+1;
           }
-
+	  
 
 	  if(isChannel_2cm){
 	    counter_2cm=counter_2cm+1;
@@ -666,7 +671,7 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
         }
       }
       
-
+      
       bool isTrg=false;
       for(auto trgCh : trigCh) { if (channel==trgCh) { isTrg=true;}}
       
@@ -711,23 +716,23 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
       NPeak=0;
       
       //cout << "Waveform max:" << Waves[channel].max << endl; 
-		//cout << "Waveform rms x 10:" << 10 * Waves[channel].rms << endl; 
+      //cout << "Waveform rms x 10:" << 10 * Waves[channel].rms << endl; 
       //if(!isTrg && Waves[channel].max > 0.05 && ((isChannel_1cm && Waves[channel].charge_integInR > 20 && Waves[channel].charge_integInR < 160) || ((isChannel_2cm || isChannel_1p5cm) && Waves[channel].charge_integInR > 60 && Waves[channel].charge_integInR < 200)) && (counter_top_first_driftTubes_line_size>=2 || counter_top_third_driftTubes_line_size>=2 || counter_top_second_driftTubes_line_size>=2)){  // we are dealing with Volts , charge in pC
       //    if(!isTrg && Waves[channel].max > 0.05 && ((isChannel_1cm && Waves[channel].charge_integInR > 20 ) || ((isChannel_1p5cm) && Waves[channel].charge_integInR > 30) || (isChannel_2cm && Waves[channel].charge_integInR > 45 )) && (counter_top_first_driftTubes_line_size>=2 || counter_top_third_driftTubes_line_size>=2 || counter_top_second_driftTubes_line_size>=2)){  // we are dealing with Volts , charge in pC
-	if(!isTrg && ((isChannel_1cm  ) || ((isChannel_1p5cm)) || (isChannel_2cm )) && channel<=nMaxCh && Waves[channel].maxInR > 0.02 && Waves[channel].min > -0.005 && ((isChannel_1cm && Waves[channel].charge_integInR > 60 ) || (isChannel_1p5cm && Waves[channel].charge_integInR > 12 ))){
+      //if(!isTrg && ((isChannel_1cm  ) || ((isChannel_1p5cm)) || (isChannel_2cm )) && channel<=nMaxCh && Waves[channel].maxInR > 0.02 && Waves[channel].min > -0.005 && ((isChannel_1cm && Waves[channel].charge_integInR > 55. ) || (isChannel_1p5cm && Waves[channel].charge_integInR > 12 ))){
+      if(!isTrg && ((isChannel_1cm  ) || ((isChannel_1p5cm)) || (isChannel_2cm )) && channel<=nMaxCh && Waves[channel].maxInR > 0.02 && ((isChannel_1cm && Waves[channel].charge_integ > 5. ) || (isChannel_1p5cm && Waves[channel].charge_integ > 5. ))){
 	//   if(!isTrg && Waves[channel].max > 10*Waves[channel].rms && (counter_top_first_driftTubes_line_size>=2 || counter_top_third_driftTubes_line_size>=2 || counter_top_second_driftTubes_line_size>=2)){  // we are dealing with Volts , charge in pC
-
-	NPeak = FindPeaks(jentry,skipFstBin[isl],channel,((wave)Waves[channel]).nPt(),&((wave)Waves[channel]).Y[0],((wave)Waves[channel]).rms,&((wave)Waves[channel]).deriv[0],&((wave)Waves[channel]).sderiv[0],pkPos,pkHgt, timeRes, N_1, N_2, N_3, N_4, bslnTimeInterval, isChannel_1cm, isChannel_2cm, isChannel_1p5cm);
 	
+	NPeak = FindPeaks(jentry,skipFstBin[isl],channel,((wave)Waves[channel]).nPt(),&((wave)Waves[channel]).Y[0],((wave)Waves[channel]).rms,&((wave)Waves[channel]).deriv[0],&((wave)Waves[channel]).sderiv[0],pkPos,pkHgt, timeRes, N_1, N_2, N_3, N_4, bslnTimeInterval, isChannel_1cm, isChannel_2cm, isChannel_1p5cm);
 	NPeak_clust = ClusterizationFindPeaks(cut_cluster_ns,nElectrons_per_cluster,jentry,skipFstBin[isl],channel,((wave)Waves[channel]).nPt(),((wave)Waves[channel]).rms,pkPos_clust,pkHgt_clust,pkPos,pkHgt,NPeak,timeRes, isChannel_1cm, isChannel_2cm, isChannel_1p5cm, scale_cut, isRuns_90_10, isRuns_85_15, isRuns_80_20);
-
+	
 	//if(NPeak_clust > 2 && ((float) X[pkPos_clust[0]] > 30. && (float) X[pkPos_clust[NPeak_clust - 1]]< 800.) && ((isChannel_1cm && (float) X[pkPos_clust[NPeak_clust-1]] - (float) X[pkPos_clust[0]]< 270.) || ((isChannel_2cm) && (float) X[pkPos_clust[NPeak_clust-1]] - (float) X[pkPos_clust[0]]< 580.) || ((isChannel_1p5cm) && (float) X[pkPos_clust[NPeak_clust-1]] - (float) X[pkPos_clust[0]]< 800.))){
 	((hstPerCh*)HstPerCh[channel])->hRms->Fill(((wave)Waves[channel]).rms*1000);
 	((hstPerCh*)HstPerCh[channel])->hMaxVInR->Fill(((wave)Waves[channel]).maxInR);
-  ((hstPerCh*)HstPerCh[channel])->hMinVInR->Fill(((wave)Waves[channel]).min);
+	((hstPerCh*)HstPerCh[channel])->hMinVInR->Fill(((wave)Waves[channel]).min);
 	((hstPerCh*)HstPerCh[channel])->hBsl->Fill(((wave)Waves[channel]).bsln);
-	((hstPerCh*)HstPerCh[channel])->hIntegN->Fill(((wave)Waves[channel]).charge_integInR);
-	if(NPeak_clust > 2){																						 
+	((hstPerCh*)HstPerCh[channel])->hIntegN->Fill(((wave)Waves[channel]).charge_integ);
+	if(NPeak_clust >= 2){																						 
 	  for(int m=0;m < NPeak_clust;m++){
 	    ((hstPerCh*)HstPerCh[channel])->hNElectrons_per_cluster->Fill((float)nElectrons_per_cluster[m]);
 	  }
@@ -739,9 +744,9 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
 	  for (int ipk=0; ipk <NPeak; ++ipk){
 	    ((hstPerCh*)HstPerCh[channel])->hHPeaks->Fill(pkHgt[ipk]);
 	    //((hstPerCh*)HstPerCh[channel])->hHNPeaks->Fill(ipk+1,pkHgt[ipk]);
-		if(ipk<NPeak-1){
+	    if(ipk<NPeak-1){
 		((hstPerCh*)HstPerCh[channel])->hHNPeaks->Fill((float)X[pkPos[ipk]], (float)X[pkPos[ipk+1]] - (float)X[pkPos[ipk]]);
-		}
+	    }
 	  }
 	  
 	  ((hstPerCh*)HstPerCh[channel])->hNClusterFCluster->Fill((float)X[pkPos_clust[0]],NPeak_clust);
@@ -758,27 +763,37 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
 	    ((hstPerCh*)HstPerCh[channel])->hTPeaks->Fill(X[pkPos[ipk]]);
 	    
 	  }
-
-    // Study on dE/dx over dN/dx resolution should be two times better
-    // File to store information
-    std::ofstream outputFile("output.txt", std::ios::app);
-
-    // Check if yourVariable is equal to any value in the list
-    if(channel == 1 || channel == 5 || channel == 6 || channel == 8){
-    //if(isChannel_1cm){
+	  
+	  // Study on dE/dx over dN/dx resolution should be two times better
+	  // File to store information
+    std::ofstream outputFile;
+    
+    // Open the initial output file
+   
+    outputFile.open("output_" + std::to_string(fileCount) + ".txt", std::ios::app);
+	  // Check if yourVariable is equal to any value in the list
+	  if(channel == 1 || channel == 5 || channel == 6 || channel == 8){
+	    //if(isChannel_1cm){
             // Write information to the file
-            outputFile << "Integral Charge (pC): " << ((wave)Waves[channel]).charge_integInR;
-            outputFile << " NPeak Clust: " << NPeak_clust << std::endl;
-       
+            outputFile << "Integral Charge (pC): " << ((wave)Waves[channel]).charge_integ;
+            outputFile << " NPeak Clust: " << NPeak_clust;
+            outputFile << " NPeak Electrons: " << NPeak << std::endl;
+    // Increment line count
+      ++lineCount;
+    // std::cout << "lineCount: " << lineCount << std::endl;
+    // Check if it's time to create a new file
+    if (lineCount > 20000) {
+        // Close the current file
+        outputFile.close();
+        lineCount = 1;
+        ++fileCount;
     }
-
-    // Close the file
+	    
+	    }
     outputFile.close();
-
-
-
+	  
 	}
-	
+   //std::cout << "FileCounter: " << fileCount << std::endl;  
 	
       } //if for finding peaks
       
@@ -786,7 +801,7 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
       bool savesignal_1 = true;
       bool uniqueCanvas = false;
       if (savesignal_1 && !isTrg && channel <=nMaxCh) { 
-
+	
 	signal->cd();
 	
 	if(uniqueCanvas){
@@ -836,18 +851,20 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
 	  counting_filter++;
 	}
 	//if(!uniqueCanvas && jentry<=200 && NPeak>0 && ((wave)Waves[channel]).nnIntegInR()>0.1 && ((channel <= 10 && channel != 4 && channel != 0 && channel !=7 && counter_1cm>=4) || (channel == 0 || channel == 4 || channel == 7 || channel == 11 && counter_1p5cm>=3))){
-	if(!uniqueCanvas && NPeak>0 && NPeak_clust>0 && jentry<=3000 &&  ((isChannel_1cm) || ((isChannel_2cm || isChannel_1p5cm))) && channel<=nMaxCh && Waves[channel].maxInR > 0.02 && Waves[channel].min > -0.005 && ((isChannel_1cm && Waves[channel].charge_integInR > 60 ) || (isChannel_1p5cm && Waves[channel].charge_integInR > 12 ))){
-//	  if(!uniqueCanvas && NPeak>0 && NPeak_clust>0 && jentry<=1000  && ((isChannel_1cm) || ((isChannel_2cm || isChannel_1p5cm)))){
+	if(!uniqueCanvas && NPeak>0 && NPeak_clust>0 && jentry<=15000 &&  ((isChannel_1cm) || ((isChannel_2cm || isChannel_1p5cm))) && channel<=nMaxCh && Waves[channel].maxInR > 0.02 && ((isChannel_1cm && Waves[channel].charge_integ > 5. ) || (isChannel_1p5cm && Waves[channel].charge_integ > 5. ))){
+	  //	  if(!uniqueCanvas && NPeak>0 && NPeak_clust>0 && jentry<=1000  && ((isChannel_1cm) || ((isChannel_2cm || isChannel_1p5cm)))){
 	  bool Studies = false;
 	  // Nov2021
 	  //   int ChannelDiameter[13] = {-1,-1,-1,-1,10,15,20,20,25,25,20,25,40}; // Old test beam correspondance
 	  //   float ChannelCellSize[13] = {-1.0,-1.0,-1.0,-1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0,2.0,2.0};
+	  static int ChannelDiameter[16] = {20,20,15,15,25,20,20,15,20,25,25,15,-1,-1,-1,-1}; // Old test beam Nov 2022
+	  static float ChannelCellSize[16] = {1.5,1.0,1.0,1.0,1.5,1.0,1.0,1.5,1.0,1.0,1.0,1.5,-1.0,-1.0,-1.0,-1.0}; // Old test beam Nov 2022
 	  /// First DRS 2023 16 DRS channels
 	  //static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022
 	  //static float ChannelCellSize[16] = {1.0,1.0,1.0,1.0,1.0,1.0,1.5,1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0};
 	  // Second DRS 2023 4 DRS channels
-	   static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022 
-	   static float ChannelCellSize[16] = {1.0,1.0,1.0,1.0,1.0,1.0,1.5,1.5,1.5,1.5,-1.0,1.0,-1.0,-1.0,-1.0,-1.0}; 
+	  //static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022 
+	  //static float ChannelCellSize[16] = {1.0,1.0,1.0,1.0,1.0,1.0,1.5,1.5,1.5,1.5,-1.0,1.0,-1.0,-1.0,-1.0,-1.0}; 
 	  //else if(!uniqueCanvas && (X[pkPos[NPeak-1]< 20 || X[pkPos[NPeak-1]> 250 || X[pkPos[0]>350)){
 	  tmpCvsignal_1.push_back( new TCanvas(Form("CvSignal_1_Ch%d_ev%d",channel,jentry),Form("tmpSignal_1_Ch%d_ev%d",channel,jentry)) );
 	  tmpCvsignal_1.back()->cd();
@@ -972,14 +989,14 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
 	}
 	//else if(!uniqueCanvas && jentry<=200 && NPeak>0 && ((wave)Waves[channel]).nnIntegInR()>0.1 && ((channel <= 10 && channel != 4 && channel != 0 && channel !=7 && counter_1cm>=4) || (channel == 0 || channel == 4 || channel == 7 || channel == 11 && counter_1p5cm>=3))){
 	//if(!uniqueCanvas  && jentry<=1000 &&  ((isChannel_1cm) || ((isChannel_2cm || isChannel_1p5cm))) && channel<=nMaxCh){
-	if(!uniqueCanvas && NPeak>0 && NPeak_clust>0 && jentry<=3000 &&  ((isChannel_1cm) || ((isChannel_2cm || isChannel_1p5cm))) && channel<=nMaxCh && Waves[channel].maxInR > 0.02 && Waves[channel].minInR > -0.005 && ((isChannel_1cm && Waves[channel].charge_integInR > 60 ) || (isChannel_1p5cm && Waves[channel].charge_integInR > 12 ))){
+	if((channel == 1 || channel == 5 || channel == 6 || channel == 8) && !uniqueCanvas && NPeak>0 && NPeak_clust>0 && jentry<=15000 &&  ((isChannel_1cm) || ((isChannel_2cm || isChannel_1p5cm))) && channel<=nMaxCh  && Waves[channel].maxInR > 0.02 && ((isChannel_1cm && Waves[channel].charge_integ > 5. ) || (isChannel_1p5cm && Waves[channel].charge_integ > 5. ))){
 	  //else if(!uniqueCanvas && NPeak>0 && NPeak_clust>0 && jentry<=200 && Waves[channel].max > 0.05 && ((isChannel_1cm && Waves[channel].charge_integInR > 20 ) || ((isChannel_2cm || isChannel_1p5cm) && Waves[channel].charge_integInR > 60)) && (counter_top_first_driftTubes_line_size>=3 || counter_top_third_driftTubes_line_size>=2 || counter_top_second_driftTubes_line_size>=2)){
 	  
 	  tmpCvsignal_1.back()->Write();          
 	}
 	theFile->cd("/");
       } //if on representing the found peaks 
-    
+      
     } //getX742Data() loop
   } //entries loop
   

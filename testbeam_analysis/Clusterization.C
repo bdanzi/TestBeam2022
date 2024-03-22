@@ -20,10 +20,10 @@ Int_t ClusterizationFindPeaks(Float_t cut,Int_t *nElectrons_per_cluster,Int_t je
     cut = scale_cut*sqrt(pkPos[ip]*timeRes);
     }
     else if(isRuns_80_20){
-      cut = scale_cut*sqrt(0.8*pkPos[ip]*timeRes);
+      cut = scale_cut*sqrt(pkPos[ip]*timeRes);//0.8*pkPos[ip]*timeRes);
     }
     else if(isRuns_85_15){
-      cut = scale_cut*sqrt(0.9*pkPos[ip]*timeRes);
+      cut = scale_cut*sqrt(pkPos[ip]*timeRes);//0.9*pkPos[ip]*timeRes);
     }
   
     if(NPeak_clust == 0){

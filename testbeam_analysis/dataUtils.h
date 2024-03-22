@@ -11,19 +11,18 @@
 #include <ostream>
 #include <fstream>
 static int skipFstBin[5] = {5,5,5,5,5}; //525 for El Cal   //100 dati proto
-static int skipLstBin[5] = {10,10,10,10,10};  //475 for El Cal   //50	dati proto
+static int skipLstBin[5] = {60,60,60,60,60};  //475 for El Cal   //50	dati proto
 // if (isNov2021TestBeam){
 // static int ChannelDiameter[13] = {-1,-1,-1,-1,10,15,20,20,25,25,20,25,40}; // Old test beam Nov 2022
 // static float ChannelCellSize[13] = {-1.0,-1.0,-1.0,-1.0,1.0,1.0,1.0,1.0,1.0,1.0,2.0,2.0,2.0}; // Old test beam Nov 2022
 // }
 // else if(isJuly2022TestBeam){
-// static int ChannelDiameter[16] = {20,20,15,15,25,20,20,15,20,25,25,15,-1,-1,-1,-1}; // Old test beam Nov 2022
-// static float ChannelCellSize[16] = {1.5,1.0,1.0,1.0,1.5,1.0,1.0,1.5,1.0,1.0,1.0,1.5,-1.0,-1.0,-1.0,-1.0}; // Old test beam Nov 2022
+static int ChannelDiameter[16] = {20,20,15,15,25,20,20,15,20,25,25,15,-1,-1,-1,-1}; // Old test beam Nov 2022
+static float ChannelCellSize[16] = {1.5,1.0,1.0,1.0,1.5,1.0,1.0,1.5,1.0,1.0,1.0,1.5,-1.0,-1.0,-1.0,-1.0}; // Old test beam Nov 2022
+// }
 // else if(isJune2023TestBeamFirstDRS){ 16 channels
-//static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022/
-//static float ChannelCellSize[16] = {1.0,1.0,1.0,1.0,1.0,1.0,1.5,1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0}; // Old test beam Nov 2022
-static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022                   
-static float ChannelCellSize[16] = {1.0,1.0,1.0,1.0,1.0,1.0,1.5,1.5,1.5,1.5,-1.0,1.0,-1.0,-1.0,-1.0,-1.0};
+// static int ChannelDiameter[16] = {20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20}; // Old test beam Nov 2022                   
+// static float ChannelCellSize[16] = {1.0,1.0,1.0,1.0,1.0,1.0,1.5,1.5,1.5,1.5,-1.0,1.0,-1.0,-1.0,-1.0,-1.0};
 
 // }
 // else if(isJune2023TestBeamSecondDRS){ 4 channels
@@ -184,7 +183,7 @@ wave() : bsln(0.0), rms(0.0), integ(0.0), max(-9999), integInR(0.0), maxInR(-999
     }
     rms = sqrt((rms)/(fbin_rms)); // Volt / number of bins
     //std::cout << "Rms first function: " << rms <<"\n";
-    for (int ipt=0; ipt<nPt-50; ++ipt) {
+    for (int ipt=0; ipt<nPt; ++ipt) {
       tmpval=((1.0/65536.0)*arr[ipt]-0.5);
       tmpval*=-1;
       //std::cout << "i-th point "<<ipt<< "tmpval: " << tmpval <<"\n";
@@ -283,33 +282,7 @@ wave() : bsln(0.0), rms(0.0), integ(0.0), max(-9999), integInR(0.0), maxInR(-999
       sderiv.push_back((deriv[(i+1)>(nPt-1)?(nPt-1):(i+1)]-deriv[(i-1)<0?0:(i-1)])/(2*binsize));
     }
   }
-  
-  /* void addPnt(float &val, bool InRng=true) {
-     Y.push_back(val);
-     int ipt=nPt()-1;
-     integ+=val;
-     
-     if (ipt<fbin_rms) {
-     rms+=val*val;
-     }
-     if (ipt==fbin_rms-1) {
-     bsln=integ*invfbin;
-     rms=sqrt(rms*invfbin-bsln*bsln);
-     }
-     if (val>max) { max=val; maxPos=ipt; }
-     if (val<min) { min=val; minPos=ipt; }
-     if (ipt>=skipFstBin[isl] && InRng) {
-     integInR+=Y.back();
-     if (Y.back()>maxInR) { maxInR=Y.back(); maxInRPos=ipt; }
-     if (Y.back()<minInR) { minInR=Y.back(); minInRPos=ipt; }
-     } else {
-     sumX+=ipt;
-     sumX2+=ipt*ipt;
-     sumY+=Y.back();
-     sumXY+=((float)ipt)*Y.back();
-     ++nPtReg;
-     }
-     } */
+
 }; //fine della struct wave
 
 
@@ -337,6 +310,7 @@ struct hstPerCh { //istogrammi per tutti i canali dell'oscilloscopio.
   TH1F *hNPeaks_clust;
   TH1F *hRms;
   TH1F *hMaxVInR;
+  TH1F *hMinVInR;
   //Derivative study
   TH1F *hFirstDeriv;	
   TH1F *hSecDeriv;
@@ -344,15 +318,8 @@ struct hstPerCh { //istogrammi per tutti i canali dell'oscilloscopio.
 
   
   hstPerCh(int Run_number=0, int Ch=0, int isChannel_1cm=0, int isChannel_2cm=0, int isChannel_1p5cm = 0, float alpha = 0., float _gsample= 0., int isRuns_80_20 = 0, int isRuns_90_10 = 0, int isRuns_85_15= 0) {
-    //gRootDir->cd();
-    //TDirectory fldch(Form("H-Ch%d",Ch),Form("folder for ch%d",Ch));
-    //fldch.cd();
-    //senza smooth
     hTimeDifference = new TH1F (Form("hTimeDifference_ch%d",Ch),Form("Time Difference between Two Consecutive Electrons - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),40,0.,40.); 
     hTimeDifference_clust = new TH1F (Form("hTimeDifference_clust_ch%d",Ch),Form("Time Difference between Two Consecutive Clusters - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),100,0.,100.); 
-    //hP0=new TH1F (Form("hP0_ch%d",Ch),Form("HP0 - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),1000,-1,1);
-    //hder = new TH1F (Form("hder_ch%d",Ch),Form("Hder - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),1000,-1e+7,1e+7);
-    //hchiFT = new TH1F (Form("hchiFT_ch%d",Ch),Form("HchiFT - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),1000,-10,10);
     if(isChannel_1cm){
       hNPeaks = new TH1F (Form("hNPeaks_ch%d",Ch),Form("N Electron Peaks found - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),100,0.,100);
     }
@@ -391,35 +358,20 @@ struct hstPerCh { //istogrammi per tutti i canali dell'oscilloscopio.
     }
       
       //hFirstDeriv= new TH1F (Form("hFirstDeriv_ch%d",Ch),Form("First derivative- Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),10000,-0.01,0.01);
-      //hSecDeriv= new TH1F (Form("hSecDeriv_ch%d",Ch),Form("Second derivative- Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),10000,-0.01,0.01);
-      
-      
+      //hSecDeriv= new TH1F (Form("hSecDeriv_ch%d",Ch),Form("Second derivative- Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),10000,-0.01,0.01); 
       
     hBsl = new TH1F (Form("hBsl_ch%d",Ch),Form("Base line - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),1000,-0.8,0.); 
     if(isChannel_1cm){
-	    hIntegN = new TH1F (Form("hIntegN_ch%d",Ch),Form("1 cm Integral Charge in mV * ns /Ohm (pC) - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),100,0.,250.);
+	    hIntegN = new TH1F (Form("hIntegN_ch%d",Ch),Form("Integral Charge in mV * ns /Ohm (pC) - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),200,0.,1000.);
     }
     if(isChannel_2cm || isChannel_1p5cm){
-      hIntegN = new TH1F (Form("hIntegN_ch%d",Ch),Form("2 cm Integral Charge in mV * ns /Ohm (pC) - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),120,0.,600.);
+      hIntegN = new TH1F (Form("hIntegN_ch%d",Ch),Form("Integral Charge in mV * ns /Ohm (pC) - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),200,0.,1000.);
     }
-    //if(Ch<=9){
-    //hIntegInR = new TH1F (Form("hIntegInR_ch%d",Ch),Form("Integral - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),400,0.,20.);
-    //}
-    //else {
-    //  hIntegInR = new TH1F (Form("hIntegInR_ch%d",Ch),Form("Integral - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),250,0.,25.);
-    //}
-    //hIntegNInR = new TH1F (Form("hIntegNInR_ch%d",Ch),Form("Integral minius PDS - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),200,-10.,10.);
-    //hIntegNInRC1 = new TH1F (Form("hIntegNInRC1_ch%d",Ch),Form("Integral minius PDS Norm. on NPeak - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),200,-10.,10.);
-    //hIntegNInRC2 = new TH1F (Form("hIntegNInRC2_ch%d",Ch),Form("Integral minius PDS Norm. on NPeak and loss - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),200,-10.,10.);
-    //hIntegNInRC3 = new TH1F (Form("hIntegNInRC3_ch%d",Ch),Form("Integral minius PDS whitout norm - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),200,-10.,20.);
-    //hIntegNInRC4 = new TH1F (Form("hIntegNInRC4_ch%d",Ch),Form("Integral minius PDS Norm. on loss - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),200,-10.,20.);
+    
     hRms = new TH1F (Form("hRms_ch%d",Ch),Form("noise RMS - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),125,0.,5.);
-    //distribution of derivative for meg FE
-    //hMaxV = new TH1F (Form("hMaxV_ch%d",Ch),Form("Max val - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),150,-0.02,0.3);
-    //hMaxVN = new TH1F (Form("hMaxVN_ch%d",Ch),Form("Max val over base line - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),150,-0.02,0.3);
-    //hMaxVNSmooth= new TH1F (Form("hMaxVNSmooth_ch%d",Ch),Form("Max val Smooth over base line - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),150,-0.02,0.3);
-    hMaxVInR = new TH1F (Form("hMaxVInR_ch%d",Ch),Form("Max val - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),100,0.,0.5);
-    //hMaxVNInR = new TH1F (Form("hMaxVNInR_ch%d",Ch),Form("Max val over base line - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),150,-0.02,0.3);
+    
+    hMaxVInR = new TH1F (Form("hMaxVInR_ch%d",Ch),Form("Max val - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),200,0.,1.0);
+    hMinVInR = new TH1F (Form("hMinVInR_ch%d",Ch),Form("Min val - Run %d - Ch %d - Sense Wire Diameter %d um - Cell Size %0.1f cm - Track Angle %0.1f - %0.1f GSa/s - Gas Mixture 80/20 %d - 90/10 %d - 85/15 %d" ,Run_number,Ch, ChannelDiameter[Ch],ChannelCellSize[Ch], alpha, _gsample, isRuns_80_20, isRuns_90_10, isRuns_85_15),100,-0.02,0.02);
     
     //////////////////////////////////////
     hNPeaks->GetYaxis()->SetTitle("Entries");
@@ -442,51 +394,22 @@ struct hstPerCh { //istogrammi per tutti i canali dell'oscilloscopio.
     hNPeaks_1->GetYaxis()->SetTitle("Entries");
     hBsl->GetYaxis()->SetTitle("Entries");
     hBsl->GetXaxis()->SetTitle("Voltage [V]");
-    //hInteg->GetYaxis()->SetTitle("Entries");
     hIntegN->GetYaxis()->SetTitle("Entries");
     hIntegN->GetXaxis()->SetTitle("Charge [pC]");
-    //hIntegInR->GetYaxis()->SetTitle("Entries");
-    //hIntegNInR->GetYaxis()->SetTitle("Entries");
-    //hIntegNInRC1->GetYaxis()->SetTitle("Entries");
-    //hIntegNInRC2->GetYaxis()->SetTitle("Entries");
-    //hIntegNInRC3->GetYaxis()->SetTitle("Entries");
-    //hIntegNInRC4->GetYaxis()->SetTitle("Entries");
-    //hMaxV->GetYaxis()->SetTitle("Entries");
-    //hMaxVN->GetYaxis()->SetTitle("Entries");
     hMaxVInR->GetYaxis()->SetTitle("Entries");
     hMaxVInR->GetXaxis()->SetTitle("Voltage [V]");
-    //hMaxVNInR->GetYaxis()->SetTitle("Entries");
-    //hIntegInRoriginalW->GetYaxis()->SetTitle("Entries");
-    //hIntegNInRoriginalW->GetYaxis()->SetTitle("Entries");
-    
-    //hder->GetYaxis()->SetTitle("Entries");
-    //hchiFT->GetYaxis()->SetTitle("Entries");
-    //hP0->GetYaxis()->SetTitle("Entries");
-    //hRmsOriginalW->GetYaxis()->SetTitle("Entries");
-    //hMaxVNSmooth->GetYaxis()->SetTitle("Entries");
+    hMinVInR->GetYaxis()->SetTitle("Entries");
+    hMinVInR->GetXaxis()->SetTitle("Voltage [V]");
     hTimeDifference->GetYaxis()->SetTitle("Entries");
     hTimeDifference_clust->GetYaxis()->SetTitle("Entries");
-      
-    /////////////////////////////////////////////////////////
     hTimeDifference->GetXaxis()->SetTitle("Difference in time [ns]");
     hTimeDifference_clust->GetXaxis()->SetTitle("Difference in time [ns]");
-    //hMaxV->GetXaxis()->SetTitle("Volt [V]");
     hNPeaks->GetXaxis()->SetTitle("N Peaks");
     hNPeaks->GetYaxis()->SetTitle("Entries");
     hBsl->GetXaxis()->SetTitle("Baseline [V]");
     hBsl->GetYaxis()->SetTitle("Entries");
-    //hIntegNInR-> GetXaxis()->SetTitle("Integral [V]");
-    //hIntegNInR-> GetYaxis()->SetTitle("Entries");
-    //hIntegNInRC1-> GetXaxis()->SetTitle("Integral [V]");
-    //hIntegNInRC1-> GetYaxis()->SetTitle("Entries");
-    //hIntegNInRC2-> GetXaxis()->SetTitle("Integral [V]");
-    //hIntegNInRC2-> GetYaxis()->SetTitle("Entries");
     hRms->GetXaxis()->SetTitle("Rms [mV]");
     hRms->GetYaxis()->SetTitle("Entries");
-    //hMaxVNInR->GetXaxis()->SetTitle("Max_value [V]");
-    //hMaxVNInR->GetYaxis()->SetTitle("Entries");
-    //hIntegNInRoriginalW-> GetXaxis()->SetTitle("Integral [mA]");
-    //hIntegNInRoriginalW-> GetYaxis()->SetTitle("Entries");
     hNPeaks_1->GetXaxis()->SetTitle("Time [ns]");
 
       
@@ -511,6 +434,7 @@ struct hstDiffCh {//non serve
   TH1F *hRms;
   TH1F *hMaxV;
   TH1F *hMaxVN;
+  TH1F *hMinVInR;
   
   hstDiffCh(int Ch1=0, int Ch2=1, bool ped=false) {
     //gRootDir->cd();

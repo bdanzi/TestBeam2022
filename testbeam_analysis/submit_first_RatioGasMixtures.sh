@@ -1,8 +1,14 @@
+"""
+ 
+   Author: B. D'Anzi - University and INFN Bari
+ 
+ 
+"""
 #create sh script for histos root file creation
-path="/eos/user/b/bdanzi/TestBeam2023/testbeam_analysis/executables"
-pathf="/eos/user/b/bdanzi/TestBeam2023/testbeam_analysis"
+path="/lustrehome/bdanzi/WorkingAreaTB2024/TestBeam2022/testbeam_analysis/executables"
+pathf="/lustrehome/bdanzi/WorkingAreaTB2024/TestBeam2022/testbeam_analysis"
 ### TestBeam2023 ######
-runinputsevents_1_gsample=("2")
+#runinputsevents_2_gsample=("40")
 
 #############################################################################################
 ############### Gas Gain Study without efficiency or Ratio plots ############################
@@ -11,7 +17,7 @@ runinputsevents_1_gsample=("2")
 #####################################################################################################################################
 ############################## HV Study with all Gas Mixtures at 180 GeV ############################################################
 #####################################################################################################################################
-#runinputsevents_1_gsample=("53") # Study July 2022  Nom 90/10 Gas Mixture
+runinputsevents_1p5_gsample=("16") # Study July 2022  Nom 90/10 Gas Mixture
 #runinputsevents_2_gsample=("40" "64" "54" "41" "42" "69" "55" "43" "56") # Study July 2022 Test Beam Scan in HV (80/20 and 85/15 and 90/10): Nom -10V, Nom, Nom +10V, Nom +20V 80/20 Gas Mixture and 85/15 ########################
 #runinputsevents_1p5_gsample=("71" "70")
 ####################################
@@ -63,22 +69,23 @@ runinputsevents_1_gsample=("2")
 dim=1024
 binTimeInterval=25.0
 rm plots_oldTestBeam.txt
+rm output*.txt
 # Original cuts for Nov 2021 cut_scale 0.26 N1 10.0 N_2 1.0 N_3 0.2 N_4 0.2 gsample 3
 # Last cuts for July 2022 cut scale  0.2 N_1 10.0 N_2 1.2 N_3 0.0 N_4 0.0 gsample 0 2
-for cut_scale in 0.250 #0.22 0.22 0.20 # 0.26 0.22 0.24 0.20 0.26 0.28 #0.1 0.4 0.5 #con N_2 1.0 # second derivative in the peak candidate
+for cut_scale in 0.30 #0.22 0.22 0.20 # 0.26 0.22 0.24 0.20 0.26 0.28 #0.1 0.4 0.5 #con N_2 1.0 # second derivative in the peak candidate
 do
-    for N_1 in 9.000 #6 # Amplitude cut
+    for N_1 in 6.000 #6 # Amplitude cut
     do
-        for N_2 in 2.000 #1.1 1.5 0.8 0.5 #1.0 amplitude on the average before and after the peak candidate 1.100
+        for N_2 in 1.2 #1.1 1.5 0.8 0.5 #1.0 amplitude on the average before and after the peak candidate 1.100
         do
-            for N_3 in 1.000 #0.050 0.1 0.4 0.5 #con N_2 1.0 # first derivative in the peak candidate
+            for N_3 in 0.000 #0.050 0.1 0.4 0.5 #con N_2 1.0 # first derivative in the peak candidate
             do
-                for N_4 in 1.500 #0.025 0.1 0.4 0.5 #con N_2 1.0 # second derivative in the peak candidate
+                for N_4 in 0.000 #0.025 0.1 0.4 0.5 #con N_2 1.0 # second derivative in the peak candidate
                 do
-                #for gsample in 1 2 0 # Scan HV
+                for gsample in 0 # Scan HV
                 #for gsample in 1 0 2 # Scan Sampling Rate
                 #for gsample in 0 2 # Scan Angle
-                for gsample in 1 # Run 43
+                #for gsample in 1 # Run 43
                     do
                         runinputs=()
                         if [ $gsample -eq 0 ]
@@ -119,7 +126,7 @@ do
                         echo 'eval `scramv1 runtime -sh`' >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
                         echo "cd ${pathf}/" >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
                         echo "source setDCDataReaderEnv.sh" >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
-                        echo "./read_data .  $i 0 -1 $sampling $N_1 $N_2 $N_3 $N_4 $binTimeInterval $dim $cut_scale >&  ${path}/log_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i &" >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
+                        echo "./read_data /lustre/cms/store/user/bdanzi/TestBeam20212022Analysis/.  $i 0 3000 $sampling $N_1 $N_2 $N_3 $N_4 $binTimeInterval $dim $cut_scale >&  ${path}/log_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i &" >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
                         chmod +x ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
                         echo "histosTB_run_${i}_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}.root ${N_1} ${N_2} ${N_3} ${N_4} ${cut_scale} ${sampling} histosTB_run_${i}.root 16 100000" >> ${pathf}/plots_oldTestBeam.txt
 
@@ -134,7 +141,7 @@ do
                         echo "Error = ${path}/submitted_recas_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.error" >> ${path}/test_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.cfg  
                         echo "Queue" >> ${path}/test_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.cfg  
                         ###then submit the job
-			echo "${path}/log_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i"
+			            echo "${path}/log_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i"
                         echo "condor_submit -name ettore test_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.cfg"
                         cd ${path}
                         #condor_submit -name ettore test_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.cfg
@@ -145,5 +152,6 @@ do
             done
         done
     done
+tail -f ${path}/log_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i
 done
 echo "DONE!"
