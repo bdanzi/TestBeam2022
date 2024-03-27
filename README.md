@@ -16,6 +16,7 @@
         <li><a href="#setup">Setup</a></li>
          <li> <a href="#instructions">Instructions</a></li>
         <li><a href="#channels-correspondance">Channels correspondance</a></li>
+        <li><a href="#resolution-comparison">dEdx and dNdx comparison</a></li>
       </ul>
     </li>
   </ol>
@@ -107,7 +108,7 @@ per each event in the third column some physical quantities which are related to
 <img width="964" alt="Channel Schematics" src="https://github.com/bdanzi/TestBeam2022/blob/main/Schermata%202022-09-10%20alle%2020.18.11.png">
 Credits for the Channel Schematics: Federica Cuna (https://indico.ihep.ac.cn/event/16837/)
 
-## dEdx and dNdx comparison
+## Resolution comparison
 
 A new feature in the `read_data.C` has been added for this. Every time you run analysis on each event, you can select a bunch of channels from which you store into a `output_*.txt` file the waveform information (number of clusters, electrons, integral charge..). Each waveform represents an hit for a track. For example, a 200 hits track corresponds to a txt files of 200 lines. You can change the `lineCount` requirement to store information of a 50 hits/100 hits/etc. track. You will get these output directly from running the analysis. If you set a high limit for lineCounts (like 10k) you will have only one `output_0.txt` file to do the next steps.
 
