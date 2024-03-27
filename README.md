@@ -111,8 +111,8 @@ Credits for the Channel Schematics: Federica Cuna (https://indico.ihep.ac.cn/eve
 
 A new feature in the `read_data.C` has been added for this. Every time you run analysis on each event, you can select a bunch of channels from which you store into a `output_*.txt` file the waveform information (number of clusters, electrons, integral charge..). Each waveform represents an hit for a track. For example, a 200 hits track corresponds to a txt files of 200 lines. You can change the `lineCount` requirement to store information of a 50 hits/100 hits/etc. track. You will get these output directly from running the analysis. If you set a high limit for lineCounts (like 10k) you will have only one `output_0.txt` file to do the next steps.
 
-Then you can use 'testbeam_analysis/LoopOnOutput.sh' to run on selected ranges of 'output_*.txt' files (e.g. from 0 to highest id number of txt file you retrieved from analysis) and get truncated mean distributions plots + 'MeandEdx.txt' and 'MeandNdx.txt' files.
-If you are interested in just a fixed resolution distribution you can use the 'PlotdEdxdNdx.py' code to retrieve them from 'MeandEdx.txt' and 'MeandNdx.txt' files. If you want to show resolution vs lenght (you should have run the analysis changing lineCounts thresholds (e.g. 50,100,150,200,250)), use the 'testbeam_analysis/ResolutionWithErrorsVsTrackLength.py', making sure your folders containing txt files are renamed accordingly.
+Then you can use `testbeam_analysis/LoopOnOutput.sh` to run on selected ranges of `output_*.txt` files (e.g. from 0 to highest id number of txt file you retrieved from analysis) and get truncated mean distributions plots + `MeandEdx.txt` and `MeandNdx.txt` files.
+If you are interested in just a fixed resolution distribution you can use the `PlotdEdxdNdx.py` code to retrieve them from `MeandEdx.txt` and `MeandNdx.txt` files. If you want to show resolution vs lenght (you should have run the analysis changing lineCounts thresholds (e.g. 50,100,150,200,250)), use the `testbeam_analysis/ResolutionWithErrorsVsTrackLength.py`, making sure your folders containing txt files are renamed accordingly.
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
