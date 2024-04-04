@@ -105,7 +105,7 @@ if fit_result.IsValid():
     box.Draw("same")
 
     # Save the canvas as a PDF file
-    c0.SaveAs(directory_name+ "/" + "IntegralChargeAllValuesnWithLandauFit" + filename + ".pdf")
+#    c0.SaveAs(directory_name+ "/" + "IntegralChargeAllValuesnWithLandauFit" + filename + ".pdf")
 else:
     print("Fit did not converge!")
 
@@ -130,7 +130,7 @@ fit_mean = fit_parameters[1]
 def append_to_file(value):
     with open("MeandEdx.txt", "a") as file:
         file.write(str(value) + "\n")
-append_to_file(fit_mean)
+append_to_file(hist_charge_values.GetMean())
 fit_sigma = fit_parameters[2]
 chi_square = fit_result.Chi2()
 # Add a box to display fit parameters
@@ -144,7 +144,7 @@ info_box.Draw("same")
 hist_charge_values.Draw("same")
 c1.SetLogy()
 c1.Draw("same")
-c1.SaveAs(directory_name+ "/" + "IntegralChargeValues" + filename + ".pdf")
+#c1.SaveAs(directory_name+ "/" + "IntegralChargeValues" + filename + ".pdf")
 
 mean_value = fit_mean
 sigma_value = fit_sigma
@@ -170,7 +170,7 @@ mean_npeak_cluster = fit_parameters[1]
 def append_to_file_clusters(value):
     with open("MeandNdx.txt", "a") as file:
         file.write(str(value) + "\n")
-append_to_file_clusters(mean_npeak_cluster)
+append_to_file_clusters(hist_npeak_cluster_values.GetMean())
 sigma_npeak_cluster = fit_parameters[2]
 chisquaredNdx = fit_result.Chi2()
 # Calculate the resolution ratio
@@ -192,7 +192,7 @@ info_box_dNdx.Draw("same")
 # Set logarithmic scale on the y-axis
 #c2.SetLogy()
 # Save the canvas as a PDF file
-c2.SaveAs(directory_name+ "/" +"NPeakClusterDistribution"+ filename + ".pdf")
+#c2.SaveAs(directory_name+ "/" +"NPeakClusterDistribution"+ filename + ".pdf")
 
 ## Compute the ratio between sigma and mean for NPeak cluster values
 #mean_npeak_cluster = np.mean(npeak_cluster_values)
@@ -239,7 +239,7 @@ if fit_result_electrons.IsValid():
 hist_npeak_electrons_values.Draw("same")
 landau_function_electrons.Draw("same")
 # Save the canvas as a PDF file
-c3.SaveAs(directory_name+ "/" +"NPeakElectronsDistribution"+ filename + ".pdf")
+#c3.SaveAs(directory_name+ "/" +"NPeakElectronsDistribution"+ filename + ".pdf")
 
 # Print mean, sigma, and ratio for NPeak cluster values
 print("Mean NPeak dN/dx: {}".format(mean_npeak_cluster))

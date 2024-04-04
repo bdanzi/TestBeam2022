@@ -782,7 +782,7 @@ void read_data::Loop( Char_t *output, Int_t Run_number,Int_t MidEv,Int_t eventn,
       ++lineCount;
     // std::cout << "lineCount: " << lineCount << std::endl;
     // Check if it's time to create a new file
-    if (lineCount > 20000) {
+    if (lineCount > 200) {
         // Close the current file
         outputFile.close();
         lineCount = 1;
