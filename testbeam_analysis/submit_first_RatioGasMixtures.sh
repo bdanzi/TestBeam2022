@@ -1,9 +1,3 @@
-"""
- 
-   Author: B. D'Anzi - University and INFN Bari
- 
- 
-"""
 #create sh script for histos root file creation
 path="/lustrehome/bdanzi/WorkingAreaTB2024/TestBeam2022/testbeam_analysis/executables"
 pathf="/lustrehome/bdanzi/WorkingAreaTB2024/TestBeam2022/testbeam_analysis"
@@ -126,7 +120,7 @@ do
                         echo 'eval `scramv1 runtime -sh`' >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
                         echo "cd ${pathf}/" >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
                         echo "source setDCDataReaderEnv.sh" >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
-                        echo "./read_data /lustre/cms/store/user/bdanzi/TestBeam20212022Analysis/.  $i 0 3000 $sampling $N_1 $N_2 $N_3 $N_4 $binTimeInterval $dim $cut_scale >&  ${path}/log_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i &" >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
+                        echo "./read_data /lustre/cms/store/user/bdanzi/TestBeam20212022Analysis/.  $i 0 -1 $sampling $N_1 $N_2 $N_3 $N_4 $binTimeInterval $dim $cut_scale >&  ${path}/log_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i &" >> ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
                         chmod +x ${path}/submit_executable_conversion_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}_$i.sh
                         echo "histosTB_run_${i}_N1_${N_1}_N2_${N_2}_N3_${N_3}_N4_${N_4}_cut_scale_${cut_scale}_sampling_${sampling}.root ${N_1} ${N_2} ${N_3} ${N_4} ${cut_scale} ${sampling} histosTB_run_${i}.root 16 100000" >> ${pathf}/plots_oldTestBeam.txt
 
