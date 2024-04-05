@@ -1,9 +1,3 @@
-"""
- 
-   Author: B. D'Anzi - University and INFN Bari
- 
- 
-"""
 import ROOT
 import argparse
 from ROOT import gROOT
