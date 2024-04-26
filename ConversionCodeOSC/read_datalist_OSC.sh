@@ -1,0 +1,1 @@
+g++ -DSTANDALONE -I "$ROOTSYS/include"  -I $WAVEDATA_DIR/inc -I $WAVEDATA_DIR/linkdef_inc read_datalist_OSC.C `root-config --glibs --libs --cflags`  -L$WAVEDATA_DIR/lib -lWaveData  -o read_datalist_OSC
